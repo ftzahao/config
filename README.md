@@ -45,6 +45,8 @@ export CARGO_HOME="$XDG_DATA_HOME"/cargo
 ## ~/.config/zsh/.zshrc
 
 ```zsh
+autoload -Uz compinit; compinit -d "$ZCOMPDUMP"
+
 . /opt/homebrew/opt/zinit/zinit.zsh
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
@@ -54,8 +56,6 @@ path=(
   $HOME/.local/bin
   $path
 )
-# 自定义补全目录
-fpath=($ZSH_COMPLETION_DIR $fpath)
 
 zinit snippet 'https://raw.githubusercontent.com/ftzahao/zsh/main/history.zsh'
 zinit snippet 'https://raw.githubusercontent.com/ftzahao/zsh/main/completion.zsh'
