@@ -57,8 +57,19 @@ path=(
 # 自定义补全目录
 fpath=($ZSH_COMPLETION_DIR $fpath)
 
+# autoload -Uz compinit; compinit
+# 加载补全系统（使用 -d 明确指定 dumpfile，避免默认路径混乱）
+autoload -Uz compinit
+# 如果 dumpfile 存在且创建时间在 24 小时之内，则使用 -C 加速
+if [[ -f "$ZCOMPDUMP" && -n "$ZCOMPDUMP"(#qN.mh+24) ]]; then
+    compinit -C -d "$ZCOMPDUMP"
+else
+    compinit -d "$ZCOMPDUMP"
+fi
+# 启用 Bash 补全兼容（让很多 Bash 工具的补全能直接用）
+autoload -Uz bashcompinit && bashcompinit
+
 zinit snippet 'https://raw.githubusercontent.com/ftzahao/zsh/main/history.zsh'
-zinit snippet 'https://raw.githubusercontent.com/ftzahao/zsh/main/compinit.zsh'
 zinit snippet 'https://raw.githubusercontent.com/ftzahao/zsh/main/plugin.zsh'
 zinit snippet 'https://raw.githubusercontent.com/ftzahao/zsh/main/completion.zsh'
 
@@ -68,6 +79,8 @@ export GITHUB_TOKEN="******"
 export CARGO_REGISTRY_TOKEN="******"
 ## Hugging Face 访问令牌 https://router.huggingface.co/v1
 export HF_TOKEN="******"
+## OpenAI 访问令牌
+export OPENAI_API_KEY="******"
 
 zinit snippet 'https://raw.githubusercontent.com/ftzahao/zsh/main/dev-init.zsh'
 zinit snippet 'https://raw.githubusercontent.com/ftzahao/zsh/main/alias.zsh'
