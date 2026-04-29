@@ -160,7 +160,7 @@ echo "🔄 生成所有工具的zsh补全..."
 # [ -x "$(command -v pitchfork)" ] && mise x pitchfork -- pitchfork completion zsh > "$ZSH_COMPLETION_DIR/_pitchfork" 2>/dev/null || true
 
 echo "✅ 所有补全内容已生成至 $ZSH_COMPLETION_DIR"
-# autoload -Uz compinit; compinit
+autoload -Uz compinit; compinit -d "$ZCOMPDUMP"
 '''
 
 [hooks]
