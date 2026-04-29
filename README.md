@@ -33,7 +33,7 @@ export ZCOMPDUMP="${ZDOTDIR}/.zcompdump"
 # 补全函数目录
 export ZSH_COMPLETION_DIR="${XDG_DATA_HOME}/zsh/site-functions"
 
-mkdir -p -- "$ZDOTDIR" "$XDG_STATE_HOME/zsh" "$XDG_CACHE_HOME/zsh" "$ZSH_COMPLETION_DIR" 2>/dev/null
+mkdir -p -- "$ZDOTDIR" "$XDG_STATE_HOME/zsh" "$ZSH_COMPLETION_DIR" 2>/dev/null
 
 export LANG=zh_CN.UTF-8
 export LC_ALL=zh_CN.UTF-8
