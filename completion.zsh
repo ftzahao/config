@@ -84,3 +84,6 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 
 # zinit ice wait lucid
 # zinit light zdharma-continuum/history-search-multi-word
+
+# 自定义补全目录
+fpath=($ZSH_COMPLETION_DIR $fpath)
