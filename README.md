@@ -122,14 +122,11 @@ yarn = "latest"
 zig = "latest"
 
 [settings]
-idiomatic_version_file_enable_tools = ["node", "python", "ruby", "go", "java"]
-lockfile = true
 auto_install = false
 experimental = true
+lockfile = true
+idiomatic_version_file_enable_tools = ["node", "python", "ruby", "go", "java"]
 python.uv_venv_auto = "source"
-
-[env]
-ZSH_COMPLETION_DIR = "{{env.HOME}}/.local/share/zsh/site-functions"
 
 [tasks.generate-completions]
 description = "生成所有常用工具的zsh补全"
