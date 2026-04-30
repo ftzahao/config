@@ -87,36 +87,37 @@ brew install --cask adguard betterdisplay cleanmymac cleanshot coteditor crossov
 redactions = ["*_TOKEN", "*_API_KEY"]
 
 [tools]
-aube = { version = "latest", postinstall = "aube completion zsh > $ZSH_COMPLETION_DIR/_aube" }
-bat = { version = "latest", postinstall = "bat --completion zsh > $ZSH_COMPLETION_DIR/_bat" }
-bun = { version = "latest", postinstall = "bun completions zsh > $ZSH_COMPLETION_DIR/_bun" }
+aube = "latest"
+bat = "latest"
+bun = "latest"
 "cargo:cargo-cache" = "latest"
 "cargo:lsd" = "latest"
-"cargo:miniserve" = { version = "latest", postinstall = "miniserve --print-completions zsh > $ZSH_COMPLETION_DIR/_miniserve" }
+"cargo:miniserve" = "latest"
 cocoapods = "latest"
-deno = { version = "latest", postinstall = "deno completions zsh > $ZSH_COMPLETION_DIR/_deno" }
+deno = "latest"
 dust = "latest"
-fd = { version = "latest", postinstall = "fd --gen-completions zsh > $ZSH_COMPLETION_DIR/_fd" }
-gh = { version = "latest", postinstall = "gh completion -s zsh > $ZSH_COMPLETION_DIR/_gh" }
+fd = "latest"
+gh = "latest"
 go = "latest"
 java = "latest"
 mkcert = "latest"
-node = { version = "latest", postinstall = "npm completion > $ZSH_COMPLETION_DIR/_npm" }
+node = "latest"
 "npm:@github/copilot" = "latest"
 "npm:@vscode/vsce" = "latest"
 "npm:npkill" = "latest"
 "npm:nrm" = "latest"
-pkl = { version = "latest", postinstall = "pkl shell-completion zsh > $ZSH_COMPLETION_DIR/_pkl" }
-pnpm = { version = "latest", postinstall = "pnpm completion zsh > $ZSH_COMPLETION_DIR/_pnpm" }
-python = { version = "latest", postinstall = "pip completion --zsh > $ZSH_COMPLETION_DIR/_pip" }
-rg = { version = "latest", postinstall = "rg --generate complete-zsh > $ZSH_COMPLETION_DIR/_rg" }
+oxfmt = "latest"
+pkl = "latest"
+pnpm = "latest"
+python = "latest"
+rg = "latest"
 ruby = "latest"
 rust = "latest"
 tokei = "latest"
-usage = { version = "latest", postinstall = "usage --completions zsh > $ZSH_COMPLETION_DIR/_usage" }
-uv = { version = "latest", postinstall = "uv generate-shell-completion zsh > $ZSH_COMPLETION_DIR/_uv" }
+usage = "latest"
+uv = "latest"
 vp = "latest"
-watchexec = { version = "latest", postinstall = "watchexec --completions zsh > $ZSH_COMPLETION_DIR/_watchexec" }
+watchexec = "latest"
 yarn = "latest"
 zig = "latest"
 
