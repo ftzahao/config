@@ -18,7 +18,7 @@ alias dns-update="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 alias public-ip="curl ipinfo.io/ip ; echo"
 alias public-ip-json="curl ipinfo.io/json ; echo"
 
-alias mise-update="mise cache c && mise up && mise ls"
+alias mise-update="mise cache clear && mise upgrade --bump && mise ls"
 alias mise-x64-update="curl https://mise.jdx.dev/mise-latest-macos-x64 > ~/.local/bin/mise-x64 && chmod +x ~/.local/bin/mise-x64"
 alias cdr='cd "$(git rev-parse --show-toplevel)"'
 alias dsstore-clean="find . -name '.DS_Store' -type f -delete"
