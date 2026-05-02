@@ -20,4 +20,4 @@ export RUSTUP_HOME="$XDG_DATA_HOME"/rustup # Rustup 配置目录
 export CARGO_HOME="$XDG_DATA_HOME"/cargo # Cargo 配置目录
 
 # 创建必要的目录
-mkdir -p -- "$ZDOTDIR" "$XDG_STATE_HOME/zsh" "$ZSH_COMPLETION_DIR" 2>/dev/null
+mkdir -p -- "$ZDOTDIR" "$ZSH_COMPLETION_DIR" 2>/dev/null

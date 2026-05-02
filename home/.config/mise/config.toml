@@ -52,23 +52,36 @@ rm -f -- $ZSH_COMPLETION_DIR/_* 2>/dev/null || true
 
 echo "🔄 生成所有工具的zsh补全..."
 
-[ -x "$(command -v aube)" ] && aube completion zsh > "$ZSH_COMPLETION_DIR/_aube" 2>/dev/null || true
-[ -x "$(command -v bat)" ] && bat --completion zsh > "$ZSH_COMPLETION_DIR/_bat" 2>/dev/null || true
-[ -x "$(command -v bun)" ] && bun completions zsh > "$ZSH_COMPLETION_DIR/_bun" 2>/dev/null || true
-[ -x "$(command -v miniserve)" ] && mise x miniserve -- miniserve --print-completions zsh > "$ZSH_COMPLETION_DIR/_miniserve" 2>/dev/null || true
-[ -x "$(command -v deno)" ] && deno completions zsh > "$ZSH_COMPLETION_DIR/_deno" 2>/dev/null || true
-[ -x "$(command -v fd)" ] && fd --gen-completions zsh > "$ZSH_COMPLETION_DIR/_fd" 2>/dev/null || true
-[ -x "$(command -v gh)" ] && gh completion -s zsh > "$ZSH_COMPLETION_DIR/_gh" 2>/dev/null || true
-[ -x "$(command -v npm)" ] && npm completion > "$ZSH_COMPLETION_DIR/_npm" 2>/dev/null || true
-[ -x "$(command -v pkl)" ] && mise x pkl -- pkl shell-completion zsh > "$ZSH_COMPLETION_DIR/_pkl" 2>/dev/null || true
-[ -x "$(command -v pnpm)" ] && pnpm completion zsh > "$ZSH_COMPLETION_DIR/_pnpm" 2>/dev/null || true
-[ -x "$(command -v pip)" ] && pip completion --zsh > "$ZSH_COMPLETION_DIR/_pip" 2>/dev/null || true
-[ -x "$(command -v rg)" ] && mise x rg -- rg --generate complete-zsh > "$ZSH_COMPLETION_DIR/_rg" 2>/dev/null || true
-[ -x "$(command -v usage)" ] && mise x usage -- usage --completions zsh > "$ZSH_COMPLETION_DIR/_usage" 2>/dev/null || true
-[ -x "$(command -v uv)" ] && mise x uv -- uv generate-shell-completion zsh > "$ZSH_COMPLETION_DIR/_uv" 2>/dev/null || true
-[ -x "$(command -v watchexec)" ] && mise x watchexec -- watchexec --completions zsh > "$ZSH_COMPLETION_DIR/_watchexec" 2>/dev/null || true
-[ -x "$(command -v pitchfork)" ] && mise x pitchfork -- pitchfork completion zsh > "$ZSH_COMPLETION_DIR/_pitchfork" 2>/dev/null || true
+# 辅助函数：检查命令是否存在并生成补全
+gen_completion() {
+    local name="$1"
+    local cmd="$2"
+    if [ -x "$(command -v "$name")" ]; then
+        eval "$cmd" > "$ZSH_COMPLETION_DIR/_${name}" 2>/dev/null && echo "✅ ${name} 补全脚本已生成" || echo "❌ ${name} 补全生成失败"
+    else
+        echo "⏭️  ${name} 未安装，跳过"
+    fi
+}
 
+gen_completion hermes "hermes completion zsh"
+gen_completion aube "aube completion zsh"
+gen_completion bat "bat --completion zsh"
+gen_completion bun "bun completions zsh"
+gen_completion miniserve "mise x miniserve -- miniserve --print-completions zsh"
+gen_completion deno "deno completions zsh"
+gen_completion fd "fd --gen-completions zsh"
+gen_completion gh "gh completion -s zsh"
+gen_completion npm "npm completion"
+gen_completion pkl "mise x pkl -- pkl shell-completion zsh"
+gen_completion pnpm "pnpm completion zsh"
+gen_completion pip "pip completion --zsh"
+gen_completion rg "mise x rg -- rg --generate complete-zsh"
+gen_completion usage "mise x usage -- usage --completions zsh"
+gen_completion uv "mise x uv -- uv generate-shell-completion zsh"
+gen_completion watchexec "mise x watchexec -- watchexec --completions zsh"
+gen_completion pitchfork "mise x pitchfork -- pitchfork completion zsh"
+
+echo ""
 echo "✅ 所有补全内容已生成至 $ZSH_COMPLETION_DIR"
 autoload -Uz compinit; compinit -d "$ZCOMPDUMP"
 '''
