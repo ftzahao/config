@@ -48,5 +48,19 @@ export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 # Docker Machine 配置
 export MACHINE_STORAGE_PATH="$XDG_DATA_HOME"/docker-machine
 
+function ensure_directory() {
+  local dir="$1"
+  if [ ! -d "$dir" ]; then
+    mkdir -p -- "$dir" 2>/dev/null || {
+      echo "Error: Failed to create directory '$dir'" >&2
+      return 1
+    }
+  fi
+}
 # 创建必要的目录
-mkdir -p -- "$ZDOTDIR" "$ZSH_COMPLETION_DIR" "$FFMPEG_DATADIR" 2>/dev/null
+ensure_directory "$ZDOTDIR"
+ensure_directory "$ZSH_COMPLETION_DIR"
+ensure_directory "$FFMPEG_DATADIR"
+ensure_directory "$GNUPGHOME"
+
+unset -f ensure_directory
