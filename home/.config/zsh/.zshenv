@@ -78,10 +78,6 @@ function ensure_directory() {
 # 创建必要的目录
 ensure_directory "$ZDOTDIR"
 ensure_directory "$ZSH_COMPLETION_DIR"
-ensure_directory "$FFMPEG_DATADIR"
 ensure_directory "$GNUPGHOME"
-ensure_directory "$BUNDLE_USER_CACHE"
-ensure_directory "$BUNDLE_USER_CONFIG"
-ensure_directory "$BUNDLE_USER_PLUGIN"
 
 unset -f ensure_directory
