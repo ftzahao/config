@@ -25,10 +25,10 @@ alias local-ip="ipconfig getifaddr en0"
 alias public-ip="curl ipinfo.io/ip ; echo"
 # 获取公网 IP 地址和相关信息
 alias public-ip-json="curl ipinfo.io/json ; echo"
-# 更新 mise 到最新版本
-alias mise-update="mise cache clear && mise upgrade --bump && mise ls"
-# 安装最新版本的 mise-x64 到 ~/.local/bin/mise-x64
-alias mise-x64-install-pkg="curl https://mise.jdx.dev/mise-latest-macos-x64 > ~/.local/bin/mise-x64 && chmod +x ~/.local/bin/mise-x64"
+# # 更新 mise 到最新版本
+# alias mise-update="mise cache clear && mise upgrade --bump && mise ls"
+# # 安装最新版本的 mise-x64 到 ~/.local/bin/mise-x64
+# alias mise-x64-install-pkg="curl https://mise.jdx.dev/mise-latest-macos-x64 > ~/.local/bin/mise-x64 && chmod +x ~/.local/bin/mise-x64"
 # 切换到 Git 仓库的根目录
 alias cdr='cd "$(git rev-parse --show-toplevel)"'
 # 清理 .DS_Store 文件

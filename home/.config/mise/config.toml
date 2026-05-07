@@ -89,5 +89,17 @@ echo "✅ 所有补全内容已生成至 $ZSH_COMPLETION_DIR"
 autoload -Uz compinit; compinit -d "$ZCOMPDUMP"
 '''
 
+[tasks.mise-x64-install-pkg]
+description = "安装64位系统的mise包"
+run = '''#!/usr/bin/env zsh
+curl https://mise.jdx.dev/mise-latest-macos-x64 > ~/.local/bin/mise-x64 && chmod +x ~/.local/bin/mise-x64
+'''
+
+[tasks.mise-update]
+description = "更新mise的包到最新版本"
+run = '''#!/usr/bin/env zsh
+mise cache clear && mise upgrade --bump && mise ls
+'''
+
 [hooks]
 postinstall = "mise run generate-completions"
