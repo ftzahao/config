@@ -60,7 +60,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,cmd'
 # 7. 插件
 # ------------------------------------------------------------------------------
 
-zinit ice wait lucid
+# zinit ice wait lucid
 zinit light zsh-users/zsh-autosuggestions
 
 zinit ice wait lucid
