@@ -47,6 +47,10 @@ export FFMPEG_DATADIR="$XDG_CONFIG_HOME"/ffmpeg
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 # Docker Machine 配置
 export MACHINE_STORAGE_PATH="$XDG_DATA_HOME"/docker-machine
+# Bundler 配置
+export BUNDLE_USER_CACHE=$XDG_CACHE_HOME/bundle
+export BUNDLE_USER_CONFIG=$XDG_CONFIG_HOME/bundle/config
+export BUNDLE_USER_PLUGIN=$XDG_DATA_HOME/bundle
 
 function ensure_directory() {
   local dir="$1"
@@ -62,5 +66,8 @@ ensure_directory "$ZDOTDIR"
 ensure_directory "$ZSH_COMPLETION_DIR"
 ensure_directory "$FFMPEG_DATADIR"
 ensure_directory "$GNUPGHOME"
+ensure_directory "$BUNDLE_USER_CACHE"
+ensure_directory "$BUNDLE_USER_CONFIG"
+ensure_directory "$BUNDLE_USER_PLUGIN"
 
 unset -f ensure_directory
