@@ -15,11 +15,11 @@ export ZSH_COMPLETION_DIR="${ZDOTDIR}/site-functions" # ZSH 补全脚本目录
 # Node REPL 历史记录
 export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
 # NPM 配置
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/.npmrc" # NPM 用户配置文件
-export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm" # NPM 缓存目录
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
 # Rust 配置
-export RUSTUP_HOME="$XDG_DATA_HOME"/rustup # Rustup 配置目录
-export CARGO_HOME="$XDG_DATA_HOME"/cargo # Cargo 配置目录
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
 # Go 配置
 export GOPATH="$XDG_DATA_HOME"/go
 export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
@@ -51,6 +51,20 @@ export MACHINE_STORAGE_PATH="$XDG_DATA_HOME"/docker-machine
 export BUNDLE_USER_CACHE=$XDG_CACHE_HOME/bundle
 export BUNDLE_USER_CONFIG=$XDG_CONFIG_HOME/bundle/config
 export BUNDLE_USER_PLUGIN=$XDG_DATA_HOME/bundle
+# Rbenv 配置
+export RBENV_ROOT="$XDG_DATA_HOME"/rbenv
+# Pyenv 配置
+export PYENV_ROOT=$XDG_DATA_HOME/pyenv
+# Codex 配置
+export CODEX_HOME="$XDG_CONFIG_HOME"/codex
+# NVM 配置
+export NVM_DIR="$XDG_DATA_HOME"/nvm
+# Nodenv 配置
+export NODENV_ROOT="$XDG_DATA_HOME"/nodenv
+# K9s 配置
+export K9SCONFIG="$XDG_CONFIG_HOME"/k9s
+# Gradle 配置
+export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 
 function ensure_directory() {
   local dir="$1"
