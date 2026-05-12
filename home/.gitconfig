@@ -12,6 +12,7 @@
 	ignorecase = false
 	preloadindex = true
 	untrackedcache = true
+	excludesfile = ~/.gitignore_global
 
 ; 新仓库默认主分支名
 [init]
