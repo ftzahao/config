@@ -11,8 +11,6 @@ export XDG_BIN_HOME="$HOME/.local/bin"
 export ZCOMPCACHE="${XDG_CACHE_HOME}/zsh/.zcompcache" # ZSH 补全缓存目录
 export ZCOMPDUMP="${XDG_CACHE_HOME}/zsh/.zcompdump" # ZSH 补全缓存文件
 export ZSH_COMPLETION_DIR="${XDG_CACHE_HOME}/zsh/site-functions" # ZSH 补全脚本目录
-# Node REPL 历史记录
-export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
 # NPM 配置
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
@@ -22,48 +20,14 @@ export CARGO_HOME="$XDG_DATA_HOME"/cargo
 # Go 配置
 export GOPATH="$XDG_DATA_HOME"/go
 export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
-# NVM 配置
-export NVM_DIR="$XDG_DATA_HOME"/nvm
-# NuGet 配置
-export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
-# Parallel 配置
-export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel
-# Pyenv 配置
-export PYENV_ROOT=$XDG_DATA_HOME/pyenv
 # Ollama 配置
 export OLLAMA_MODELS=$XDG_DATA_HOME/ollama/models
-# Kubernetes 配置
-export KUBECONFIG="$XDG_CONFIG_HOME/kube"
-export KUBECACHEDIR="$XDG_CACHE_HOME/kube"
 # GPG 配置
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
-# GNU Radio 配置
-export GR_PREFS_PATH="$XDG_CONFIG_HOME"/gnuradio
-export GRC_PREFS_PATH="$XDG_CONFIG_HOME"/gnuradio/grc.conf
-# FFMPEG 配置
-export FFMPEG_DATADIR="$XDG_CONFIG_HOME"/ffmpeg
-# Docker 配置
-export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
-# Docker Machine 配置
-export MACHINE_STORAGE_PATH="$XDG_DATA_HOME"/docker-machine
 # Bundler 配置
 export BUNDLE_USER_CACHE=$XDG_CACHE_HOME/bundle
 export BUNDLE_USER_CONFIG=$XDG_CONFIG_HOME/bundle/config
 export BUNDLE_USER_PLUGIN=$XDG_DATA_HOME/bundle
-# Rbenv 配置
-export RBENV_ROOT="$XDG_DATA_HOME"/rbenv
-# Pyenv 配置
-export PYENV_ROOT=$XDG_DATA_HOME/pyenv
-# Codex 配置
-export CODEX_HOME="$XDG_CONFIG_HOME"/codex
-# NVM 配置
-export NVM_DIR="$XDG_DATA_HOME"/nvm
-# Nodenv 配置
-export NODENV_ROOT="$XDG_DATA_HOME"/nodenv
-# K9s 配置
-export K9SCONFIG="$XDG_CONFIG_HOME"/k9s
-# Gradle 配置
-export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 
 function ensure_directory() {
   local dir="$1"
