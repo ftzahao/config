@@ -16,7 +16,6 @@ gh = "latest"
 go = "latest"
 java = "latest"
 jq = "latest"
-make = "latest"
 mkcert = "latest"
 node = "latest"
 "npm:@vscode/vsce" = "latest"
@@ -47,6 +46,7 @@ experimental = true
 lockfile = true
 idiomatic_version_file_enable_tools = ["node", "python", "ruby", "go", "java"]
 python.uv_venv_auto = "source"
+trusted_config_paths = ["~"]
 
 [tasks.generate-completions]
 description = "生成所有常用工具的zsh补全"
