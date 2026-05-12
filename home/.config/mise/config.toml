@@ -110,3 +110,15 @@ run = '''
 set -e
 mise cache clear && mise upgrade --bump && mise ls
 '''
+
+[tasks.install-node-14]
+description = "安装 Node.js 14"
+run = '''
+#!/usr/bin/env zsh
+set -e
+echo "🔧 安装 Node.js 14..."
+echo "Node.js 14 无法在 ARM64 架构上安装，正在使用 x86_64 版本的 mise 进行安装..."
+export MISE_ARCH=x86_64
+echo "正在安装 Node.js 14..."
+mise install node@14
+'''
