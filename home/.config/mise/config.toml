@@ -3,7 +3,6 @@ redactions = ["*_TOKEN", "*_API_KEY"]
 [tools]
 aube = "latest"
 bat = "latest"
-biome = "latest"
 bun = "latest"
 "cargo:cargo-cache" = "latest"
 "cargo:miniserve" = "latest"
@@ -19,8 +18,10 @@ jq = "latest"
 mkcert = "latest"
 node = "latest"
 "npm:@vscode/vsce" = "latest"
+"npm:kill-port-now" = "latest"
 "npm:npkill" = "latest"
 "npm:nrm" = "latest"
+"npm:typescript" = "latest"
 oha = "latest"
 opencode = "latest"
 oxfmt = "latest"
@@ -38,7 +39,6 @@ vp = "latest"
 watchexec = "latest"
 yarn = "latest"
 yq = "latest"
-zig = "latest"
 
 [settings]
 auto_install = false
