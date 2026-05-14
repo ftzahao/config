@@ -9,37 +9,37 @@
 {
   "language_models": {
     "ollama": {
-      "api_url": "http://localhost:11434",
-    },
+      "api_url": "http://localhost:11434"
+    }
   },
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "One Dark",
+    "dark": "One Dark"
   },
   "diff_view_style": "split",
   "project_panel": {
     "git_status_indicator": true,
-    "dock": "left",
+    "dock": "left"
   },
   "outline_panel": {
-    "dock": "left",
+    "dock": "left"
   },
   "collaboration_panel": {
-    "dock": "left",
+    "dock": "left"
   },
   "git_panel": {
     "show_count_badge": true,
     "file_icons": true,
     "tree_view": true,
-    "dock": "left",
+    "dock": "left"
   },
   "ui_font_family": "Maple Mono NF CN",
   "colorize_brackets": true,
   "buffer_font_family": "Maple Mono NF CN",
   "buffer_font_features": {
     "calt": true,
-    "liga": true,
+    "liga": true
   },
   "agent": {
     "dock": "right",
@@ -48,24 +48,24 @@
       "effort": "high",
       "enable_thinking": true,
       "provider": "copilot_chat",
-      "model": "gpt-5-mini",
+      "model": "gpt-5-mini"
     },
-    "model_parameters": [],
+    "model_parameters": []
   },
   "icon_theme": {
     "mode": "system",
     "light": "VSCode Icons for Zed (Light)",
-    "dark": "VSCode Icons for Zed (Dark)",
+    "dark": "VSCode Icons for Zed (Dark)"
   },
   "terminal": {
-    "blinking": "on",
+    "blinking": "on"
   },
   "git": {
     "inline_blame": {
       "enabled": true,
-      "show_commit_summary": true,
-    },
+      "show_commit_summary": true
+    }
   },
   "use_system_window_tabs": true,
-  "linked_edits": true,
+  "linked_edits": true
 }
