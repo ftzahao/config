@@ -22,9 +22,9 @@ alias dns-update="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 # 本机 IP 地址（局域网）
 alias ip-local="ipconfig getifaddr en0"
 # 获取本机 IPv4 地址（公网）
-alias ip-public-4="curl 4.ipcheck.ing/geo"
+alias ip-v4-public="curl 4.ipcheck.ing/geo"
 # 获取本机 IPv6 地址（公网）
-alias ip-public-6="curl 6.ipcheck.ing/geo"
+alias ip-v6-public="curl 6.ipcheck.ing/geo"
 # 获取本机优先网络出口的 IP 地址
 alias ip-public="curl 64.ipcheck.ing/geo"
 # 切换到 Git 仓库的根目录
