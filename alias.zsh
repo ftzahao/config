@@ -19,16 +19,14 @@ function brews() {
 }
 # 清理 DNS 缓存
 alias dns-update="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
-# 本机 IP 地址
-alias local-ip="ipconfig getifaddr en0"
-# 获取公网 IP 地址
-alias public-ip="curl ipinfo.io/ip ; echo"
-# 获取公网 IP 地址和相关信息
-alias public-ip-json="curl ipinfo.io/json ; echo"
-# # 更新 mise 到最新版本
-# alias mise-update="mise cache clear && mise upgrade --bump && mise ls"
-# # 安装最新版本的 mise-x64 到 ~/.local/bin/mise-x64
-# alias mise-x64-install-pkg="curl https://mise.jdx.dev/mise-latest-macos-x64 > ~/.local/bin/mise-x64 && chmod +x ~/.local/bin/mise-x64"
+# 本机 IP 地址（局域网）
+alias ip-local="ipconfig getifaddr en0"
+# 获取本机 IPv4 地址（公网）
+alias ip-public-4="curl 4.ipcheck.ing/geo"
+# 获取本机 IPv6 地址（公网）
+alias ip-public-6="curl 6.ipcheck.ing/geo"
+# 获取本机优先网络出口的 IP 地址
+alias ip-public="curl 64.ipcheck.ing/geo"
 # 切换到 Git 仓库的根目录
 alias cdr='cd "$(git rev-parse --show-toplevel)"'
 # 清理 .DS_Store 文件
