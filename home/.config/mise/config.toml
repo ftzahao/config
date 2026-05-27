@@ -6,6 +6,7 @@ bat = "latest"
 bun = "latest"
 "cargo:cargo-cache" = "latest"
 "cargo:miniserve" = "latest"
+"cargo:rustnet-monitor" = "latest"
 cocoapods = "latest"
 copilot = "latest"
 deno = "latest"
@@ -18,7 +19,6 @@ jq = "latest"
 mkcert = "latest"
 node = "latest"
 "npm:@vscode/vsce" = "latest"
-"npm:kill-port-now" = "latest"
 "npm:npkill" = "latest"
 "npm:nrm" = "latest"
 "npm:typescript" = "latest"
@@ -95,14 +95,6 @@ echo "✅ 所有补全内容已生成至 $ZSH_COMPLETION_DIR"
 autoload -Uz compinit; compinit -d "$ZCOMPDUMP"
 '''
 
-[tasks.mise-x64-install-pkg]
-description = "安装64位系统的mise包"
-run = '''
-#!/usr/bin/env zsh
-set -e
-curl https://mise.jdx.dev/mise-latest-macos-x64 > ~/.local/bin/mise-x64 && chmod +x ~/.local/bin/mise-x64
-'''
-
 [tasks.mise-update]
 description = "更新mise的包到最新版本"
 run = '''
@@ -111,14 +103,13 @@ set -e
 mise cache clear && mise upgrade --bump && mise ls
 '''
 
-[tasks.install-node-14]
-description = "安装 Node.js 14"
+[tasks.install-x64]
+description = "安装64位系统的工具包"
 run = '''
 #!/usr/bin/env zsh
 set -e
-echo "🔧 安装 Node.js 14..."
-echo "Node.js 14 无法在 ARM64 架构上安装，正在使用 x86_64 版本的 mise 进行安装..."
 export MISE_ARCH=x86_64
-echo "正在安装 Node.js 14..."
-mise install node@14
+echo "🔧 安装 $MISE_ARCH 版本的 $1"
+mise install "$1"
+mise ls
 '''
