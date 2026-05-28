@@ -1,7 +1,6 @@
 redactions = ["*_TOKEN", "*_API_KEY"]
 
 [tools]
-aube = "latest"
 bat = "latest"
 bun = "latest"
 "cargo:cargo-cache" = "latest"
@@ -47,9 +46,10 @@ lockfile = true
 idiomatic_version_file_enable_tools = ["node", "python", "ruby", "go", "java"]
 python.uv_venv_auto = "source"
 trusted_config_paths = ["~"]
+npm.package_manager = "npm"
 
 [tasks.generate-completions]
-description = "生成所有常用工具的zsh补全"
+description = "生成常用工具的zsh补全"
 run = '''
 #!/usr/bin/env zsh
 set -e
@@ -57,7 +57,7 @@ set -e
 # 清理旧的补全文件，避免过期或冲突
 rm -f -- $ZSH_COMPLETION_DIR/_* 2>/dev/null || true
 
-echo "🔄 生成所有工具的zsh补全..."
+echo "🔄 生成常用工具的zsh补全..."
 
 # 辅助函数：检查命令是否存在并生成补全
 gen_completion() {
