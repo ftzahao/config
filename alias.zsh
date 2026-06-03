@@ -22,7 +22,7 @@ alias dns-update="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 # 本机 IP 地址（局域网）
 alias ip-local="ipconfig getifaddr en0"
 # 获取本机 IPv4 地址（公网）
-alias ip-v4-public="curl ifconfig.me ; echo"
+alias ip-v4-public="curl -s ifconfig.me && echo"
 # 切换到 Git 仓库的根目录
 alias cdr='cd "$(git rev-parse --show-toplevel)"'
 # 清理 .DS_Store 文件
