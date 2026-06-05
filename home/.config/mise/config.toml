@@ -5,27 +5,19 @@ bat = "latest"
 bun = "latest"
 "cargo:cargo-cache" = "latest"
 "cargo:miniserve" = "latest"
-"cargo:rustnet-monitor" = "latest"
-cocoapods = "latest"
-copilot = "latest"
 deno = "latest"
 dust = "latest"
 fd = "latest"
-gh = "latest"
 go = "latest"
 java = "latest"
 jq = "latest"
+lefthook = "latest"
 mkcert = "latest"
 node = "latest"
 "npm:@vscode/vsce" = "latest"
 "npm:npkill" = "latest"
 "npm:nrm" = "latest"
-"npm:typescript" = "latest"
 oha = "latest"
-opencode = "latest"
-oxfmt = "latest"
-oxlint = "latest"
-pkl = "latest"
 pnpm = "latest"
 python = "latest"
 rg = "latest"
@@ -36,7 +28,6 @@ usage = "latest"
 uv = "latest"
 vp = "latest"
 watchexec = "latest"
-yarn = "latest"
 yq = "latest"
 
 [settings]
@@ -46,7 +37,7 @@ lockfile = true
 idiomatic_version_file_enable_tools = ["node", "python", "ruby", "go", "java"]
 python.uv_venv_auto = "source"
 trusted_config_paths = ["~"]
-npm.package_manager = "npm"
+npm.package_manager = "bun"
 
 [tasks.generate-completions]
 description = "生成常用工具的zsh补全"
@@ -100,7 +91,7 @@ description = "更新mise的包到最新版本"
 run = '''
 #!/usr/bin/env zsh
 set -e
-mise cache clear && mise upgrade --bump && mise ls
+mise cache clear && mise upgrade --bump
 '''
 
 [tasks.install-x64]
@@ -109,7 +100,6 @@ run = '''
 #!/usr/bin/env zsh
 set -e
 export MISE_ARCH=x86_64
-echo "🔧 安装 $MISE_ARCH 版本的 $1"
+echo "即将安装 $MISE_ARCH 版本的 $1"
 mise install "$1"
-mise ls
 '''
