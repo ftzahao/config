@@ -26,10 +26,6 @@ zstyle ':completion:*' insert-unambiguous true
 # 颜色
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-# 描述
-zstyle ':completion:*:descriptions' format '%F{green} %d%f'
-zstyle ':completion:*:warnings' format '%F{red} no matches%f'
-
 # ------------------------------------------------------------------------------
 # 3. 缓存 + 性能优化
 # ------------------------------------------------------------------------------
