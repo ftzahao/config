@@ -184,23 +184,30 @@ else
 fi
 
 # --- zstyle 配置 ---
+# 使用 _expand、_complete、_approximate 三个补全器，按顺序尝试：
+# 1. _expand   — 先展开通配符/变量/历史扩展
+# 2. _complete — 再做普通补全
+# 3. _approximate — 最后允许模糊/近似匹配（容错）
 zstyle ':completion:*' completer _expand _complete _approximate
+ # 匹配规则（两条按顺序应用）：
+# 1. m:{a-zA-Z}={A-Za-z}  — 大小写不敏感匹配（a↔A）
+# 2. r:|[._-]=* r:|=*     — 在分隔符 . _ - 处做子串匹配，且允许光标后补全
 zstyle ':completion:*' matcher-list \
- 'm:{a-zA-Z}={A-Za-z}' \
- 'r:|[._-]=* r:|=*'
+'m:{a-zA-Z}={A-Za-z}' \
+'r:|[._-]=* r:|=*'
 
-setopt auto_menu
-zstyle ':completion:*' menu select
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' insert-unambiguous true
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' use-cache yes
-zstyle ':completion:*' cache-path "$ZCOMPCACHE"
-zstyle ':completion:*' rehash true
-zstyle ':completion:*' sort true
-zstyle ':completion:*:history-words' stop yes
-zstyle ':completion:*:cd:*' ignore-parents parent pwd
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,cmd'
+setopt auto_menu # 启用“二次 Tab 进菜单”，有多个候选时自动进入交互式菜单
+zstyle ':completion:*' menu select # 菜单模式改为“高亮选择”（可用方向键），而非单纯循环
+zstyle ':completion:*' group-name '' # 不显示分组标题（如 "commands" "files" 等分组名）
+zstyle ':completion:*' insert-unambiguous true # 只有在补全无歧义时才自动插入；有歧义则停在菜单让你选
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} # 用 LS_COLORS 给补全列表上色（目录蓝、可执行绿等）
+zstyle ':completion:*' use-cache yes # 启用补全缓存，加速二次补全
+zstyle ':completion:*' cache-path "$ZCOMPCACHE" # 缓存目录指向 $ZCOMPCACHE 变量
+zstyle ':completion:*' rehash true # 每次补全前自动 rehash，确保新安装的命令立即可补全
+zstyle ':completion:*' sort true # 补全结果排序（字母序）
+zstyle ':completion:*:history-words' stop yes # 历史词补全时，遇到停止词（如 ; & |）就停止，不再继续补全
+zstyle ':completion:*:cd:*' ignore-parents parent pwd # cd 补全时忽略父目录 (..) 和当前目录 (.)，避免误选
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,cmd' # kill 补全进程时，用自定义 ps 格式显示 PID 和命令名
 ''' }
 
 "~/.zshrc/plugin" = { block = '''
