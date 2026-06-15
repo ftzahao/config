@@ -1,0 +1,285 @@
+[tools]
+aube = "latest"
+bat = "latest"
+bun = "latest"
+"cargo:cargo-cache" = "latest"
+"cargo:miniserve" = "latest"
+deno = "latest"
+dust = "latest"
+fd = "latest"
+gh = "latest"
+go = "latest"
+java = "latest"
+jq = "latest"
+lefthook = "latest"
+mkcert = "latest"
+node = "latest"
+"npm:@vscode/vsce" = "latest"
+"npm:npkill" = "latest"
+"npm:nrm" = "latest"
+oha = "latest"
+opencode = "latest"
+pkl = "latest"
+pnpm = "latest"
+python = "latest"
+rg = "latest"
+ruby = "latest"
+rust = "latest"
+tokei = "latest"
+usage = "latest"
+uv = "latest"
+vp = "latest"
+watchexec = "latest"
+xcbeautify = "latest"
+yq = "latest"
+
+[settings]
+auto_install = false
+experimental = true
+lockfile = true
+idiomatic_version_file_enable_tools = ["node", "python", "ruby", "go", "java"]
+python.uv_venv_auto = "source"
+trusted_config_paths = ["~"]
+npm.package_manager = "bun"
+minimum_release_age = "0s"
+activate_aggressive = true
+system_packages.managers = ["brew", "brew-cask"]
+dotfiles.root = "~/.config/mise/.dotfiles"
+dotfiles.default_mode = "symlink"
+env_shell_expand = true
+
+[bootstrap.packages]
+"brew:bash" = "latest"
+"brew:container" = "latest"
+"brew:git" = "latest"
+"brew:gnupg" = "latest"
+"brew:hf" = "latest"
+"brew:mole" = "latest"
+"brew:python-build" = "latest"
+"brew:ruby-build" = "latest"
+"brew:starship" = "latest"
+"brew:swift-format" = "latest"
+"brew:zinit" = "latest"
+
+[env]
+# GITHUB_TOKEN = ""
+
+HF_BASE_URL = "https://router.huggingface.co/v1"
+# HF_TOKEN = ""  # https://huggingface.co/settings/tokens
+
+DEEPSEEK_BASE_URL = "https://api.deepseek.com"
+# DEEPSEEK_API_KEY = ""  # https://api-docs.deepseek.com/zh-cn/quick_start/pricing
+
+OPENCODE_ZEN_BASE_URL = "https://opencode.ai/zen/"
+OPENCODE_GO_BASE_URL = "https://opencode.ai/zen/go"
+# OPENCODE_API_KEY = ""  # https://opencode.ai/docs/zh-cn/zen/
+
+GLM_BASE_URL = "https://open.bigmodel.cn/api/paas/v4"
+# GLM_API_KEY = ""  # https://docs.bigmodel.cn/cn/api/introduction
+
+GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
+# GEMINI_API_KEY = ""  # https://aistudio.google.com/app/apikey
+
+GROQ_BASE_URL = "https://api.groq.com/openai/v1"
+# GROQ_API_KEY = ""  # https://console.groq.com/docs/rate-limits
+
+NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
+# NVIDIA_API_KEY = ""  # https://build.nvidia.com/settings/api-keys
+
+XAI_BASE_URL = "https://api.x.ai/v1"
+# XAI_API_KEY = ""  # https://docs.x.ai
+
+XIAOMI_BASE_URL = "https://api.xiaomimimo.com/v1"
+# XIAOMI_API_KEY = ""  # https://platform.xiaomimimo.com/docs/zh-CN
+
+[dotfiles]
+"~/.zshenv/lang" = { block = '''
+export LANG=zh_CN.UTF-8
+export LC_ALL=zh_CN.UTF-8
+''' }
+
+"~/.zshenv/zsh_cache_folder" = { block = '''
+export ZCOMPCACHE="$HOME/.cache/zsh/.zcompcache" # ZSH 补全缓存目录
+export ZSH_COMPLETION_DIR="$HOME/.cache/zsh/.zfunc" # ZSH 补全脚本目录
+
+function ensure_directory() {
+  local dir="$1"
+  if [ ! -d "$dir" ]; then
+    mkdir -p -- "$dir" 2>/dev/null || {
+      echo "Error: Failed to create directory '$dir'" >&2
+      return 1
+    }
+  fi
+}
+ensure_directory "$ZCOMPCACHE"
+ensure_directory "$ZSH_COMPLETION_DIR"
+unset -f ensure_directory
+''' }
+
+"~/.zprofile/activate" = { block = '''
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+eval "$(mise activate zsh --shims)"
+''' }
+
+"~/.zshrc/zinit" = { block = '''
+. /opt/homebrew/opt/zinit/zinit.zsh
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+''' }
+
+"~/.zshrc/path" = { block = '''
+export PNPM_HOME="$HOME/.pnpm" # PNPM_HOME 环境变量
+typeset -U path PATH  # 声明 PATH 为数组
+path=(
+ $PNPM_HOME/bin      # ~/.pnpm/bin
+ $HOME/.local/bin    # 本地 bin 目录
+ $path               # 原有路径
+)
+''' }
+
+"~/.zshrc/history" = { block = '''
+setopt HIST_EXPIRE_DUPS_FIRST # 当历史记录满时，优先删除重复的旧条目
+setopt HIST_IGNORE_DUPS # 不记录与上一条相同的命令
+setopt HIST_IGNORE_SPACE # 不记录以空格开头的命令
+setopt HIST_VERIFY # 执行历史命令前先展开，允许用户确认或修改
+setopt SHARE_HISTORY # 在所有 zsh 会话间实时共享历史记录
+''' }
+
+"~/.zshrc/activate" = { block = '''
+[ -x "$(command -v mise)" ] && eval "$(mise activate zsh)"
+[ -x "$(command -v starship)" ] && eval "$(starship init zsh)"
+''' }
+
+"~/.zshrc/aliases" = { block = '''
+alias brew-update="brew update && brew upgrade --greedy && brew cleanup --prune 0" # 更新 Homebrew 包并清理旧版本
+alias buz='brew uninstall --zap' # 卸载 Homebrew 包并清理相关文件
+alias bi='brew install' # 安装 Homebrew 包
+alias binfo='brew info' # 显示 Homebrew 包的信息
+function brews() {
+  local formulae="$(brew leaves | xargs brew deps --installed --for-each)"
+  local casks="$(brew list --cask 2>/dev/null)"
+  local blue="$(tput setaf 4)"
+  local bold="$(tput bold)"
+  local off="$(tput sgr0)"
+  echo "${blue}==>${off} ${bold}Formulae${off}"
+  echo "${formulae}" | sed "s/^\(.*\):\(.*\)$/\1${blue}\2${off}/"
+  echo "\n${blue}==>${off} ${bold}Casks${off}\n${casks}"
+} # 列出所有已安装的 Homebrew 包，包括依赖关系和版本信息
+alias dns-update="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder" # 清理 DNS 缓存
+alias ip-local="ipconfig getifaddr en0" # 本机 IP 地址（局域网）
+alias ip-v4-public="curl -s ifconfig.me && echo" # 获取本机 IPv4 地址（公网）
+alias cdr='cd "$(git rev-parse --show-toplevel)"' # 切换到 Git 仓库的根目录
+alias dsstore-clean="find . -name '.DS_Store' -type f -delete" # 清理 .DS_Store 文件
+''' }
+
+"~/.zshrc/completion" = { block = '''
+fpath=($ZSH_COMPLETION_DIR $fpath)
+
+# 仅在缓存失效时运行 compinit
+autoload -Uz compinit
+# 检查缓存文件是否在 24 小时内更新过
+if [[ -n ${ZCOMPCACHE} && ! -n ${ZCOMPCACHE} && $(($(date +%s) - $(stat -f %m ${ZCOMPCACHE} 2>/dev/null || echo 0))) -lt 86400 ]]; then
+ compinit -C # -C 忽略检查，直接加载缓存，速度极快
+else
+ compinit
+fi
+
+# --- zstyle 配置 ---
+zstyle ':completion:*' completer _expand _complete _approximate
+zstyle ':completion:*' matcher-list \
+ 'm:{a-zA-Z}={A-Za-z}' \
+ 'r:|[._-]=* r:|=*'
+
+setopt auto_menu
+zstyle ':completion:*' menu select
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' insert-unambiguous true
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' cache-path "$ZCOMPCACHE"
+zstyle ':completion:*' rehash true
+zstyle ':completion:*' sort true
+zstyle ':completion:*:history-words' stop yes
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,cmd'
+''' }
+
+"~/.zshrc/plugin" = { block = '''
+# zinit ice wait lucid
+zinit light zsh-users/zsh-autosuggestions
+
+zinit ice wait lucid
+zinit light zdharma-continuum/fast-syntax-highlighting
+
+# zinit ice wait lucid
+# zinit light zdharma-continuum/history-search-multi-word
+''' }
+
+"~/.config/starship.toml" = { mode = "symlink" }
+"~/.gitconfig" = { mode = "symlink" }
+"~/.gitignore_global" = { mode = "symlink" }
+
+[tasks.generate-completions]
+description = "生成常用工具的zsh补全"
+run = '''
+#!/usr/bin/env zsh
+set -e
+
+# 清理旧的补全文件，避免过期或冲突
+rm -f -- $ZSH_COMPLETION_DIR/_* 2>/dev/null || true
+
+echo "🔄 生成常用工具的zsh补全..."
+
+# 辅助函数：检查命令是否存在并生成补全
+gen_completion() {
+    local name="$1"
+    local cmd="$2"
+    if [ -x "$(command -v "$name")" ]; then
+        eval "$cmd" > "$ZSH_COMPLETION_DIR/_${name}" 2>/dev/null && echo "✅ ${name} 补全脚本已生成" || echo "❌ ${name} 补全生成失败"
+    else
+        echo "⏭️  ${name} 未安装，跳过"
+    fi
+}
+
+gen_completion hermes "hermes completion zsh"
+gen_completion aube "aube completion zsh"
+gen_completion bat "bat --completion zsh"
+gen_completion bun "bun completions zsh"
+gen_completion miniserve "mise x miniserve -- miniserve --print-completions zsh"
+gen_completion deno "deno completions zsh"
+gen_completion fd "fd --gen-completions zsh"
+gen_completion gh "gh completion -s zsh"
+gen_completion opencode "opencode completion"
+gen_completion npm "npm completion"
+gen_completion pkl "mise x pkl -- pkl shell-completion zsh"
+gen_completion pnpm "pnpm completion zsh"
+gen_completion pip "pip completion --zsh"
+gen_completion rg "mise x rg -- rg --generate complete-zsh"
+gen_completion usage "mise x usage -- usage --completions zsh"
+gen_completion uv "mise x uv -- uv generate-shell-completion zsh"
+gen_completion watchexec "mise x watchexec -- watchexec --completions zsh"
+gen_completion yq "yq completion zsh"
+gen_completion pitchfork "mise x pitchfork -- pitchfork completion zsh"
+
+echo ""
+echo "✅ 所有补全内容已生成至 $ZSH_COMPLETION_DIR"
+autoload -Uz compinit; compinit -d "$ZCOMPDUMP"
+'''
+
+[tasks.mise-update]
+description = "更新mise的包到最新版本"
+run = '''
+#!/usr/bin/env zsh
+set -e
+mise cache clear && mise upgrade --bump
+'''
+
+[tasks.install-x64]
+description = "安装64位系统的工具包"
+run = '''
+#!/usr/bin/env zsh
+set -e
+export MISE_ARCH=x86_64
+echo "即将安装 $MISE_ARCH 版本的 $1"
+mise install "$1"
+'''

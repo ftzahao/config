@@ -1,45 +1,21 @@
-# Zsh 配置
+# zsh
 
-个人 `zsh` 环境配置，主要用于 `macOS`。
+个人 `zsh` 环境配置
 
-## 通过 curl 执行 setup.sh
+## 目录结构
 
-```sh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ftzahao/zsh/refs/heads/main/setup.sh)"
-```
+- `.config/mise/config.toml`：仓库主配置文件，定义了工具版本、`mise` 设置、环境变量、Bootstrap 包和 dotfiles 内容。
+- `.config/mise/.dotfiles`：`mise` 管理的 dotfiles 根目录（在配置中映射到 `~/.config/mise/.dotfiles`）。
 
-## 初始化脚本说明
+## 主要功能
 
-`setup.sh` 会从仓库 `home/` 目录下载配置到本机 `$HOME`：
+- 统一管理 shell 工具版本和自动激活策略
+- 定义 Zsh 相关环境变量、路径和别名
+- 配置 Zsh 补全目录、缓存目录和 `compinit` 加速
+- 通过 `mise` 生成并同步用户 home 目录下的 dotfiles
 
-- 必装依赖：`curl`
-- 按命令存在与否做可选配置：
-  - 检测到 `starship` 才下载 `~/.config/starship.toml`
-  - 检测到 `mise` 才下载 `~/.config/mise/config.toml`
-  - 检测到 `aube` 才下载 `~/.config/aube/config.toml`
-- 其余文件（如 `~/.zshrc`、`~/.gitconfig`）默认下载
+## 使用方式
 
-脚本是“仅在目标文件不存在时创建”，不会覆盖已有文件。
-
-## 仓库结构
-
-- `home/`：映射到 `macOS` 用户目录（`$HOME`）的模板文件
-- `setup.sh`：初始化脚本，自动下载缺失配置
-- `activate.zsh`：初始化 `mise` 与 `starship`
-- `alias.zsh`：常用别名与函数（如 `brew-update`、`brews`）
-- `completion.zsh`：补全规则、补全 UI 与插件加载
-- `history.zsh`：历史记录相关选项
-
-## 手动同步方式
-
-如果你不想执行脚本，也可以手动从 `home/` 目录复制到 `$HOME`。
-
-## brew 安装的工具
-
-```zsh
-# ==> Formulae
-brew install git mise mole python-build ruby-build starship zinit gnupg swift-format bash container ffmpeg-full hf
-
-# ==> Casks
-brew install --cask adguard betterdisplay cleanmymac cleanshot coteditor crossover downie equinox google-chrome jetbrains-toolbox keka launchos mole-app ogdesign-eagle osaurus parallels popclip proxyman qq screenkite sf-symbols stash steam syntax-highlight tablepro telegram tencent-meeting typora visual-studio-code wechat wechatwebdevtools wechatwork zed@preview
-```
+1. 安装 `mise`: `brew install mise`
+2. 运行 `mise dotfiles apply` 应用 dotfiles
+3. 按需修改 `.config/mise/config.toml` 中的工具列表、插件和环境变量。
