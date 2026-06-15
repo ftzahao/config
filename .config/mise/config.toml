@@ -175,11 +175,10 @@ alias dsstore-clean="find . -name '.DS_Store' -type f -delete" # 清理 .DS_Stor
 "~/.zshrc/completion" = { block = '''
 fpath=($ZSH_COMPLETION_DIR $fpath)
 
-# 仅在缓存失效时运行 compinit
 autoload -Uz compinit
 # 检查缓存文件是否在 24 小时内更新过
 if [[ -n ${ZCOMPCACHE} && ! -n ${ZCOMPCACHE} && $(($(date +%s) - $(stat -f %m ${ZCOMPCACHE} 2>/dev/null || echo 0))) -lt 86400 ]]; then
- compinit -C # -C 忽略检查，直接加载缓存，速度极快
+ compinit -C
 else
  compinit
 fi
