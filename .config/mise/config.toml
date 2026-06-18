@@ -48,19 +48,6 @@ dotfiles.root = "~/.config/mise/.dotfiles"
 dotfiles.default_mode = "symlink"
 env_shell_expand = true
 
-[bootstrap.packages]
-"brew:bash" = "latest"
-"brew:container" = "latest"
-"brew:git" = "latest"
-"brew:gnupg" = "latest"
-"brew:hf" = "latest"
-"brew:mole" = "latest"
-"brew:python-build" = "latest"
-"brew:ruby-build" = "latest"
-"brew:starship" = "latest"
-"brew:swift-format" = "latest"
-"brew:zinit" = "latest"
-
 [env]
 # GITHUB_TOKEN = ""
 
@@ -167,7 +154,9 @@ function brews() {
 } # 列出所有已安装的 Homebrew 包，包括依赖关系和版本信息
 alias dns-update="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder" # 清理 DNS 缓存
 alias ip-local="ipconfig getifaddr en0" # 本机 IP 地址（局域网）
-alias ip-v4-public="curl -s ifconfig.me && echo" # 获取本机 IPv4 地址（公网）
+alias ip-v4-public="curl ip4.now && echo" # 获取本机 IPv4 地址（公网）
+alias ip-v6-public="curl ip6.now && echo" # 获取本机 IPv6 地址（公网）
+alias ip-info="curl ip.im/info && echo"   # 获取本机 IP 地址详细信息
 alias cdr='cd "$(git rev-parse --show-toplevel)"' # 切换到 Git 仓库的根目录
 alias dsstore-clean="find . -name '.DS_Store' -type f -delete" # 清理 .DS_Store 文件
 ''' }
