@@ -1,3 +1,5 @@
+redactions = ["*_TOKEN", "*_API_KEY"]
+
 [tools]
 aube = "latest"
 bat = "latest"
@@ -22,7 +24,7 @@ opencode = "latest"
 pkl = "latest"
 pnpm = "latest"
 python = "latest"
-rg = "latest"
+ripgrep = "latest"
 ruby = "latest"
 rust = "latest"
 tokei = "latest"
@@ -40,12 +42,12 @@ lockfile = true
 idiomatic_version_file_enable_tools = ["node", "python", "ruby", "go", "java"]
 python.uv_venv_auto = "source"
 trusted_config_paths = ["~"]
-npm.package_manager = "bun"
+# npm.package_manager = "bun"
 minimum_release_age = "0s"
 activate_aggressive = true
 system_packages.managers = ["brew", "brew-cask"]
 dotfiles.root = "~/.config/mise/.dotfiles"
-dotfiles.default_mode = "symlink"
+dotfiles.default_mode = "copy"
 env_shell_expand = true
 
 [env]
@@ -69,6 +71,9 @@ GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
 
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 # GROQ_API_KEY = ""  # https://console.groq.com/docs/rate-limits
+
+OPENAI_BASE_URL = "https://api.openai.com/v1"
+# OPENAI_API_KEY = ""
 
 NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
 # NVIDIA_API_KEY = ""  # https://build.nvidia.com/settings/api-keys
@@ -156,7 +161,7 @@ alias dns-update="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 alias ip-local="ipconfig getifaddr en0" # 本机 IP 地址（局域网）
 alias ip-v4-public="curl ip4.now && echo" # 获取本机 IPv4 地址（公网）
 alias ip-v6-public="curl ip6.now && echo" # 获取本机 IPv6 地址（公网）
-alias ip-info="curl ip.im/info && echo"   # 获取本机 IP 地址详细信息
+alias ip-info="curl ip.im/info && echo" # 获取本机 IP 地址详细信息
 alias cdr='cd "$(git rev-parse --show-toplevel)"' # 切换到 Git 仓库的根目录
 alias dsstore-clean="find . -name '.DS_Store' -type f -delete" # 清理 .DS_Store 文件
 ''' }
@@ -210,9 +215,9 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 # zinit light zdharma-continuum/history-search-multi-word
 ''' }
 
-"~/.config/starship.toml" = { mode = "symlink" }
-"~/.gitconfig" = { mode = "symlink" }
-"~/.gitignore_global" = { mode = "symlink" }
+"~/.config/starship.toml" = { mode = "copy" }
+"~/.gitconfig" = { mode = "copy" }
+"~/.gitignore_global" = { mode = "copy" }
 
 [tasks.generate-completions]
 description = "生成常用工具的zsh补全"
