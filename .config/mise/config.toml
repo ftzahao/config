@@ -19,14 +19,17 @@ node = "latest"
 "npm:@vscode/vsce" = "latest"
 "npm:npkill" = "latest"
 "npm:nrm" = "latest"
+"npm:skills" = "latest"
 oha = "latest"
 opencode = "latest"
+oxfmt = "latest"
+oxlint = "latest"
 pkl = "latest"
 pnpm = "latest"
 python = "latest"
 ripgrep = "latest"
 ruby = "latest"
-rust = "latest"
+rust = "stable"
 tokei = "latest"
 usage = "latest"
 uv = "latest"
@@ -43,7 +46,8 @@ idiomatic_version_file_enable_tools = ["node", "python", "ruby", "go", "java"]
 python.uv_venv_auto = "source"
 trusted_config_paths = ["~"]
 # npm.package_manager = "bun"
-minimum_release_age = "0s"
+minimum_release_age = "0"
+fetch_remote_versions_cache = "0"
 activate_aggressive = true
 system_packages.managers = ["brew", "brew-cask"]
 dotfiles.root = "~/.config/mise/.dotfiles"
@@ -135,6 +139,7 @@ setopt HIST_IGNORE_DUPS # 不记录与上一条相同的命令
 setopt HIST_IGNORE_SPACE # 不记录以空格开头的命令
 setopt HIST_VERIFY # 执行历史命令前先展开，允许用户确认或修改
 setopt SHARE_HISTORY # 在所有 zsh 会话间实时共享历史记录
+setopt HIST_IGNORE_ALL_DUPS # 重复记录只保留最新一条
 ''' }
 
 "~/.zshrc/activate" = { block = '''
