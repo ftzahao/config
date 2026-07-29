@@ -1,51 +1,54 @@
 redactions = ["*_TOKEN", "*_API_KEY"]
 
 [tools]
-aube = "latest"
-bat = "latest"
-bun = "latest"
-"cargo:cargo-cache" = "latest"
-"cargo:miniserve" = "latest"
-deno = "latest"
-dust = "latest"
-fd = "latest"
-gh = "latest"
-go = "latest"
-java = "latest"
-jq = "latest"
-lefthook = "latest"
-mkcert = "latest"
-node = "latest"
-"npm:@vscode/vsce" = "latest"
-"npm:npkill" = "latest"
-"npm:nrm" = "latest"
-"npm:skills" = "latest"
-oha = "latest"
-opencode = "latest"
-oxfmt = "latest"
-oxlint = "latest"
-pkl = "latest"
-pnpm = "latest"
-python = "latest"
-ripgrep = "latest"
-ruby = "latest"
 rust = "stable"
-tokei = "latest"
-usage = "latest"
-uv = "latest"
-vp = "latest"
+cargo-binstall = "latest"
 watchexec = "latest"
-xcbeautify = "latest"
+fd = "latest"
+ripgrep = "latest"
+dust = "latest"
+usage = "latest"
+bat = "latest"
+"cargo:cargo-cache" = { version = "latest", depends = ["rust"] }
+"cargo:miniserve" = { version = "latest", depends = ["rust"] }
+"cargo:oha" = { version = "latest", depends = ["rust"] }
+tokei = { version = "latest", depends = ["rust"] }
+aube = "latest"
+bun = "latest"
+deno = "latest"
+node = "latest"
+pnpm = "latest"
+yarn = "latest"
+prettier = { version = "latest", depends = ["aube"] }
+oxlint = { version = "latest", depends = ["aube"] }
+oxfmt = { version = "latest", depends = ["aube"] }
+vp = { version = "latest", depends = ["aube"] }
+"npm:@vscode/vsce" = { version = "latest", depends = ["aube"] }
+"npm:npkill" = { version = "latest", depends = ["aube"] }
+"npm:nrm" = { version = "latest", depends = ["aube"] }
+"npm:skills" = { version = "latest", depends = ["aube"] }
+python = "latest"
+uv = "latest"
+go = "latest"
+lefthook = "latest"
 yq = "latest"
+java = "latest"
+pkl = "latest"
+ruby = "latest"
+curlie = "latest"
+gh = "latest"
+jq = "latest"
+mkcert = "latest"
+xcbeautify = "latest"
+make = "latest"
 
 [settings]
 auto_install = false
 experimental = true
 lockfile = true
 idiomatic_version_file_enable_tools = ["node", "python", "ruby", "go", "java"]
-python.uv_venv_auto = "source"
-trusted_config_paths = ["~"]
-# npm.package_manager = "bun"
+trusted_config_paths = ["/"]
+npm.package_manager = "auto"
 minimum_release_age = "0"
 fetch_remote_versions_cache = "0"
 activate_aggressive = true
@@ -89,12 +92,12 @@ XIAOMI_BASE_URL = "https://api.xiaomimimo.com/v1"
 # XIAOMI_API_KEY = ""  # https://platform.xiaomimimo.com/docs/zh-CN
 
 [dotfiles]
-"~/.zshenv/lang" = { block = '''
-export LANG=zh_CN.UTF-8
-export LC_ALL=zh_CN.UTF-8
+"~/.zshenv/LANG" = { block = '''
+export LANG="zh_CN.UTF-8"
+export LC_ALL="zh_CN.UTF-8"
 ''' }
 
-"~/.zshenv/zsh_cache_folder" = { block = '''
+"~/.zshenv/ZSH_CACHE_FOLDER" = { block = '''
 export ZCOMPCACHE="$HOME/.cache/zsh/.zcompcache" # ZSH 补全缓存目录
 export ZSH_COMPLETION_DIR="$HOME/.cache/zsh/.zfunc" # ZSH 补全脚本目录
 
@@ -112,28 +115,23 @@ ensure_directory "$ZSH_COMPLETION_DIR"
 unset -f ensure_directory
 ''' }
 
-"~/.zprofile/activate" = { block = '''
+"~/.zprofile/ACTIVATE" = { block = '''
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 eval "$(mise activate zsh --shims)"
 ''' }
 
-"~/.zshrc/zinit" = { block = '''
+"~/.zshrc/ZINIT" = { block = '''
 . /opt/homebrew/opt/zinit/zinit.zsh
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ''' }
 
-"~/.zshrc/path" = { block = '''
-export PNPM_HOME="$HOME/.pnpm" # PNPM_HOME 环境变量
-typeset -U path PATH  # 声明 PATH 为数组
-path=(
- $PNPM_HOME/bin      # ~/.pnpm/bin
- $HOME/.local/bin    # 本地 bin 目录
- $path               # 原有路径
-)
+"~/.zshrc/PATH" = { block = '''
+export PNPM_HOME="$HOME/.cache/.pnpm" # PNPM_HOME 环境变量
+path+=("$PNPM_HOME/bin" "$HOME/.local/bin")
 ''' }
 
-"~/.zshrc/history" = { block = '''
+"~/.zshrc/HISTORY" = { block = '''
 setopt HIST_EXPIRE_DUPS_FIRST # 当历史记录满时，优先删除重复的旧条目
 setopt HIST_IGNORE_DUPS # 不记录与上一条相同的命令
 setopt HIST_IGNORE_SPACE # 不记录以空格开头的命令
@@ -142,12 +140,12 @@ setopt SHARE_HISTORY # 在所有 zsh 会话间实时共享历史记录
 setopt HIST_IGNORE_ALL_DUPS # 重复记录只保留最新一条
 ''' }
 
-"~/.zshrc/activate" = { block = '''
+"~/.zshrc/ACTIVATE" = { block = '''
 [ -x "$(command -v mise)" ] && eval "$(mise activate zsh)"
 [ -x "$(command -v starship)" ] && eval "$(starship init zsh)"
 ''' }
 
-"~/.zshrc/aliases" = { block = '''
+"~/.zshrc/ALIASES" = { block = '''
 alias brew-update="brew update && brew upgrade --greedy && brew cleanup --prune 0" # 更新 Homebrew 包并清理旧版本
 alias buz='brew uninstall --zap' # 卸载 Homebrew 包并清理相关文件
 alias bi='brew install' # 安装 Homebrew 包
@@ -171,7 +169,7 @@ alias cdr='cd "$(git rev-parse --show-toplevel)"' # 切换到 Git 仓库的根�
 alias dsstore-clean="find . -name '.DS_Store' -type f -delete" # 清理 .DS_Store 文件
 ''' }
 
-"~/.zshrc/completion" = { block = '''
+"~/.zshrc/COMPLETION" = { block = '''
 fpath=($ZSH_COMPLETION_DIR $fpath)
 
 autoload -Uz compinit
@@ -209,7 +207,7 @@ zstyle ':completion:*:cd:*' ignore-parents parent pwd # cd 补全时忽略父目
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,cmd' # kill 补全进程时，用自定义 ps 格式显示 PID 和命令名
 ''' }
 
-"~/.zshrc/plugin" = { block = '''
+"~/.zshrc/PLUGIN" = { block = '''
 # zinit ice wait lucid
 zinit light zsh-users/zsh-autosuggestions
 
@@ -228,7 +226,6 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 description = "生成常用工具的zsh补全"
 run = '''
 #!/usr/bin/env zsh
-set -e
 
 # 清理旧的补全文件，避免过期或冲突
 rm -f -- $ZSH_COMPLETION_DIR/_* 2>/dev/null || true
@@ -273,17 +270,13 @@ autoload -Uz compinit; compinit -d "$ZCOMPDUMP"
 
 [tasks.mise-update]
 description = "更新mise的包到最新版本"
-run = '''
-#!/usr/bin/env zsh
-set -e
-mise cache clear && mise upgrade --bump
-'''
+run = "mise cache clear && mise upgrade --bump"
 
 [tasks.install-x64]
 description = "安装64位系统的工具包"
 run = '''
 #!/usr/bin/env zsh
-set -e
+
 export MISE_ARCH=x86_64
 echo "即将安装 $MISE_ARCH 版本的 $1"
 mise install "$1"
