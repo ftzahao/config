@@ -1,46 +1,46 @@
-redactions = ["*_TOKEN", "*_API_KEY"]
+redactions = ["*_TOKEN", "*_API_KEY", "*_AUTH_TOKEN"]
 
 [tools]
-rust = "stable"
-cargo-binstall = "latest"
-watchexec = "latest"
-fd = "latest"
-ripgrep = "latest"
-dust = "latest"
-usage = "latest"
+aube = "latest"
 bat = "latest"
+bun = "latest"
+cargo-binstall = "latest"
 "cargo:cargo-cache" = { version = "latest", depends = ["rust"] }
 "cargo:miniserve" = { version = "latest", depends = ["rust"] }
 "cargo:oha" = { version = "latest", depends = ["rust"] }
-tokei = { version = "latest", depends = ["rust"] }
-aube = "latest"
-bun = "latest"
+"claude-code" = "latest"
+"codex" = "latest"
+curlie = "latest"
 deno = "latest"
+dust = "latest"
+fd = "latest"
+gh = "latest"
+java = "latest"
+jq = "latest"
+lefthook = "latest"
+mkcert = "latest"
 node = "latest"
-pnpm = "latest"
-yarn = "latest"
-prettier = { version = "latest", depends = ["aube"] }
-oxlint = { version = "latest", depends = ["aube"] }
-oxfmt = { version = "latest", depends = ["aube"] }
-vp = { version = "latest", depends = ["aube"] }
 "npm:@vscode/vsce" = { version = "latest", depends = ["aube"] }
 "npm:npkill" = { version = "latest", depends = ["aube"] }
 "npm:nrm" = { version = "latest", depends = ["aube"] }
 "npm:skills" = { version = "latest", depends = ["aube"] }
-python = "latest"
-uv = "latest"
-go = "latest"
-lefthook = "latest"
-yq = "latest"
-java = "latest"
+nub = { version = "latest", allow_builds = ["@nubjs/nub"], depends = ["aube"] }
+opencode = "latest"
 pkl = "latest"
+pnpm = "latest"
+prettier = "latest"
+python = ["latest", "3.11"]
+ripgrep = "latest"
 ruby = "latest"
-curlie = "latest"
-gh = "latest"
-jq = "latest"
-mkcert = "latest"
+rust = "stable"
+tokei = { version = "latest", depends = ["rust"] }
+usage = "latest"
+uv = "latest"
+vp = { version = "latest", depends = ["aube"] }
+watchexec = "latest"
 xcbeautify = "latest"
-make = "latest"
+yarn = "latest"
+yq = "latest"
 
 [settings]
 auto_install = false
@@ -59,45 +59,53 @@ env_shell_expand = true
 
 [env]
 # GITHUB_TOKEN = ""
+# GITHUB_PAT = "$GITHUB_TOKEN"
+# GH_TOKEN = "$GITHUB_TOKEN"
+# GITHUB_PERSONAL_ACCESS_TOKEN = "$GITHUB_TOKEN"
 
-HF_BASE_URL = "https://router.huggingface.co/v1"
-# HF_TOKEN = ""  # https://huggingface.co/settings/tokens
+# HF_BASE_URL = "https://router.huggingface.co/v1"
+# HF_TOKEN = ""
+# HF_REF_URL = "https://huggingface.co/settings/tokens"
 
-DEEPSEEK_BASE_URL = "https://api.deepseek.com"
-# DEEPSEEK_API_KEY = ""  # https://api-docs.deepseek.com/zh-cn/quick_start/pricing
+# TAVILY_API_KEY = ""
+# TAVILY_REF_URL = "https://app.tavily.com/home"
 
-OPENCODE_ZEN_BASE_URL = "https://opencode.ai/zen/"
-OPENCODE_GO_BASE_URL = "https://opencode.ai/zen/go"
-# OPENCODE_API_KEY = ""  # https://opencode.ai/docs/zh-cn/zen/
+# EXA_API_KEY = ""
+# EXA_REF_URL = "https://dashboard.exa.ai/api-keys"
 
-GLM_BASE_URL = "https://open.bigmodel.cn/api/paas/v4"
-# GLM_API_KEY = ""  # https://docs.bigmodel.cn/cn/api/introduction
+# DEEPSEEK_BASE_URL = "https://api.deepseek.com"
+# DEEPSEEK_API_KEY = ""
+# DEEPSEEK_REF_URL = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
 
-GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
-# GEMINI_API_KEY = ""  # https://aistudio.google.com/app/apikey
+# MIMO_BASE_URL = "https://api.xiaomimimo.com/v1"
+# MIMO_API_KEY = ""
+# MIMO_REF_URL = "https://platform.xiaomimimo.com/docs/zh-CN"
 
-GROQ_BASE_URL = "https://api.groq.com/openai/v1"
-# GROQ_API_KEY = ""  # https://console.groq.com/docs/rate-limits
+# NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
+# NVIDIA_API_KEY = ""
+# NVIDIA_REF_URL = "https://build.nvidia.com/settings/api-keys"
 
-OPENAI_BASE_URL = "https://api.openai.com/v1"
-# OPENAI_API_KEY = ""
+# OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+# OPENROUTER_API_KEY = ""
+# OPENROUTER_REF_URL = "https://openrouter.ai/workspaces/default/keys"
 
-NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
-# NVIDIA_API_KEY = ""  # https://build.nvidia.com/settings/api-keys
-
-XAI_BASE_URL = "https://api.x.ai/v1"
-# XAI_API_KEY = ""  # https://docs.x.ai
-
-XIAOMI_BASE_URL = "https://api.xiaomimimo.com/v1"
-# XIAOMI_API_KEY = ""  # https://platform.xiaomimimo.com/docs/zh-CN
+# ANTHROPIC_BASE_URL = "https://api.deepseek.com/anthropic"
+# ANTHROPIC_AUTH_TOKEN = "$DEEPSEEK_API_KEY"
+# ANTHROPIC_MODEL = "deepseek-v4-flash"
+# ANTHROPIC_DEFAULT_OPUS_MODEL = "deepseek-v4-flash"
+# ANTHROPIC_DEFAULT_SONNET_MODEL = "deepseek-v4-flash"
+# ANTHROPIC_DEFAULT_HAIKU_MODEL = "deepseek-v4-flash"
+# CLAUDE_CODE_SUBAGENT_MODEL = "deepseek-v4-flash"
+# CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = 1
+# CLAUDE_CODE_EFFORT_LEVEL = "max"
 
 [dotfiles]
-"~/.zshenv/LANG" = { block = '''
+"~/.zshenv/lang" = { block = '''
 export LANG="zh_CN.UTF-8"
 export LC_ALL="zh_CN.UTF-8"
 ''' }
 
-"~/.zshenv/ZSH_CACHE_FOLDER" = { block = '''
+"~/.zshenv/zsh_cache_folder" = { block = '''
 export ZCOMPCACHE="$HOME/.cache/zsh/.zcompcache" # ZSH 补全缓存目录
 export ZSH_COMPLETION_DIR="$HOME/.cache/zsh/.zfunc" # ZSH 补全脚本目录
 
@@ -115,23 +123,23 @@ ensure_directory "$ZSH_COMPLETION_DIR"
 unset -f ensure_directory
 ''' }
 
-"~/.zprofile/ACTIVATE" = { block = '''
+"~/.zprofile/activate" = { block = '''
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 eval "$(mise activate zsh --shims)"
 ''' }
 
-"~/.zshrc/ZINIT" = { block = '''
+"~/.zshrc/zinit" = { block = '''
 . /opt/homebrew/opt/zinit/zinit.zsh
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ''' }
 
-"~/.zshrc/PATH" = { block = '''
+"~/.zshrc/path" = { block = '''
 export PNPM_HOME="$HOME/.cache/.pnpm" # PNPM_HOME 环境变量
 path+=("$PNPM_HOME/bin" "$HOME/.local/bin")
 ''' }
 
-"~/.zshrc/HISTORY" = { block = '''
+"~/.zshrc/history" = { block = '''
 setopt HIST_EXPIRE_DUPS_FIRST # 当历史记录满时，优先删除重复的旧条目
 setopt HIST_IGNORE_DUPS # 不记录与上一条相同的命令
 setopt HIST_IGNORE_SPACE # 不记录以空格开头的命令
@@ -140,12 +148,12 @@ setopt SHARE_HISTORY # 在所有 zsh 会话间实时共享历史记录
 setopt HIST_IGNORE_ALL_DUPS # 重复记录只保留最新一条
 ''' }
 
-"~/.zshrc/ACTIVATE" = { block = '''
+"~/.zshrc/activate" = { block = '''
 [ -x "$(command -v mise)" ] && eval "$(mise activate zsh)"
 [ -x "$(command -v starship)" ] && eval "$(starship init zsh)"
 ''' }
 
-"~/.zshrc/ALIASES" = { block = '''
+"~/.zshrc/aliases" = { block = '''
 alias brew-update="brew update && brew upgrade --greedy && brew cleanup --prune 0" # 更新 Homebrew 包并清理旧版本
 alias buz='brew uninstall --zap' # 卸载 Homebrew 包并清理相关文件
 alias bi='brew install' # 安装 Homebrew 包
@@ -169,7 +177,7 @@ alias cdr='cd "$(git rev-parse --show-toplevel)"' # 切换到 Git 仓库的根�
 alias dsstore-clean="find . -name '.DS_Store' -type f -delete" # 清理 .DS_Store 文件
 ''' }
 
-"~/.zshrc/COMPLETION" = { block = '''
+"~/.zshrc/completion" = { block = '''
 fpath=($ZSH_COMPLETION_DIR $fpath)
 
 autoload -Uz compinit
@@ -207,7 +215,7 @@ zstyle ':completion:*:cd:*' ignore-parents parent pwd # cd 补全时忽略父目
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,cmd' # kill 补全进程时，用自定义 ps 格式显示 PID 和命令名
 ''' }
 
-"~/.zshrc/PLUGIN" = { block = '''
+"~/.zshrc/plugins" = { block = '''
 # zinit ice wait lucid
 zinit light zsh-users/zsh-autosuggestions
 
@@ -216,6 +224,12 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 
 # zinit ice wait lucid
 # zinit light zdharma-continuum/history-search-multi-word
+
+zinit ice wait lucid as"completion" \
+  atclone"cp -f completions/_claude.zh-CN completions/_claude" \
+  atpull"%atclone" \
+  blockf
+zinit light 1160054/claude-code-zsh-completion
 ''' }
 
 "~/.config/starship.toml" = { mode = "copy" }
@@ -273,11 +287,16 @@ description = "更新mise的包到最新版本"
 run = "mise cache clear && mise upgrade --bump"
 
 [tasks.install-x64]
-description = "安装64位系统的工具包"
+description = "安装64位系统的工具包: mise run install-x64 [tool@version]"
+env = { MISE_ARCH = "x86_64" }
+run = "mise install"
+
+[tasks.hf-i-mlx]
+description = "使用 hf ci 下载模型到 ~/MLXModels"
 run = '''
 #!/usr/bin/env zsh
 
-export MISE_ARCH=x86_64
-echo "即将安装 $MISE_ARCH 版本的 $1"
-mise install "$1"
+echo "> 模型仓库: https://huggingface.co/$1"
+echo "> hf download $1 --local-dir ~/MLXModels/$1"
+hf download $1 --local-dir ~/MLXModels/$1
 '''
