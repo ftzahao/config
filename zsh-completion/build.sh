@@ -1,0 +1,2 @@
+usage g completion zsh mlx_lm.server -f mlx_lm.server/usage.kdl > mlx_lm.server/_mlx_lm.server
+usage g completion zsh mlx_lm.server -f ./mlx_lm.server/zh-CN.usage.kdl > mlx_lm.server/_mlx_lm.server.zh-CN

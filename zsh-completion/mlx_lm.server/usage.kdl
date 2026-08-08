@@ -1,0 +1,54 @@
+name "MLX Http Server"
+bin "mlx_lm.server"
+about "MLX Http Server."
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--model <MODEL>" help="The path to the MLX model weights, tokenizer, and config"
+
+flag "--adapter-path <ADAPTER_PATH>" help="Optional path for the trained adapter weights and config."
+
+flag "--host <HOST>" help="Host for the HTTP server (default: 127.0.0.1)" default="127.0.0.1"
+
+flag "--port <PORT>" help="Port for the HTTP server (default: 8080)" default="8080"
+
+flag "--allowed-origins <ALLOWED_ORIGINS>" help="Allowed origins (default: *)" default="*"
+
+flag "--draft-model <DRAFT_MODEL>" help="A model to be used for speculative decoding."
+
+flag "--num-draft-tokens <NUM_DRAFT_TOKENS>" help="Number of tokens to draft when using speculative decoding." default="3"
+
+flag "--trust-remote-code" help="Enable trusting remote code for tokenizer"
+
+flag "--log-level <LOG_LEVEL>" help="Set the logging level (default: INFO)" default="INFO" {
+    choices "DEBUG" "INFO" "WARNING" "ERROR" "CRITICAL"
+}
+
+flag "--chat-template <CHAT_TEMPLATE>" help="Specify a chat template for the tokenizer"
+
+flag "--use-default-chat-template" help="Use the default chat template"
+
+flag "--temp <TEMP>" help="Default sampling temperature (default: 0.0)" default="0.0"
+
+flag "--top-p <TOP_P>" help="Default nucleus sampling top-p (default: 1.0)" default="1.0"
+
+flag "--top-k <TOP_K>" help="Default top-k sampling (default: 0, disables top-k)" default="0"
+
+flag "--min-p <MIN_P>" help="Default min-p sampling (default: 0.0, disables min-p)" default="0.0"
+
+flag "--max-tokens <MAX_TOKENS>" help="Default maximum number of tokens to generate (default: 512)" default="512"
+
+flag "--chat-template-args <CHAT_TEMPLATE_ARGS>" help="A JSON formatted string of arguments for the tokenizer's apply_chat_template, e.g. '{\"enable_thinking\":false}'" default="{}"
+
+flag "--decode-concurrency <DECODE_CONCURRENCY>" help="When a request is batchable then decode that many requests in parallel" default="32"
+
+flag "--prompt-concurrency <PROMPT_CONCURRENCY>" help="When a request is batchable then process that many prompts in parallel" default="8"
+
+flag "--prefill-step-size <PREFILL_STEP_SIZE>" help="Step size for prefill processing (default: 2048)" default="2048"
+
+flag "--prompt-cache-size <PROMPT_CACHE_SIZE>" help="Maximum number of distinct KV caches to hold in the prompt cache" default="10"
+
+flag "--prompt-cache-bytes <PROMPT_CACHE_BYTES>" help="Maximum size in bytes of the KV caches"
+
+flag "--pipeline" help="Use pipelining instead of tensor parallelism"
