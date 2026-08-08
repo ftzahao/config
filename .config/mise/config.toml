@@ -105,6 +105,11 @@ export LANG="zh_CN.UTF-8"
 export LC_ALL="zh_CN.UTF-8"
 ''' }
 
+"~/.zshenv/path" = { block = '''
+export PNPM_HOME="$HOME/.cache/.pnpm" # pnpm
+path+=("$PNPM_HOME/bin" "$HOME/.local/bin")
+''' }
+
 "~/.zshenv/zsh_cache_folder" = { block = '''
 export ZCOMPCACHE="$HOME/.cache/zsh/.zcompcache" # ZSH 补全缓存目录
 export ZSH_COMPLETION_DIR="$HOME/.cache/zsh/.zfunc" # ZSH 补全脚本目录
@@ -132,11 +137,6 @@ eval "$(mise activate zsh --shims)"
 . /opt/homebrew/opt/zinit/zinit.zsh
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
-''' }
-
-"~/.zshrc/path" = { block = '''
-export PNPM_HOME="$HOME/.cache/.pnpm" # PNPM_HOME 环境变量
-path+=("$PNPM_HOME/bin" "$HOME/.local/bin")
 ''' }
 
 "~/.zshrc/history" = { block = '''
@@ -181,6 +181,7 @@ alias dsstore-clean="find . -name '.DS_Store' -type f -delete" # 清理 .DS_Stor
 fpath=($ZSH_COMPLETION_DIR $fpath)
 
 autoload -Uz compinit
+
 # 检查缓存文件是否在 24 小时内更新过
 if [[ -n ${ZCOMPCACHE} && ! -n ${ZCOMPCACHE} && $(($(date +%s) - $(stat -f %m ${ZCOMPCACHE} 2>/dev/null || echo 0))) -lt 86400 ]]; then
  compinit -C
@@ -194,25 +195,38 @@ fi
 # 2. _complete — 再做普通补全
 # 3. _approximate — 最后允许模糊/近似匹配（容错）
 zstyle ':completion:*' completer _expand _complete _approximate
- # 匹配规则（两条按顺序应用）：
-# 1. m:{a-zA-Z}={A-Za-z}  — 大小写不敏感匹配（a↔A）
-# 2. r:|[._-]=* r:|=*     — 在分隔符 . _ - 处做子串匹配，且允许光标后补全
-zstyle ':completion:*' matcher-list \
-'m:{a-zA-Z}={A-Za-z}' \
-'r:|[._-]=* r:|=*'
 
-setopt auto_menu # 启用“二次 Tab 进菜单”，有多个候选时自动进入交互式菜单
-zstyle ':completion:*' menu select # 菜单模式改为“高亮选择”（可用方向键），而非单纯循环
-zstyle ':completion:*' group-name '' # 不显示分组标题（如 "commands" "files" 等分组名）
-zstyle ':completion:*' insert-unambiguous true # 只有在补全无歧义时才自动插入；有歧义则停在菜单让你选
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} # 用 LS_COLORS 给补全列表上色（目录蓝、可执行绿等）
-zstyle ':completion:*' use-cache yes # 启用补全缓存，加速二次补全
-zstyle ':completion:*' cache-path "$ZCOMPCACHE" # 缓存目录指向 $ZCOMPCACHE 变量
-zstyle ':completion:*' rehash true # 每次补全前自动 rehash，确保新安装的命令立即可补全
-zstyle ':completion:*' sort true # 补全结果排序（字母序）
-zstyle ':completion:*:history-words' stop yes # 历史词补全时，遇到停止词（如 ; & |）就停止，不再继续补全
-zstyle ':completion:*:cd:*' ignore-parents parent pwd # cd 补全时忽略父目录 (..) 和当前目录 (.)，避免误选
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,cmd' # kill 补全进程时，用自定义 ps 格式显示 PID 和命令名
+# 匹配规则
+# 1. 大小写不敏感
+# 2. 在 . _ - 处做子串匹配，并允许光标后补全
+zstyle ':completion:*' matcher-list \
+  'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' \
+  'r:|[._-]=* r:|=*'
+
+# 菜单与交互
+setopt auto_menu                    # 二次 Tab 进入菜单
+zstyle ':completion:*' menu select  # 高亮选择（方向键可用）
+
+# 分组与显示
+zstyle ':completion:*' group-name ''                   # 不显示分组标题
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}  # 颜色跟随 LS_COLORS
+zstyle ':completion:*' insert-unambiguous true         # 无歧义才自动插入
+
+# 缓存与性能
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' cache-path "${ZCOMPCACHE:-${ZDOTDIR:-$HOME}/.zcompcache}"
+zstyle ':completion:*' rehash true             # 新命令立即生效
+zstyle ':completion:*' sort true               # 结果排序
+
+# 特殊场景优化
+zstyle ':completion:*:history-words' stop yes
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,cmd'
+
+# 可选增强（按需开启）
+zstyle ':completion:*' verbose yes          # 更详细的描述
+zstyle ':completion:*' list-packed true     # 更紧凑的列表
+zstyle ':completion:*' special-dirs true    # 允许补全 . 和 ..
 ''' }
 
 "~/.zshrc/plugins" = { block = '''
@@ -276,6 +290,10 @@ gen_completion uv "mise x uv -- uv generate-shell-completion zsh"
 gen_completion watchexec "mise x watchexec -- watchexec --completions zsh"
 gen_completion yq "yq completion zsh"
 gen_completion pitchfork "mise x pitchfork -- pitchfork completion zsh"
+gen_completion hf "hf --show-completion"
+gen_completion mlx_lm.server "curl -sL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.server/_mlx_lm.server.zh-CN | iconv -f utf-8 -t utf-8"
+gen_completion mlx_lm.chat "curl -sL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.chat/_mlx_lm.chat.zh-CN | iconv -f utf-8 -t utf-8"
+gen_completion mlx_lm.dynamic_quant "curl -sL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.dynamic_quant/_mlx_lm.dynamic_quant.zh-CN | iconv -f utf-8 -t utf-8"
 
 echo ""
 echo "✅ 所有补全内容已生成至 $ZSH_COMPLETION_DIR"
