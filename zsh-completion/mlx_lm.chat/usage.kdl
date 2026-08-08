@@ -1,0 +1,30 @@
+name "MLX Chat"
+bin "mlx_lm.chat"
+about "Chat with an LLM"
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--model <MODEL>" help="The path to the local model directory or Hugging Face repo."
+
+flag "--trust-remote-code" help="Enable trusting remote code for tokenizer"
+
+flag "--adapter-path <ADAPTER_PATH>" help="Optional path for the trained adapter weights and config."
+
+flag "--temp <TEMP>" help="Sampling temperature"
+
+flag "--top-p <TOP_P>" help="Sampling top-p"
+
+flag "--xtc-probability <XTC_PROBABILITY>" help="Probability of XTC sampling to happen each next token"
+
+flag "--xtc-threshold <XTC_THRESHOLD>" help="Thresold the probs of each next token candidate to be sampled by XTC"
+
+flag "--seed <SEED>" help="PRNG seed"
+
+flag "--max-kv-size <MAX_KV_SIZE>" help="Set the maximum key-value cache size"
+
+flag "--max-tokens -m <MAX_TOKENS>" help="Maximum number of tokens to generate"
+
+flag "--system-prompt <SYSTEM_PROMPT>" help="System prompt to be used for the chat template"
+
+flag "--pipeline" help="Use pipelining instead of tensor parallelism"

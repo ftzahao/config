@@ -1,0 +1,30 @@
+name "MLX 聊天"
+bin "mlx_lm.chat"
+about "与 LLM 聊天。"
+version "0.31.3"
+
+flag "-h --help" help="显示此帮助信息并退出"
+
+flag "--model <MODEL>" help="本地模型目录或 Hugging Face 仓库的路径。"
+
+flag "--trust-remote-code" help="允许信任分词器的远程代码"
+
+flag "--adapter-path <ADAPTER_PATH>" help="已训练适配器权重和配置的可选路径。"
+
+flag "--temp <TEMP>" help="采样温度"
+
+flag "--top-p <TOP_P>" help="采样 top-p"
+
+flag "--xtc-probability <XTC_PROBABILITY>" help="每个下一 token 发生 XTC 采样的概率"
+
+flag "--xtc-threshold <XTC_THRESHOLD>" help="每个下一 token 候选被 XTC 采样的概率阈值"
+
+flag "--seed <SEED>" help="PRNG 随机种子"
+
+flag "--max-kv-size <MAX_KV_SIZE>" help="设置最大键值缓存大小"
+
+flag "--max-tokens -m <MAX_TOKENS>" help="生成的最大 token 数"
+
+flag "--system-prompt <SYSTEM_PROMPT>" help="用于聊天模板的系统提示词"
+
+flag "--pipeline" help="使用流水线而非张量并行"
