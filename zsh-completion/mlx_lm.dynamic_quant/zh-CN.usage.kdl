@@ -1,0 +1,32 @@
+name "MLX 动态量化"
+bin "mlx_lm.dynamic_quant"
+about ""
+version "0.31.3"
+
+flag "-h --help" help="显示此帮助信息并退出"
+
+flag "--model -m <MODEL>"
+
+flag "--mlx-path <MLX_PATH>" help="保存模型的路径"
+
+flag "--seed <SEED>"
+
+flag "--sensitivities <SENSITIVITIES>" help="预先计算的敏感性 JSON 文件的路径。"
+
+flag "--target-bpw <TARGET_BPW>" help="每个权重的目标比特数。"
+
+flag "--low-bits <LOW_BITS>"
+
+flag "--low-group-size <LOW_GROUP_SIZE>"
+
+flag "--high-bits <HIGH_BITS>"
+
+flag "--high-group-size <HIGH_GROUP_SIZE>"
+
+flag "--report-ppl" help="计算基础模型和量化模型的困惑度。"
+
+flag "--grad-checkpoint" help="使用梯度检查点以减少内存使用。"
+
+flag "--accumulation-dtype <ACCUMULATION_DTYPE>" help="用于累积敏感性梯度的数据类型" {
+    choices "float32" "bfloat16"
+}

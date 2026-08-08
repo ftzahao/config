@@ -1,0 +1,32 @@
+name "MLX Dynamic Quant"
+bin "mlx_lm.dynamic_quant"
+about ""
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--model -m <MODEL>"
+
+flag "--mlx-path <MLX_PATH>" help="Path to save the model"
+
+flag "--seed <SEED>"
+
+flag "--sensitivities <SENSITIVITIES>" help="Path to a pre-computed sensitivity JSON file."
+
+flag "--target-bpw <TARGET_BPW>" help="Target bits per weight."
+
+flag "--low-bits <LOW_BITS>"
+
+flag "--low-group-size <LOW_GROUP_SIZE>"
+
+flag "--high-bits <HIGH_BITS>"
+
+flag "--high-group-size <HIGH_GROUP_SIZE>"
+
+flag "--report-ppl" help="Compute the perplexity of the base and quantized models."
+
+flag "--grad-checkpoint" help="Use gradient checkpointing to reduce memory use."
+
+flag "--accumulation-dtype <ACCUMULATION_DTYPE>" help="What type to use to accumulate the gradients for the sensitivities" {
+    choices "float32" "bfloat16"
+}
