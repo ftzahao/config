@@ -310,6 +310,11 @@ description = "安装64位系统的工具包: mise run install-x64 [tool@version
 env = { MISE_ARCH = "x86_64" }
 run = "mise install"
 
+[tasks.install-node-14-arm64]
+description = "仅用于安装 arm64 版本的 Node 14（走非官方镜像源）"
+env = { MISE_NODE_MIRROR_URL = "https://nodejs.raccoon-tw.dev/release/", MISE_NODE_VERIFY = 0 }
+run = "mise install node@14"
+
 [tasks.hf-i-mlx]
 description = "使用 hf ci 下载模型到 ~/MLXModels"
 run = '''
