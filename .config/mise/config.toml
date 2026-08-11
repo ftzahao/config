@@ -14,6 +14,7 @@ deno = "latest"
 dust = "latest"
 fd = "latest"
 gh = "latest"
+"github:anthropics/claude-code" = "latest"
 helm = "latest"
 java = "latest"
 jq = "latest"
@@ -21,11 +22,9 @@ kubectl = "latest"
 lefthook = "latest"
 mkcert = "latest"
 node = "latest"
-"npm:@anthropic-ai/claude-code" = "latest"
 "npm:@vscode/vsce" = { version = "latest", depends = ["aube"] }
 "npm:npkill" = { version = "latest", depends = ["aube"] }
 "npm:nrm" = { version = "latest", depends = ["aube"] }
-"npm:opencode-ai" = "latest"
 "npm:skills" = { version = "latest", depends = ["aube"] }
 nub = { version = "latest", allow_builds = ["@nubjs/nub"], depends = ["aube"] }
 opencode = "latest"
@@ -241,12 +240,6 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 
 # zinit ice wait lucid
 # zinit light zdharma-continuum/history-search-multi-word
-
-zinit ice wait lucid as"completion" \
-  atclone"cp -f completions/_claude.zh-CN completions/_claude" \
-  atpull"%atclone" \
-  blockf
-zinit light 1160054/claude-code-zsh-completion
 ''' }
 
 "~/.config/starship.toml" = { mode = "copy" }
@@ -296,6 +289,7 @@ gen_completion pitchfork "mise x pitchfork -- pitchfork completion zsh"
 gen_completion hf "hf --show-completion"
 gen_completion container "container --generate-completion-script zsh"
 gen_completion kubectl "kubectl completion zsh"
+gen_completion claude "curl -fsSL --raw https://raw.githubusercontent.com/1160054/claude-code-zsh-completion/refs/heads/main/completions/_claude.zh-CN"
 gen_completion fd "curl -fsSL --raw https://raw.githubusercontent.com/sharkdp/fd/master/contrib/completion/_fd"
 gen_completion mlx_lm.server "curl -fsSL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.server/_mlx_lm.server.zh-CN"
 gen_completion mlx_lm.chat "curl -fsSL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.chat/_mlx_lm.chat.zh-CN"
