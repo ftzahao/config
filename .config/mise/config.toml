@@ -8,7 +8,6 @@ cargo-binstall = "latest"
 "cargo:cargo-cache" = { version = "latest", depends = ["rust"] }
 "cargo:miniserve" = { version = "latest", depends = ["rust"] }
 "cargo:oha" = { version = "latest", depends = ["rust"] }
-"claude-code" = "latest"
 "codex" = "latest"
 curlie = "latest"
 deno = "latest"
@@ -22,9 +21,11 @@ kubectl = "latest"
 lefthook = "latest"
 mkcert = "latest"
 node = "latest"
+"npm:@anthropic-ai/claude-code" = "latest"
 "npm:@vscode/vsce" = { version = "latest", depends = ["aube"] }
 "npm:npkill" = { version = "latest", depends = ["aube"] }
 "npm:nrm" = { version = "latest", depends = ["aube"] }
+"npm:opencode-ai" = "latest"
 "npm:skills" = { version = "latest", depends = ["aube"] }
 nub = { version = "latest", allow_builds = ["@nubjs/nub"], depends = ["aube"] }
 opencode = "latest"
@@ -114,7 +115,7 @@ path+=("$PNPM_HOME/bin" "$HOME/.local/bin")
 
 "~/.zshenv/zsh_cache_folder" = { block = '''
 export ZCOMPCACHE="$HOME/.cache/zsh/.zcompcache" # ZSH 补全缓存目录
-export ZSH_COMPLETION_DIR="$HOME/.cache/zsh/.zfunc" # ZSH 补全脚本目录
+export ZSH_COMPLETION_DIR="$HOME/.cache/zsh/site-functions" # ZSH 补全脚本目录
 
 function ensure_directory() {
   local dir="$1"
@@ -295,9 +296,10 @@ gen_completion pitchfork "mise x pitchfork -- pitchfork completion zsh"
 gen_completion hf "hf --show-completion"
 gen_completion container "container --generate-completion-script zsh"
 gen_completion kubectl "kubectl completion zsh"
-gen_completion mlx_lm.server "curl -sL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.server/_mlx_lm.server.zh-CN | iconv -f utf-8 -t utf-8"
-gen_completion mlx_lm.chat "curl -sL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.chat/_mlx_lm.chat.zh-CN | iconv -f utf-8 -t utf-8"
-gen_completion mlx_lm.dynamic_quant "curl -sL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.dynamic_quant/_mlx_lm.dynamic_quant.zh-CN | iconv -f utf-8 -t utf-8"
+gen_completion fd "curl -fsSL --raw https://raw.githubusercontent.com/sharkdp/fd/master/contrib/completion/_fd"
+gen_completion mlx_lm.server "curl -fsSL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.server/_mlx_lm.server.zh-CN"
+gen_completion mlx_lm.chat "curl -fsSL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.chat/_mlx_lm.chat.zh-CN"
+gen_completion mlx_lm.dynamic_quant "curl -fsSL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.dynamic_quant/_mlx_lm.dynamic_quant.zh-CN"
 
 echo ""
 echo "✅ 所有补全内容已生成至 $ZSH_COMPLETION_DIR"
