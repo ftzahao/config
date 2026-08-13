@@ -18,6 +18,7 @@ gh = "latest"
 helm = "latest"
 java = "latest"
 jq = "latest"
+k9s = "latest"
 kubectl = "latest"
 lefthook = "latest"
 mkcert = "latest"
@@ -108,8 +109,7 @@ export LC_ALL="zh_CN.UTF-8"
 ''' }
 
 "~/.zshenv/path" = { block = '''
-export PNPM_HOME="$HOME/.cache/.pnpm" # pnpm
-path+=("$PNPM_HOME/bin" "$HOME/.local/bin")
+export PATH="$HOME/.local/bin:$PATH"
 ''' }
 
 "~/.zshenv/zsh_cache_folder" = { block = '''
@@ -232,14 +232,23 @@ zstyle ':completion:*' special-dirs true    # 允许补全 . 和 ..
 ''' }
 
 "~/.zshrc/plugins" = { block = '''
-# zinit ice wait lucid
-zinit light zsh-users/zsh-autosuggestions
-
 zinit ice wait lucid
 zinit light zdharma-continuum/fast-syntax-highlighting
 
-# zinit ice wait lucid
-# zinit light zdharma-continuum/history-search-multi-word
+zinit light zsh-users/zsh-autosuggestions
+''' }
+
+"~/.zshrc/path" = { block = '''
+export PNPM_HOME="$HOME/.cache/.pnpm" # pnpm
+path+=("$PNPM_HOME/bin")
+
+# Added by MiniMax Code
+export PATH="/Users/shimenghao/.minimax/bin:$PATH"
+''' }
+
+"~/.bashrc/path" = { block = '''
+# Added by MiniMax Code
+export PATH="/Users/shimenghao/.minimax/bin:$PATH"
 ''' }
 
 "~/.config/starship.toml" = { mode = "copy" }
@@ -250,81 +259,116 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 description = "生成常用工具的zsh补全"
 run = '''
 #!/usr/bin/env zsh
+set -u
+
+# 补全目录与缓存路径（未加载 dotfiles 时使用默认值兜底）
+ZSH_COMPLETION_DIR="${ZSH_COMPLETION_DIR:-$HOME/.cache/zsh/site-functions}"
+ZCOMPDUMP="${ZCOMPDUMP:-$HOME/.zcompdump}"
+CONCURRENCY=8 # 并发上限，curl 下载较多，串行太慢
+
+mkdir -p -- "$ZSH_COMPLETION_DIR"
 
 # 清理旧的补全文件，避免过期或冲突
-rm -f -- $ZSH_COMPLETION_DIR/_* 2>/dev/null || true
+rm -f -- "$ZSH_COMPLETION_DIR"/_* 2>/dev/null
 
 echo "🔄 生成常用工具的zsh补全..."
 
-# 辅助函数：检查命令是否存在并生成补全
+# 辅助函数：检查命令是否存在并生成补全；失败或输出为空时清理残留文件
 gen_completion() {
-    local name="$1"
-    local cmd="$2"
-    if [ -x "$(command -v "$name")" ]; then
-        eval "$cmd" > "$ZSH_COMPLETION_DIR/_${name}" 2>/dev/null && echo "✅ ${name} 补全脚本已生成" || echo "❌ ${name} 补全生成失败"
-    else
+    local name="$1" cmd="$2"
+    local target="$ZSH_COMPLETION_DIR/_${name}"
+
+    if ! [ -x "$(command -v "$name" 2>/dev/null)" ]; then
         echo "⏭️  ${name} 未安装，跳过"
+        return
+    fi
+
+    if eval "$cmd" > "$target" 2>/dev/null && [[ -s "$target" ]]; then
+        echo "✅ ${name} 补全脚本已生成"
+    else
+        rm -f -- "$target"
+        echo "❌ ${name} 补全生成失败"
     fi
 }
 
-gen_completion hermes "hermes completion zsh"
-gen_completion aube "aube completion zsh"
-gen_completion bat "bat --completion zsh"
-gen_completion bun "bun completions zsh"
-gen_completion miniserve "mise x miniserve -- miniserve --print-completions zsh"
-gen_completion deno "deno completions zsh"
-gen_completion fd "fd --gen-completions zsh"
-gen_completion gh "gh completion -s zsh"
-gen_completion opencode "opencode completion"
-gen_completion npm "npm completion"
-gen_completion pkl "mise x pkl -- pkl shell-completion zsh"
-gen_completion pnpm "pnpm completion zsh"
-gen_completion pip "pip completion --zsh"
-gen_completion rg "mise x rg -- rg --generate complete-zsh"
-gen_completion usage "mise x usage -- usage --completions zsh"
-gen_completion uv "mise x uv -- uv generate-shell-completion zsh"
-gen_completion watchexec "mise x watchexec -- watchexec --completions zsh"
-gen_completion yq "yq completion zsh"
-gen_completion pitchfork "mise x pitchfork -- pitchfork completion zsh"
-gen_completion hf "hf --show-completion"
-gen_completion container "container --generate-completion-script zsh"
-gen_completion kubectl "kubectl completion zsh"
-gen_completion bash "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_bash"
-gen_completion zsh "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_zsh"
-gen_completion zip "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_zip"
-gen_completion who "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_who"
-gen_completion uname "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_uname"
-gen_completion tar "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_tar"
-gen_completion tail "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_tail"
-gen_completion swift "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_swift"
-gen_completion rm "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_rm"
-gen_completion rmdir "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_rmdir"
-gen_completion ps "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_ps"
-gen_completion ping "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_ping"
-gen_completion nginx "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_nginx"
-gen_completion mv "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_mv"
-gen_completion mkdir "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_mkdir"
-gen_completion lsof "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_lsof"
-gen_completion make "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_make"
-gen_completion ls "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_ls"
-gen_completion gpg "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_gpg"
-gen_completion grep "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_grep"
-gen_completion gem "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_gem"
-gen_completion find "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_find"
-gen_completion ffmpeg "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_ffmpeg"
-gen_completion cp "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_cp"
-gen_completion cat "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_cat"
-gen_completion base64 "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_base64"
-gen_completion awk "curl -fsSL --raw https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion/Unix/Command/_awk"
-gen_completion claude "curl -fsSL --raw https://raw.githubusercontent.com/1160054/claude-code-zsh-completion/refs/heads/main/completions/_claude.zh-CN"
-gen_completion fd "curl -fsSL --raw https://raw.githubusercontent.com/sharkdp/fd/master/contrib/completion/_fd"
-gen_completion mlx_lm.server "curl -fsSL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.server/_mlx_lm.server.zh-CN"
-gen_completion mlx_lm.chat "curl -fsSL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.chat/_mlx_lm.chat.zh-CN"
-gen_completion mlx_lm.dynamic_quant "curl -fsSL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.dynamic_quant/_mlx_lm.dynamic_quant.zh-CN"
+# 后台并发执行，超过上限时等待最早完成的任务
+PENDING=0
+spawn() {
+    gen_completion "$@" &
+    PENDING=$((PENDING + 1))
+    if (( PENDING >= CONCURRENCY )); then
+        wait -n 2>/dev/null
+        PENDING=$((PENDING - 1))
+    fi
+}
+
+ZSH_USER_COMPLETION_URL="https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion"
+CURL="curl -fsSL --retry 2 --retry-delay 1 --connect-timeout 5 --max-time 20"
+
+spawn hermes "hermes completion zsh"
+spawn aube "aube completion zsh"
+spawn bat "bat --completion zsh"
+spawn bun "bun completions zsh"
+spawn miniserve "miniserve --print-completions zsh"
+spawn deno "deno completions zsh"
+spawn fd "fd --gen-completions zsh"
+spawn gh "gh completion -s zsh"
+spawn opencode "opencode completion"
+spawn npm "npm completion"
+spawn pkl "pkl shell-completion zsh"
+spawn pnpm "pnpm completion zsh"
+spawn pip "pip completion --zsh"
+spawn rg "rg --generate complete-zsh"
+spawn usage "usage --completions zsh"
+spawn uv "uv generate-shell-completion zsh"
+spawn watchexec "watchexec --completions zsh"
+spawn yq "yq completion zsh"
+spawn pitchfork "pitchfork completion zsh"
+spawn hf "hf --show-completion"
+spawn container "container --generate-completion-script zsh"
+spawn kubectl "kubectl completion zsh"
+spawn witr "witr completion zsh"
+spawn bash "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_bash"
+spawn zsh "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_zsh"
+spawn zip "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_zip"
+spawn who "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_who"
+spawn uname "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_uname"
+spawn tar "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_tar"
+spawn tail "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_tail"
+spawn swift "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_swift"
+spawn rm "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_rm"
+spawn rmdir "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_rmdir"
+spawn ps "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_ps"
+spawn ping "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_ping"
+spawn nginx "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_nginx"
+spawn mv "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_mv"
+spawn mkdir "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_mkdir"
+spawn lsof "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_lsof"
+spawn make "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_make"
+spawn ls "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_ls"
+spawn gpg "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_gpg"
+spawn grep "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_grep"
+spawn gem "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_gem"
+spawn find "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_find"
+spawn ffmpeg "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_ffmpeg"
+spawn cp "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_cp"
+spawn cat "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_cat"
+spawn base64 "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_base64"
+spawn awk "$CURL $ZSH_USER_COMPLETION_URL/Unix/Command/_awk"
+spawn claude "$CURL https://raw.githubusercontent.com/1160054/claude-code-zsh-completion/refs/heads/main/completions/_claude.zh-CN"
+spawn mlx_lm.server "$CURL https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.server/_mlx_lm.server.zh-CN"
+spawn mlx_lm.chat "$CURL https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.chat/_mlx_lm.chat.zh-CN"
+spawn mlx_lm.dynamic_quant "$CURL https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.dynamic_quant/_mlx_lm.dynamic_quant.zh-CN"
+
+wait
 
 echo ""
 echo "✅ 所有补全内容已生成至 $ZSH_COMPLETION_DIR"
-autoload -Uz compinit; compinit -d "$ZCOMPDUMP"
+
+# 刷新补全缓存，让新补全对后续会话立即生效
+fpath=("$ZSH_COMPLETION_DIR" $fpath)
+autoload -Uz compinit
+compinit -d "$ZCOMPDUMP"
 '''
 
 [tasks.mise-update]
