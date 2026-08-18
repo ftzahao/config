@@ -68,6 +68,19 @@ env_shell_expand = true
 # GH_TOKEN = "$GITHUB_TOKEN"
 # GITHUB_PERSONAL_ACCESS_TOKEN = "$GITHUB_TOKEN"
 
+# DEEPSEEK_BASE_URL = "https://api.deepseek.com"
+# DEEPSEEK_ANTHROPIC_BASE_URL = "https://api.deepseek.com/anthropic"
+# DEEPSEEK_API_KEY = ""
+# DEEPSEEK_REF_URL = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
+
+# MIMO_BASE_URL = "https://api.xiaomimimo.com/v1"
+# MIMO_ANTHROPIC_BASE_URL = "https://api.xiaomimimo.com/anthropic"
+# MIMO_API_KEY = ""
+# MIMO_REF_URL = "https://platform.xiaomimimo.com/docs/zh-CN"
+# XIAOMI_BASE_URL = "$MIMO_BASE_URL"
+# XIAOMI_ANTHROPIC_BASE_URL = "$MIMO_ANTHROPIC_BASE_URL"
+# XIAOMI_API_KEY = "$MIMO_API_KEY"
+
 # HF_BASE_URL = "https://router.huggingface.co/v1"
 # HF_TOKEN = ""
 # HF_REF_URL = "https://huggingface.co/settings/tokens"
@@ -78,31 +91,25 @@ env_shell_expand = true
 # EXA_API_KEY = ""
 # EXA_REF_URL = "https://dashboard.exa.ai/api-keys"
 
-# DEEPSEEK_BASE_URL = "https://api.deepseek.com"
-# DEEPSEEK_API_KEY = ""
-# DEEPSEEK_REF_URL = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
-
-# MIMO_BASE_URL = "https://api.xiaomimimo.com/v1"
-# MIMO_API_KEY = ""
-# MIMO_REF_URL = "https://platform.xiaomimimo.com/docs/zh-CN"
-
-# NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
-# NVIDIA_API_KEY = ""
-# NVIDIA_REF_URL = "https://build.nvidia.com/settings/api-keys"
-
-# OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-# OPENROUTER_API_KEY = ""
-# OPENROUTER_REF_URL = "https://openrouter.ai/workspaces/default/keys"
-
-# ANTHROPIC_BASE_URL = "https://api.deepseek.com/anthropic"
+# ANTHROPIC_BASE_URL = "$DEEPSEEK_ANTHROPIC_BASE_URL"
 # ANTHROPIC_AUTH_TOKEN = "$DEEPSEEK_API_KEY"
-# ANTHROPIC_MODEL = "deepseek-v4-flash"
-# ANTHROPIC_DEFAULT_OPUS_MODEL = "deepseek-v4-flash"
-# ANTHROPIC_DEFAULT_SONNET_MODEL = "deepseek-v4-flash"
-# ANTHROPIC_DEFAULT_HAIKU_MODEL = "deepseek-v4-flash"
-# CLAUDE_CODE_SUBAGENT_MODEL = "deepseek-v4-flash"
-# CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = 1
+# ANTHROPIC_MODEL = "deepseek-v4-pro[1m]"
+# ANTHROPIC_DEFAULT_OPUS_MODEL = "deepseek-v4-pro[1m]"
+# ANTHROPIC_DEFAULT_SONNET_MODEL = "deepseek-v4-pro[1m]"
+# ANTHROPIC_DEFAULT_HAIKU_MODEL = "deepseek-v4-flash[1m]"
+# CLAUDE_CODE_SUBAGENT_MODEL = "deepseek-v4-flash[1m]"
 # CLAUDE_CODE_EFFORT_LEVEL = "max"
+# CLAUDE_CODE_AUTO_COMPACT_WINDOW = "786432"
+
+ANTHROPIC_BASE_URL = "$MIMO_ANTHROPIC_BASE_URL"
+ANTHROPIC_AUTH_TOKEN = "$MIMO_API_KEY"
+ANTHROPIC_MODEL = "mimo-v2.5-pro[1m]"
+ANTHROPIC_DEFAULT_SONNET_MODEL = "mimo-v2.5-pro[1m]"
+ANTHROPIC_DEFAULT_OPUS_MODEL = "mimo-v2.5-pro[1m]"
+ANTHROPIC_DEFAULT_HAIKU_MODEL = "mimo-v2.5[1m]"
+CLAUDE_CODE_SUBAGENT_MODEL = "mimo-v2.5[1m]"
+CLAUDE_CODE_EFFORT_LEVEL = "max"
+CLAUDE_CODE_AUTO_COMPACT_WINDOW = "786432"
 
 [dotfiles]
 "~/.zshenv/lang" = { block = '''
