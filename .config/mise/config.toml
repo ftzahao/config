@@ -23,6 +23,7 @@ kubectl = "latest"
 lefthook = "latest"
 mkcert = "latest"
 node = "latest"
+"npm:@deepseek-ai/dsh" = "latest"
 "npm:@vscode/vsce" = { version = "latest", depends = ["aube"] }
 "npm:npkill" = { version = "latest", depends = ["aube"] }
 "npm:nrm" = { version = "latest", depends = ["aube"] }
@@ -52,6 +53,7 @@ lockfile = true
 idiomatic_version_file_enable_tools = ["node", "python", "ruby", "go", "java"]
 trusted_config_paths = ["/"]
 npm.package_manager = "auto"
+npm.shell_out = true
 minimum_release_age = "0"
 fetch_remote_versions_cache = "0"
 activate_aggressive = true
@@ -174,7 +176,7 @@ alias dns-update="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 alias ip-local="ipconfig getifaddr en0" # 本机 IP 地址（局域网）
 alias ip-v4-public="curl ip4.now && echo" # 获取本机 IPv4 地址（公网）
 alias ip-v6-public="curl ip6.now && echo" # 获取本机 IPv6 地址（公网）
-alias ip-info="curl ip.im/info && echo" # 获取本机 IP 地址详细信息
+alias ip-info="curl -s https://ipinfo.io | jq" # 获取本机 IP 地址详细信息
 alias cdr='cd "$(git rev-parse --show-toplevel)"' # 切换到 Git 仓库的根目录
 alias dsstore-clean="find . -name '.DS_Store' -type f -delete" # 清理 .DS_Store 文件
 ''' }
@@ -302,7 +304,6 @@ spawn() {
     fi
 }
 
-ZSH_USER_COMPLETION_URL="https://raw.githubusercontent.com/zsh-users/zsh/refs/heads/master/Completion"
 CURL="curl -fsSL --retry 2 --retry-delay 1 --connect-timeout 5 --max-time 20"
 
 spawn hermes "hermes completion zsh"
@@ -328,6 +329,7 @@ spawn hf "hf --show-completion"
 spawn container "container --generate-completion-script zsh"
 spawn kubectl "kubectl completion zsh"
 spawn witr "witr completion zsh"
+spawn yarn "$CURL https://raw.githubusercontent.com/zsh-users/zsh-completions/refs/heads/master/src/_yarn"
 spawn claude "$CURL https://raw.githubusercontent.com/1160054/claude-code-zsh-completion/refs/heads/main/completions/_claude.zh-CN"
 spawn mlx_lm.server "$CURL https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.server/_mlx_lm.server.zh-CN"
 spawn mlx_lm.chat "$CURL https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.chat/_mlx_lm.chat.zh-CN"
@@ -364,6 +366,6 @@ run = '''
 #!/usr/bin/env zsh
 
 echo "> 模型仓库: https://huggingface.co/$1"
-echo "> hf download $1 --local-dir ~/MLXModels/$1"
-hf download $1 --local-dir ~/MLXModels/$1
+echo "> hf download $1 --local-dir ~/.cache/MLXModels/$1"
+hf download $1 --local-dir ~/.cache/MLXModels/$1
 '''
