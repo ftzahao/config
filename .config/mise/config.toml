@@ -2,53 +2,88 @@ redactions = ["*_TOKEN", "*_API_KEY", "*_AUTH_TOKEN"]
 
 [tools]
 aube = "latest"
-bat = "latest"
 bun = "latest"
-cargo-binstall = "latest"
 "cargo:cargo-cache" = { version = "latest", depends = ["rust"] }
-"cargo:miniserve" = { version = "latest", depends = ["rust"] }
-"cargo:oha" = { version = "latest", depends = ["rust"] }
-"claude-code" = "latest"
-"codex" = "latest"
-curlie = "latest"
 deno = "latest"
-dust = "latest"
-fd = "latest"
-gh = "latest"
+"github:BurntSushi/ripgrep" = "latest"
+"github:FiloSottile/mkcert" = "latest"
+"github:anomalyco/opencode" = "latest"
+"github:anthropics/claude-code" = "latest"
+"github:apple/pkl" = "latest"
+"github:astral-sh/uv" = "latest"
+"github:bootandy/dust" = "latest"
+"github:cargo-bins/cargo-binstall" = "latest"
+"github:cli/cli" = "latest"
+"github:cpisciotta/xcbeautify" = "latest"
+"github:derailed/k9s" = "latest"
+"github:hatoo/oha" = "latest"
+"github:jqlang/jq" = "latest"
+"github:nubjs/nub" = "latest"
+"github:openai/codex" = "latest"
+"github:pnpm/pnpm" = "latest"
+"github:rs/curlie" = "latest"
+"github:sharkdp/bat" = "latest"
+"github:sharkdp/fd" = "latest"
+"github:svenstaro/miniserve" = "latest"
+"github:voidzero-dev/vite-plus" = "latest"
+"github:watchexec/watchexec" = "latest"
 java = "latest"
-jq = "latest"
+kubectl = "latest"
 lefthook = "latest"
-mkcert = "latest"
 node = "latest"
+"npm:@deepseek-ai/dsh" = { version = "latest", depends = ["aube"] }
 "npm:@vscode/vsce" = { version = "latest", depends = ["aube"] }
 "npm:npkill" = { version = "latest", depends = ["aube"] }
 "npm:nrm" = { version = "latest", depends = ["aube"] }
 "npm:skills" = { version = "latest", depends = ["aube"] }
-nub = { version = "latest", allow_builds = ["@nubjs/nub"], depends = ["aube"] }
-opencode = "latest"
-pkl = "latest"
-pnpm = "latest"
 prettier = "latest"
-python = ["latest", "3.11"]
-ripgrep = "latest"
+python = ["latest", "3.13", "3.10"]
 ruby = "latest"
 rust = "stable"
-tokei = { version = "latest", depends = ["rust"] }
 usage = "latest"
-uv = "latest"
-vp = { version = "latest", depends = ["aube"] }
-watchexec = "latest"
-xcbeautify = "latest"
-yarn = "latest"
 yq = "latest"
 
+[bootstrap.packages]
+"brew:bash" = "latest"
+"brew:bat" = "latest"
+"brew:cmake" = "latest"
+"brew:cmake-docs" = "latest"
+"brew:dust" = "latest"
+"brew:fd" = "latest"
+"brew:ffmpeg" = "latest"
+"brew:gh" = "latest"
+"brew:git" = "latest"
+"brew:gnupg" = "latest"
+"brew:helm" = "latest"
+"brew:hf" = "latest"
+"brew:jq" = "latest"
+"brew:lefthook" = "latest"
+"brew:mkcert" = "latest"
+"brew:mole" = "latest"
+"brew:oha" = "latest"
+"brew:openssl@3" = "latest"
+"brew:opus" = "latest"
+"brew:pkl" = "latest"
+"brew:python-build" = "latest"
+"brew:ripgrep" = "latest"
+"brew:ruby-build" = "latest"
+"brew:starship" = "latest"
+"brew:swift-format" = "latest"
+"brew:tokei" = "latest"
+"brew:witr" = "latest"
+"brew:xcbeautify" = "latest"
+"brew:yq" = "latest"
+"brew:zinit" = "latest"
+
 [settings]
+auto_update = true
 auto_install = false
 experimental = true
 lockfile = true
 idiomatic_version_file_enable_tools = ["node", "python", "ruby", "go", "java"]
 trusted_config_paths = ["/"]
 npm.package_manager = "auto"
+npm.shell_out = true
 minimum_release_age = "0"
 fetch_remote_versions_cache = "0"
 activate_aggressive = true
@@ -63,6 +98,19 @@ env_shell_expand = true
 # GH_TOKEN = "$GITHUB_TOKEN"
 # GITHUB_PERSONAL_ACCESS_TOKEN = "$GITHUB_TOKEN"
 
+# DEEPSEEK_BASE_URL = "https://api.deepseek.com"
+# DEEPSEEK_ANTHROPIC_BASE_URL = "https://api.deepseek.com/anthropic"
+# DEEPSEEK_API_KEY = ""
+# DEEPSEEK_REF_URL = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
+
+# MIMO_BASE_URL = "https://api.xiaomimimo.com/v1"
+# MIMO_ANTHROPIC_BASE_URL = "https://api.xiaomimimo.com/anthropic"
+# MIMO_API_KEY = ""
+# MIMO_REF_URL = "https://platform.xiaomimimo.com/docs/zh-CN"
+# XIAOMI_BASE_URL = "$MIMO_BASE_URL"
+# XIAOMI_ANTHROPIC_BASE_URL = "$MIMO_ANTHROPIC_BASE_URL"
+# XIAOMI_API_KEY = "$MIMO_API_KEY"
+
 # HF_BASE_URL = "https://router.huggingface.co/v1"
 # HF_TOKEN = ""
 # HF_REF_URL = "https://huggingface.co/settings/tokens"
@@ -73,31 +121,27 @@ env_shell_expand = true
 # EXA_API_KEY = ""
 # EXA_REF_URL = "https://dashboard.exa.ai/api-keys"
 
-# DEEPSEEK_BASE_URL = "https://api.deepseek.com"
-# DEEPSEEK_API_KEY = ""
-# DEEPSEEK_REF_URL = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
-
-# MIMO_BASE_URL = "https://api.xiaomimimo.com/v1"
-# MIMO_API_KEY = ""
-# MIMO_REF_URL = "https://platform.xiaomimimo.com/docs/zh-CN"
-
-# NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
-# NVIDIA_API_KEY = ""
-# NVIDIA_REF_URL = "https://build.nvidia.com/settings/api-keys"
-
-# OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-# OPENROUTER_API_KEY = ""
-# OPENROUTER_REF_URL = "https://openrouter.ai/workspaces/default/keys"
-
-# ANTHROPIC_BASE_URL = "https://api.deepseek.com/anthropic"
+# ANTHROPIC_BASE_URL = "$DEEPSEEK_ANTHROPIC_BASE_URL"
 # ANTHROPIC_AUTH_TOKEN = "$DEEPSEEK_API_KEY"
-# ANTHROPIC_MODEL = "deepseek-v4-flash"
-# ANTHROPIC_DEFAULT_OPUS_MODEL = "deepseek-v4-flash"
-# ANTHROPIC_DEFAULT_SONNET_MODEL = "deepseek-v4-flash"
-# ANTHROPIC_DEFAULT_HAIKU_MODEL = "deepseek-v4-flash"
-# CLAUDE_CODE_SUBAGENT_MODEL = "deepseek-v4-flash"
-# CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = 1
+# ANTHROPIC_DEFAULT_MODEL = "deepseek-v4-flash[1m]"
+# ANTHROPIC_MODEL = "deepseek-v4-pro[1m]"
+# ANTHROPIC_DEFAULT_OPUS_MODEL = "deepseek-v4-pro[1m]"
+# ANTHROPIC_DEFAULT_SONNET_MODEL = "deepseek-v4-pro[1m]"
+# ANTHROPIC_DEFAULT_HAIKU_MODEL = "deepseek-v4-flash[1m]"
+# CLAUDE_CODE_SUBAGENT_MODEL = "deepseek-v4-flash[1m]"
 # CLAUDE_CODE_EFFORT_LEVEL = "max"
+# CLAUDE_CODE_AUTO_COMPACT_WINDOW = "786432"
+#
+ANTHROPIC_BASE_URL = "$MIMO_ANTHROPIC_BASE_URL"
+ANTHROPIC_AUTH_TOKEN = "$MIMO_API_KEY"
+ANTHROPIC_DEFAULT_MODEL = "mimo-v2.5[1m]"
+ANTHROPIC_MODEL = "mimo-v2.5-pro[1m]"
+ANTHROPIC_DEFAULT_SONNET_MODEL = "mimo-v2.5-pro[1m]"
+ANTHROPIC_DEFAULT_OPUS_MODEL = "mimo-v2.5-pro[1m]"
+ANTHROPIC_DEFAULT_HAIKU_MODEL = "mimo-v2.5[1m]"
+CLAUDE_CODE_SUBAGENT_MODEL = "mimo-v2.5[1m]"
+CLAUDE_CODE_EFFORT_LEVEL = "max"
+CLAUDE_CODE_AUTO_COMPACT_WINDOW = "786432"
 
 [dotfiles]
 "~/.zshenv/lang" = { block = '''
@@ -106,13 +150,11 @@ export LC_ALL="zh_CN.UTF-8"
 ''' }
 
 "~/.zshenv/path" = { block = '''
-export PNPM_HOME="$HOME/.cache/.pnpm" # pnpm
-path+=("$PNPM_HOME/bin" "$HOME/.local/bin")
+export PATH="$HOME/.local/bin:$PATH"
 ''' }
 
 "~/.zshenv/zsh_cache_folder" = { block = '''
-export ZCOMPCACHE="$HOME/.cache/zsh/.zcompcache" # ZSH 补全缓存目录
-export ZSH_COMPLETION_DIR="$HOME/.cache/zsh/.zfunc" # ZSH 补全脚本目录
+export ZSH_COMPLETION_DIR="$HOME/.local/share/zsh/site-functions" # ZSH 补全脚本目录
 
 function ensure_directory() {
   local dir="$1"
@@ -123,14 +165,13 @@ function ensure_directory() {
     }
   fi
 }
-ensure_directory "$ZCOMPCACHE"
 ensure_directory "$ZSH_COMPLETION_DIR"
 unset -f ensure_directory
 ''' }
 
 "~/.zprofile/activate" = { block = '''
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-eval "$(mise activate zsh --shims)"
+# eval "$(mise activate zsh --shims)"
 ''' }
 
 "~/.zshrc/zinit" = { block = '''
@@ -170,24 +211,16 @@ function brews() {
 } # 列出所有已安装的 Homebrew 包，包括依赖关系和版本信息
 alias dns-update="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder" # 清理 DNS 缓存
 alias ip-local="ipconfig getifaddr en0" # 本机 IP 地址（局域网）
-alias ip-v4-public="curl ip4.now && echo" # 获取本机 IPv4 地址（公网）
-alias ip-v6-public="curl ip6.now && echo" # 获取本机 IPv6 地址（公网）
-alias ip-info="curl ip.im/info && echo" # 获取本机 IP 地址详细信息
+alias ip-v4-public="curl -fsSL 4.ipcheck.ing/geo | yq --output-format toml" # 获取本机 IPv4 地址（公网）
+alias ip-v6-public="curl -fsSL 4.ipcheck.ing/geo | yq --output-format toml" # 获取本机 IPv6 地址（公网）
+alias ip-net-public="curl -fsSL 64.ipcheck.ing/geo | yq --output-format toml" # 获取本机优先网络出口的 IP 地址（公网）
 alias cdr='cd "$(git rev-parse --show-toplevel)"' # 切换到 Git 仓库的根目录
 alias dsstore-clean="find . -name '.DS_Store' -type f -delete" # 清理 .DS_Store 文件
 ''' }
 
 "~/.zshrc/completion" = { block = '''
-fpath=($ZSH_COMPLETION_DIR $fpath)
-
-autoload -Uz compinit
-
-# 检查缓存文件是否在 24 小时内更新过
-if [[ -n ${ZCOMPCACHE} && ! -n ${ZCOMPCACHE} && $(($(date +%s) - $(stat -f %m ${ZCOMPCACHE} 2>/dev/null || echo 0))) -lt 86400 ]]; then
- compinit -C
-else
- compinit
-fi
+fpath+=($ZSH_COMPLETION_DIR)
+autoload -Uz compinit && compinit
 
 # --- zstyle 配置 ---
 # 使用 _expand、_complete、_approximate 三个补全器，按顺序尝试：
@@ -214,7 +247,6 @@ zstyle ':completion:*' insert-unambiguous true         # 无歧义才自动插�
 
 # 缓存与性能
 zstyle ':completion:*' use-cache yes
-zstyle ':completion:*' cache-path "${ZCOMPCACHE:-${ZDOTDIR:-$HOME}/.zcompcache}"
 zstyle ':completion:*' rehash true             # 新命令立即生效
 zstyle ':completion:*' sort true               # 结果排序
 
@@ -230,20 +262,23 @@ zstyle ':completion:*' special-dirs true    # 允许补全 . 和 ..
 ''' }
 
 "~/.zshrc/plugins" = { block = '''
-# zinit ice wait lucid
-zinit light zsh-users/zsh-autosuggestions
-
 zinit ice wait lucid
 zinit light zdharma-continuum/fast-syntax-highlighting
 
-# zinit ice wait lucid
-# zinit light zdharma-continuum/history-search-multi-word
+zinit light zsh-users/zsh-autosuggestions
+''' }
 
-zinit ice wait lucid as"completion" \
-  atclone"cp -f completions/_claude.zh-CN completions/_claude" \
-  atpull"%atclone" \
-  blockf
-zinit light 1160054/claude-code-zsh-completion
+"~/.zshrc/path" = { block = '''
+export PNPM_HOME="$HOME/.cache/.pnpm" # pnpm
+path+=("$PNPM_HOME/bin")
+
+# Added by MiniMax Code
+export PATH="/Users/shimenghao/.minimax/bin:$PATH"
+''' }
+
+"~/.bashrc/path" = { block = '''
+# Added by MiniMax Code
+export PATH="/Users/shimenghao/.minimax/bin:$PATH"
 ''' }
 
 "~/.config/starship.toml" = { mode = "copy" }
@@ -254,68 +289,117 @@ zinit light 1160054/claude-code-zsh-completion
 description = "生成常用工具的zsh补全"
 run = '''
 #!/usr/bin/env zsh
+set -u
+
+# 补全目录与缓存路径（未加载 dotfiles 时使用默认值兜底）
+ZSH_COMPLETION_DIR="${ZSH_COMPLETION_DIR:-$HOME/.local/share/zsh/site-functions}"
+CONCURRENCY=8 # 并发上限，curl 下载较多，串行太慢
+
+mkdir -p -- "$ZSH_COMPLETION_DIR"
 
 # 清理旧的补全文件，避免过期或冲突
-rm -f -- $ZSH_COMPLETION_DIR/_* 2>/dev/null || true
+rm -f -- "$ZSH_COMPLETION_DIR"/_* 2>/dev/null
 
 echo "🔄 生成常用工具的zsh补全..."
 
-# 辅助函数：检查命令是否存在并生成补全
+# 辅助函数：检查命令是否存在并生成补全；失败或输出为空时清理残留文件
 gen_completion() {
-    local name="$1"
-    local cmd="$2"
-    if [ -x "$(command -v "$name")" ]; then
-        eval "$cmd" > "$ZSH_COMPLETION_DIR/_${name}" 2>/dev/null && echo "✅ ${name} 补全脚本已生成" || echo "❌ ${name} 补全生成失败"
-    else
+    local name="$1" cmd="$2"
+    local target="$ZSH_COMPLETION_DIR/_${name}"
+
+    if ! [ -x "$(command -v "$name" 2>/dev/null)" ]; then
         echo "⏭️  ${name} 未安装，跳过"
+        return
+    fi
+
+    if eval "$cmd" > "$target" 2>/dev/null && [[ -s "$target" ]]; then
+        echo "✅ ${name} 补全脚本已生成"
+    else
+        rm -f -- "$target"
+        echo "❌ ${name} 补全生成失败"
     fi
 }
 
-gen_completion hermes "hermes completion zsh"
-gen_completion aube "aube completion zsh"
-gen_completion bat "bat --completion zsh"
-gen_completion bun "bun completions zsh"
-gen_completion miniserve "mise x miniserve -- miniserve --print-completions zsh"
-gen_completion deno "deno completions zsh"
-gen_completion fd "fd --gen-completions zsh"
-gen_completion gh "gh completion -s zsh"
-gen_completion opencode "opencode completion"
-gen_completion npm "npm completion"
-gen_completion pkl "mise x pkl -- pkl shell-completion zsh"
-gen_completion pnpm "pnpm completion zsh"
-gen_completion pip "pip completion --zsh"
-gen_completion rg "mise x rg -- rg --generate complete-zsh"
-gen_completion usage "mise x usage -- usage --completions zsh"
-gen_completion uv "mise x uv -- uv generate-shell-completion zsh"
-gen_completion watchexec "mise x watchexec -- watchexec --completions zsh"
-gen_completion yq "yq completion zsh"
-gen_completion pitchfork "mise x pitchfork -- pitchfork completion zsh"
-gen_completion hf "hf --show-completion"
-gen_completion container "container --generate-completion-script zsh"
-gen_completion mlx_lm.server "curl -sL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.server/_mlx_lm.server.zh-CN | iconv -f utf-8 -t utf-8"
-gen_completion mlx_lm.chat "curl -sL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.chat/_mlx_lm.chat.zh-CN | iconv -f utf-8 -t utf-8"
-gen_completion mlx_lm.dynamic_quant "curl -sL --raw https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.dynamic_quant/_mlx_lm.dynamic_quant.zh-CN | iconv -f utf-8 -t utf-8"
+# 后台并发执行，超过上限时等待最早完成的任务
+PENDING=0
+spawn() {
+    gen_completion "$@" &
+    PENDING=$((PENDING + 1))
+    if (( PENDING >= CONCURRENCY )); then
+        wait -n 2>/dev/null
+        PENDING=$((PENDING - 1))
+    fi
+}
+
+CURL="curl -fsSL --retry 2 --retry-delay 1 --connect-timeout 5 --max-time 20"
+
+spawn mise "mise completion zsh"
+spawn hermes "hermes completion zsh"
+spawn aube "aube completion zsh"
+spawn bat "bat --completion zsh"
+spawn bun "bun completions zsh"
+spawn miniserve "miniserve --print-completions zsh"
+spawn deno "deno completions zsh"
+spawn fd "fd --gen-completions zsh"
+spawn gh "gh completion -s zsh"
+spawn opencode "opencode completion"
+spawn npm "npm completion"
+spawn pkl "pkl shell-completion zsh"
+spawn pnpm "pnpm completion zsh"
+spawn pip "pip completion --zsh"
+spawn rg "rg --generate complete-zsh"
+spawn usage "usage --completions zsh"
+spawn uv "uv generate-shell-completion zsh"
+spawn watchexec "watchexec --completions zsh"
+spawn yq "yq completion zsh"
+spawn pitchfork "pitchfork completion zsh"
+spawn hf "hf --show-completion"
+spawn container "container --generate-completion-script zsh"
+spawn lefthook "lefthook completion zsh"
+spawn kubectl "kubectl completion zsh"
+spawn witr "witr completion zsh"
+spawn xcbeautify "xcbeautify --generate-completion-script"
+spawn dust "$CURL https://raw.githubusercontent.com/bootandy/dust/refs/heads/master/completions/_dust"
+spawn yarn "$CURL https://raw.githubusercontent.com/zsh-users/zsh-completions/refs/heads/master/src/_yarn"
+spawn claude "$CURL https://raw.githubusercontent.com/1160054/claude-code-zsh-completion/refs/heads/main/completions/_claude.zh-CN"
+spawn mlx_lm.server "$CURL https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.server/_mlx_lm.server.zh-CN"
+spawn mlx_lm.chat "$CURL https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.chat/_mlx_lm.chat.zh-CN"
+spawn mlx_lm.dynamic_quant "$CURL https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.dynamic_quant/_mlx_lm.dynamic_quant.zh-CN"
+
+wait
 
 echo ""
 echo "✅ 所有补全内容已生成至 $ZSH_COMPLETION_DIR"
-autoload -Uz compinit; compinit -d "$ZCOMPDUMP"
+
+# 刷新补全缓存，让新补全对后续会话立即生效
+fpath+=("$ZSH_COMPLETION_DIR")
+autoload -Uz compinit && compinit
 '''
+
+[tasks.i-mise-cli]
+description = "安装 mise 到 ~/.local/bin"
+run = "curl https://mise.run | sh"
 
 [tasks.mise-update]
 description = "更新mise的包到最新版本"
 run = "mise cache clear && mise upgrade --bump"
 
-[tasks.install-x64]
+[tasks.i-x64]
 description = "安装64位系统的工具包: mise run install-x64 [tool@version]"
 env = { MISE_ARCH = "x86_64" }
 run = "mise install"
 
+[tasks.i-node-14-arm64]
+description = "仅用于安装 arm64 版本的 Node 14（走非官方镜像源）"
+env = { MISE_NODE_MIRROR_URL = "https://nodejs.raccoon-tw.dev/release/", MISE_NODE_VERIFY = 0 }
+run = "mise install node@14"
+
 [tasks.hf-i-mlx]
-description = "使用 hf ci 下载模型到 ~/MLXModels"
+description = "使用 hf ci 下载模型到 ~/.cache/MLXModels"
 run = '''
 #!/usr/bin/env zsh
 
 echo "> 模型仓库: https://huggingface.co/$1"
-echo "> hf download $1 --local-dir ~/MLXModels/$1"
-hf download $1 --local-dir ~/MLXModels/$1
+echo "> hf download $1 --local-dir ~/.cache/MLXModels/$1"
+hf download $1 --local-dir ~/.cache/MLXModels/$1
 '''
