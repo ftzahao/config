@@ -219,46 +219,58 @@ alias dsstore-clean="find . -name '.DS_Store' -type f -delete" # 清理 .DS_Stor
 ''' }
 
 "~/.zshrc/completion" = { block = '''
+# ============================================================
+# zsh 补全系统
+# ============================================================
+# 用户补全目录加入 fpath
 fpath+=($ZSH_COMPLETION_DIR)
-autoload -Uz compinit && compinit
 
-# --- zstyle 配置 ---
-# 使用 _expand、_complete、_approximate 三个补全器，按顺序尝试：
-# 1. _expand   — 先展开通配符/变量/历史扩展
-# 2. _complete — 再做普通补全
-# 3. _approximate — 最后允许模糊/近似匹配（容错）
-zstyle ':completion:*' completer _expand _complete _approximate
+# compinit 性能优化：
+# - -C 跳过 compdump 文件的 owner 安全检查（个人机器可放心使用，省去每次启动的 compaudit 开销）
+# - -d 把 compdump 放到 XDG cache 目录，避免污染主目录
+autoload -Uz compinit
+_comp_dump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
+mkdir -p -- "${_comp_dump:h}"
+compinit -C -d "$_comp_dump"
 
-# 匹配规则
-# 1. 大小写不敏感
-# 2. 在 . _ - 处做子串匹配，并允许光标后补全
+# ---- 补全器（按顺序尝试，形成回退链）----
+# _expand       展开通配符 / 变量 / 历史扩展
+# _complete     普通补全
+# _match        基于模式匹配（处理 *xxx 类的展开）
+# _approximate  模糊 / 近似匹配（容错）
+# _prefix       光标在词中也能补全（不强制光标在末尾）
+zstyle ':completion:*' completer _expand _complete _match _approximate _prefix
+
+# ---- 匹配规则（从精确到宽松，逐级回退）----
+# 1. 精确匹配（空规则）
+# 2. 大小写不敏感
+# 3. 在 . _ - 处分段匹配，并允许光标后补全
 zstyle ':completion:*' matcher-list \
+  '' \
   'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' \
   'r:|[._-]=* r:|=*'
 
-# 菜单与交互
-setopt auto_menu                    # 二次 Tab 进入菜单
-zstyle ':completion:*' menu select  # 高亮选择（方向键可用）
+# ---- 菜单与交互 ----
+setopt auto_menu                       # 多次 Tab 在备选项间循环
+zstyle ':completion:*' menu select     # 高亮选择，方向键 / Emacs 风格键可用
 
-# 分组与显示
-zstyle ':completion:*' group-name ''                   # 不显示分组标题
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}  # 颜色跟随 LS_COLORS
-zstyle ':completion:*' insert-unambiguous true         # 无歧义才自动插入
+# ---- 列表显示 ----
+# LS_COLORS 未设置（tmux / screen / ssh 等场景）回退到默认配色，避免 list-colors 为空导致无色
+_zsh_ls_colors_default='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.zip=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.png=01;35:*.gif=01;35:*.svg=01;35'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS:-$_zsh_ls_colors_default}"
+zstyle ':completion:*' group-name ''                   # 不显示分组标题（仍按 description 排序）
+zstyle ':completion:*' insert-unambiguous true         # 无歧义时自动插入公共前缀
+zstyle ':completion:*' verbose yes                     # 描述更详细
 
-# 缓存与性能
-zstyle ':completion:*' use-cache yes
-zstyle ':completion:*' rehash true             # 新命令立即生效
-zstyle ':completion:*' sort true               # 结果排序
+# ---- 布局微调 ----
+zstyle ':completion:*' list-packed true               # 紧凑多列布局
+zstyle ':completion:*' special-dirs true               # 允许补全 . 和 ..
 
-# 特殊场景优化
-zstyle ':completion:*:history-words' stop yes
-zstyle ':completion:*:cd:*' ignore-parents parent pwd
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,cmd'
-
-# 可选增强（按需开启）
-zstyle ':completion:*' verbose yes          # 更详细的描述
-zstyle ':completion:*' list-packed true     # 更紧凑的列表
-zstyle ':completion:*' special-dirs true    # 允许补全 . 和 ..
+# ---- 特殊场景 ----
+zstyle ':completion:*:history-words' stop yes          # 禁止 history-words 补全（避免与 !cmd 混淆）
+zstyle ':completion:*:cd:*' ignore-parents parent pwd  # cd 时不显示 .. 和当前目录
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,cmd'  # kill 补全显示完整命令
+zstyle ':completion:*:kill:*' verbose yes              # kill 列表展示 PID / CPU / 命令
 ''' }
 
 "~/.zshrc/plugins" = { block = '''
@@ -295,17 +307,70 @@ set -u
 ZSH_COMPLETION_DIR="${ZSH_COMPLETION_DIR:-$HOME/.local/share/zsh/site-functions}"
 CONCURRENCY=8 # 并发上限，curl 下载较多，串行太慢
 
-mkdir -p -- "$ZSH_COMPLETION_DIR"
+# 临时目录：所有补全先写到这里，全部跑完后再原子替换到目标目录
+# 任务中途失败（Ctrl+C / 任意一步报错）都不会污染 $ZSH_COMPLETION_DIR
+STAGING_DIR="$(mktemp -d -t zsh-completions)"
+cleanup() {
+    if [ -n "${STAGING_DIR:-}" ] && [ -d "$STAGING_DIR" ]; then
+        rm -rf -- "$STAGING_DIR"
+    fi
+}
+trap cleanup EXIT INT TERM
 
-# 清理旧的补全文件，避免过期或冲突
-rm -f -- "$ZSH_COMPLETION_DIR"/_* 2>/dev/null
+mkdir -p -- "$ZSH_COMPLETION_DIR"
 
 echo "🔄 生成常用工具的zsh补全..."
 
-# 辅助函数：检查命令是否存在并生成补全；失败或输出为空时清理残留文件
-gen_completion() {
+CURL() {
+    # 封装 curl 的重试 / 超时参数；用函数而非变量，避免 zsh 默认 SH_WORD_SPLIT 关闭导致
+    # 不带引号的 $CURL 整串被当成命令名（这正是原 gen_completion 走 eval 才正常工作的原因）
+    curl -fsSL --retry 2 --retry-delay 1 --connect-timeout 5 --max-time 20 "$@"
+}
+
+# 检测系统是否已经提供了某个工具的补全，并返回来源标识
+# 输出 "brew"（homebrew 提供）/ "zsh"（系统 zsh 自带）/ 空字符串（未提供）
+has_system_completion() {
+    local name="$1"
+    local brew_prefix
+    brew_prefix="$(brew --prefix 2>/dev/null)" || brew_prefix=""
+
+    # homebrew（Apple Silicon: /opt/homebrew；Intel: /usr/local）
+    [ -n "$brew_prefix" ] && [ -f "$brew_prefix/share/zsh/site-functions/_$name" ] && { echo "brew"; return 0; }
+    [ -n "$brew_prefix" ] && [ -f "$brew_prefix/share/zsh/$ZSH_VERSION/functions/_$name" ] && { echo "brew"; return 0; }
+
+    # 系统 zsh 标准目录
+    [ -f "/usr/share/zsh/$ZSH_VERSION/functions/_$name" ] && { echo "zsh"; return 0; }
+    [ -f "/usr/share/zsh/site-functions/_$name" ] && { echo "zsh"; return 0; }
+    [ -f "/usr/local/share/zsh/site-functions/_$name" ] && { echo "zsh"; return 0; }
+
+    return 1
+}
+
+# 通用并发控制：超过上限时等待最早完成的任务
+PENDING=0
+spawn() {
+    "$@" &
+    PENDING=$((PENDING + 1))
+    if (( PENDING >= CONCURRENCY )); then
+        wait -n 2>/dev/null
+        PENDING=$((PENDING - 1))
+    fi
+}
+
+# 本地工具：依赖命令已存在；执行 `cmd` 把补全输出到目标文件
+gen_local_completion() {
     local name="$1" cmd="$2"
-    local target="$ZSH_COMPLETION_DIR/_${name}"
+    local target="$STAGING_DIR/_${name}"
+    local source
+
+    source="$(has_system_completion "$name")"
+    if [[ -n "$source" ]]; then
+        case "$source" in
+            brew) echo "🍺 ${name} (brew)，跳过" ;;
+            zsh)  echo "🐚 ${name} (zsh)，跳过" ;;
+        esac
+        return
+    fi
 
     if ! [ -x "$(command -v "$name" 2>/dev/null)" ]; then
         echo "⏭️  ${name} 未安装，跳过"
@@ -320,56 +385,92 @@ gen_completion() {
     fi
 }
 
-# 后台并发执行，超过上限时等待最早完成的任务
-PENDING=0
-spawn() {
-    gen_completion "$@" &
-    PENDING=$((PENDING + 1))
-    if (( PENDING >= CONCURRENCY )); then
-        wait -n 2>/dev/null
-        PENDING=$((PENDING - 1))
+# 远程补全：从 URL 下载，不依赖本地命令是否存在（修复原版对 mlx_lm.* 等子命令的 bug）
+fetch_url_completion() {
+    local name="$1" url="$2"
+    local target="$STAGING_DIR/_${name}"
+    local source
+
+    source="$(has_system_completion "$name")"
+    if [[ -n "$source" ]]; then
+        case "$source" in
+            brew) echo "🍺 ${name} (brew)，跳过" ;;
+            zsh)  echo "🐚 ${name} (zsh)，跳过" ;;
+        esac
+        return
+    fi
+
+    if ! [ -x "$(command -v "$name" 2>/dev/null)" ]; then
+        echo "⏭️  ${name} 未安装，跳过"
+        return
+    fi
+
+    if CURL "$url" -o "$target" 2>/dev/null && [[ -s "$target" ]]; then
+        echo "✅ ${name} 补全脚本已下载"
+    else
+        rm -f -- "$target"
+        echo "❌ ${name} 补全下载失败"
     fi
 }
 
-CURL="curl -fsSL --retry 2 --retry-delay 1 --connect-timeout 5 --max-time 20"
+# ---- 本地命令补全（需要命令已安装） ----
+spawn gen_local_completion mise "mise completion zsh"
+spawn gen_local_completion hermes "hermes completion zsh"
+spawn gen_local_completion aube "aube completion zsh"
+spawn gen_local_completion bat "bat --completion zsh"
+spawn gen_local_completion bun "bun completions zsh"
+spawn gen_local_completion miniserve "miniserve --print-completions zsh"
+spawn gen_local_completion deno "deno completions zsh"
+spawn gen_local_completion fd "fd --gen-completions zsh"
+spawn gen_local_completion gh "gh completion -s zsh"
+spawn gen_local_completion opencode "opencode completion"
+spawn gen_local_completion npm "npm completion"
+spawn gen_local_completion pkl "pkl shell-completion zsh"
+spawn gen_local_completion pnpm "pnpm completion zsh"
+spawn gen_local_completion pip "pip completion --zsh"
+spawn gen_local_completion rg "rg --generate complete-zsh"
+spawn gen_local_completion usage "usage --completions zsh"
+spawn gen_local_completion uv "uv generate-shell-completion zsh"
+spawn gen_local_completion watchexec "watchexec --completions zsh"
+spawn gen_local_completion yq "yq completion zsh"
+spawn gen_local_completion pitchfork "pitchfork completion zsh"
+spawn gen_local_completion hf "hf --show-completion"
+spawn gen_local_completion container "container --generate-completion-script zsh"
+spawn gen_local_completion lefthook "lefthook completion zsh"
+spawn gen_local_completion kubectl "kubectl completion zsh"
+spawn gen_local_completion witr "witr completion zsh"
+spawn gen_local_completion xcbeautify "xcbeautify --generate-completion-script"
 
-spawn mise "mise completion zsh"
-spawn hermes "hermes completion zsh"
-spawn aube "aube completion zsh"
-spawn bat "bat --completion zsh"
-spawn bun "bun completions zsh"
-spawn miniserve "miniserve --print-completions zsh"
-spawn deno "deno completions zsh"
-spawn fd "fd --gen-completions zsh"
-spawn gh "gh completion -s zsh"
-spawn opencode "opencode completion"
-spawn npm "npm completion"
-spawn pkl "pkl shell-completion zsh"
-spawn pnpm "pnpm completion zsh"
-spawn pip "pip completion --zsh"
-spawn rg "rg --generate complete-zsh"
-spawn usage "usage --completions zsh"
-spawn uv "uv generate-shell-completion zsh"
-spawn watchexec "watchexec --completions zsh"
-spawn yq "yq completion zsh"
-spawn pitchfork "pitchfork completion zsh"
-spawn hf "hf --show-completion"
-spawn container "container --generate-completion-script zsh"
-spawn lefthook "lefthook completion zsh"
-spawn kubectl "kubectl completion zsh"
-spawn witr "witr completion zsh"
-spawn xcbeautify "xcbeautify --generate-completion-script"
-spawn dust "$CURL https://raw.githubusercontent.com/bootandy/dust/refs/heads/master/completions/_dust"
-spawn yarn "$CURL https://raw.githubusercontent.com/zsh-users/zsh-completions/refs/heads/master/src/_yarn"
-spawn claude "$CURL https://raw.githubusercontent.com/1160054/claude-code-zsh-completion/refs/heads/main/completions/_claude.zh-CN"
-spawn mlx_lm.server "$CURL https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.server/_mlx_lm.server.zh-CN"
-spawn mlx_lm.chat "$CURL https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.chat/_mlx_lm.chat.zh-CN"
-spawn mlx_lm.dynamic_quant "$CURL https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.dynamic_quant/_mlx_lm.dynamic_quant.zh-CN"
+# ---- 远程补全（不依赖本地命令是否存在） ----
+spawn fetch_url_completion dust "https://raw.githubusercontent.com/bootandy/dust/refs/heads/master/completions/_dust"
+spawn fetch_url_completion yarn "https://raw.githubusercontent.com/zsh-users/zsh-completions/refs/heads/master/src/_yarn"
+spawn fetch_url_completion claude "https://raw.githubusercontent.com/1160054/claude-code-zsh-completion/refs/heads/main/completions/_claude.zh-CN"
+spawn fetch_url_completion mlx_lm.server "https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.server/_mlx_lm.server.zh-CN"
+spawn fetch_url_completion mlx_lm.chat "https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.chat/_mlx_lm.chat.zh-CN"
+spawn fetch_url_completion mlx_lm.dynamic_quant "https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.dynamic_quant/_mlx_lm.dynamic_quant.zh-CN"
 
 wait
 
+# 统计 staging 中成功生成的文件数
+success_count=$(ls -1 "$STAGING_DIR"/_* 2>/dev/null | wc -l | tr -d ' ')
+
+if (( success_count == 0 )); then
+    echo ""
+    echo "❌ 没有任何补全生成成功，保留 $ZSH_COMPLETION_DIR 不变"
+    exit 1
+fi
+
+# 原子替换：先清空旧的补全文件，再把 staging 中的内容移过去
+# 这是脚本里唯一会动 $ZSH_COMPLETION_DIR 的地方
+rm -f -- "$ZSH_COMPLETION_DIR"/_* 2>/dev/null
+mv "$STAGING_DIR"/* "$ZSH_COMPLETION_DIR"/
+
+# 清空 staging，让 trap 知道不需要再清理
+rmdir "$STAGING_DIR" 2>/dev/null || rm -rf -- "$STAGING_DIR"
+STAGING_DIR=""
+
 echo ""
-echo "✅ 所有补全内容已生成至 $ZSH_COMPLETION_DIR"
+echo "✅ ${success_count} 个补全脚本已生成至 $ZSH_COMPLETION_DIR"
 
 # 刷新补全缓存，让新补全对后续会话立即生效
 fpath+=("$ZSH_COMPLETION_DIR")
