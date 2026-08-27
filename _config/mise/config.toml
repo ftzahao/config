@@ -1,9 +1,8 @@
 redactions = ["*_TOKEN", "*_API_KEY", "*_AUTH_TOKEN"]
 
 [tools]
-aube = "latest"
 bun = "latest"
-"cargo:cargo-cache" = { version = "latest", depends = ["rust"] }
+"cargo:cargo-cache" = "latest"
 deno = "latest"
 "github:BurntSushi/ripgrep" = "latest"
 "github:FiloSottile/mkcert" = "latest"
@@ -17,6 +16,7 @@ deno = "latest"
 "github:cpisciotta/xcbeautify" = "latest"
 "github:derailed/k9s" = "latest"
 "github:hatoo/oha" = "latest"
+"github:jdx/aube" = "latest"
 "github:jqlang/jq" = "latest"
 "github:nubjs/nub" = "latest"
 "github:openai/codex" = "latest"
@@ -25,19 +25,19 @@ deno = "latest"
 "github:sharkdp/bat" = "latest"
 "github:sharkdp/fd" = "latest"
 "github:svenstaro/miniserve" = "latest"
-"github:voidzero-dev/vite-plus" = "latest"
 "github:watchexec/watchexec" = "latest"
 java = "latest"
 kubectl = "latest"
 lefthook = "latest"
 node = "latest"
-"npm:@deepseek-ai/dsh" = { version = "latest", depends = ["aube"] }
-"npm:@vscode/vsce" = { version = "latest", depends = ["aube"] }
-"npm:npkill" = { version = "latest", depends = ["aube"] }
-"npm:nrm" = { version = "latest", depends = ["aube"] }
-"npm:skills" = { version = "latest", depends = ["aube"] }
-prettier = "latest"
-python = ["latest", "3.13", "3.10"]
+"npm:@deepseek-ai/dsh" = "latest"
+"npm:@vscode/vsce" = "latest"
+"npm:npkill" = "latest"
+"npm:nrm" = "latest"
+"npm:prettier" = "latest"
+"npm:skills" = "latest"
+"npm:vite-plus" = "latest"
+python = "latest"
 ruby = "latest"
 rust = "stable"
 usage = "latest"
@@ -45,35 +45,57 @@ yq = "latest"
 
 [bootstrap.packages]
 "brew:bash" = "latest"
-"brew:bat" = "latest"
-"brew:cmake" = "latest"
-"brew:cmake-docs" = "latest"
-"brew:dust" = "latest"
-"brew:fd" = "latest"
 "brew:ffmpeg" = "latest"
-"brew:gh" = "latest"
 "brew:git" = "latest"
 "brew:gnupg" = "latest"
 "brew:helm" = "latest"
 "brew:hf" = "latest"
-"brew:jq" = "latest"
-"brew:lefthook" = "latest"
-"brew:mkcert" = "latest"
 "brew:mole" = "latest"
-"brew:oha" = "latest"
 "brew:openssl@3" = "latest"
 "brew:opus" = "latest"
-"brew:pkl" = "latest"
 "brew:python-build" = "latest"
-"brew:ripgrep" = "latest"
 "brew:ruby-build" = "latest"
 "brew:starship" = "latest"
 "brew:swift-format" = "latest"
 "brew:tokei" = "latest"
 "brew:witr" = "latest"
-"brew:xcbeautify" = "latest"
-"brew:yq" = "latest"
 "brew:zinit" = "latest"
+"brew-cask:betterdisplay" = "latest"
+"brew-cask:brave-browser" = "latest"
+"brew-cask:cleanmymac" = "latest"
+"brew-cask:cleanshot" = "latest"
+"brew-cask:crossover" = "latest"
+"brew-cask:dbx" = "latest"
+"brew-cask:downie" = "latest"
+"brew-cask:equinox" = "latest"
+"brew-cask:font-maple-mono-nf-cn" = "latest"
+"brew-cask:jetbrains-toolbox" = "latest"
+"brew-cask:keka" = "latest"
+"brew-cask:launchos" = "latest"
+"brew-cask:markdown-preview" = "latest"
+"brew-cask:mole-app" = "latest"
+"brew-cask:ogdesign-eagle" = "latest"
+"brew-cask:parallels" = "latest"
+"brew-cask:permute" = "latest"
+"brew-cask:popclip" = "latest"
+"brew-cask:proxyman" = "latest"
+"brew-cask:qq" = "latest"
+"brew-cask:screenkite" = "latest"
+"brew-cask:sf-symbols" = "latest"
+"brew-cask:stash" = "latest"
+"brew-cask:steam" = "latest"
+"brew-cask:syntax-highlight" = "latest"
+"brew-cask:tablepro" = "latest"
+"brew-cask:telegram" = "latest"
+"brew-cask:tencent-meeting" = "latest"
+"brew-cask:visual-studio-code" = "latest"
+"brew-cask:wechat" = "latest"
+"brew-cask:wechatwebdevtools" = "latest"
+"brew-cask:wechatwork" = "latest"
+"brew-cask:zcode" = "latest"
+"brew-cask:zed" = "latest"
+"brew-cask:coteditor" = "latest"
+"brew-cask:apifox" = "latest"
 
 [settings]
 auto_update = true
@@ -91,57 +113,21 @@ system_packages.managers = ["brew", "brew-cask"]
 dotfiles.root = "~/.config/mise/.dotfiles"
 dotfiles.default_mode = "copy"
 env_shell_expand = true
+registry_floating = true
 
 [env]
-# GITHUB_TOKEN = ""
-# GITHUB_PAT = "$GITHUB_TOKEN"
-# GH_TOKEN = "$GITHUB_TOKEN"
-# GITHUB_PERSONAL_ACCESS_TOKEN = "$GITHUB_TOKEN"
-
-# DEEPSEEK_BASE_URL = "https://api.deepseek.com"
-# DEEPSEEK_ANTHROPIC_BASE_URL = "https://api.deepseek.com/anthropic"
-# DEEPSEEK_API_KEY = ""
-# DEEPSEEK_REF_URL = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
-
-# MIMO_BASE_URL = "https://api.xiaomimimo.com/v1"
-# MIMO_ANTHROPIC_BASE_URL = "https://api.xiaomimimo.com/anthropic"
-# MIMO_API_KEY = ""
-# MIMO_REF_URL = "https://platform.xiaomimimo.com/docs/zh-CN"
-# XIAOMI_BASE_URL = "$MIMO_BASE_URL"
-# XIAOMI_ANTHROPIC_BASE_URL = "$MIMO_ANTHROPIC_BASE_URL"
-# XIAOMI_API_KEY = "$MIMO_API_KEY"
-
-# HF_BASE_URL = "https://router.huggingface.co/v1"
-# HF_TOKEN = ""
-# HF_REF_URL = "https://huggingface.co/settings/tokens"
-
-# TAVILY_API_KEY = ""
-# TAVILY_REF_URL = "https://app.tavily.com/home"
-
-# EXA_API_KEY = ""
-# EXA_REF_URL = "https://dashboard.exa.ai/api-keys"
-
-# ANTHROPIC_BASE_URL = "$DEEPSEEK_ANTHROPIC_BASE_URL"
-# ANTHROPIC_AUTH_TOKEN = "$DEEPSEEK_API_KEY"
-# ANTHROPIC_DEFAULT_MODEL = "deepseek-v4-flash[1m]"
-# ANTHROPIC_MODEL = "deepseek-v4-pro[1m]"
-# ANTHROPIC_DEFAULT_OPUS_MODEL = "deepseek-v4-pro[1m]"
-# ANTHROPIC_DEFAULT_SONNET_MODEL = "deepseek-v4-pro[1m]"
-# ANTHROPIC_DEFAULT_HAIKU_MODEL = "deepseek-v4-flash[1m]"
-# CLAUDE_CODE_SUBAGENT_MODEL = "deepseek-v4-flash[1m]"
-# CLAUDE_CODE_EFFORT_LEVEL = "max"
-# CLAUDE_CODE_AUTO_COMPACT_WINDOW = "786432"
-#
-ANTHROPIC_BASE_URL = "$MIMO_ANTHROPIC_BASE_URL"
-ANTHROPIC_AUTH_TOKEN = "$MIMO_API_KEY"
-ANTHROPIC_DEFAULT_MODEL = "mimo-v2.5[1m]"
-ANTHROPIC_MODEL = "mimo-v2.5-pro[1m]"
-ANTHROPIC_DEFAULT_SONNET_MODEL = "mimo-v2.5-pro[1m]"
-ANTHROPIC_DEFAULT_OPUS_MODEL = "mimo-v2.5-pro[1m]"
-ANTHROPIC_DEFAULT_HAIKU_MODEL = "mimo-v2.5[1m]"
-CLAUDE_CODE_SUBAGENT_MODEL = "mimo-v2.5[1m]"
-CLAUDE_CODE_EFFORT_LEVEL = "max"
-CLAUDE_CODE_AUTO_COMPACT_WINDOW = "786432"
+_.file = { paths = [
+  "~/.config/mise/env/github.yaml",
+  "~/.config/mise/env/deepseek.yaml",
+  "~/.config/mise/env/xiaomi.yaml",
+  "~/.config/mise/env/z.ai.yaml",
+  "~/.config/mise/env/hf.yaml",
+  "~/.config/mise/env/tavily.yaml",
+  "~/.config/mise/env/exa.yaml",
+  # "~/.config/mise/env/claude.deepseek.yaml",
+  "~/.config/mise/env/claude.local.yaml",
+  # "~/.config/mise/env/claude.xiaomi.yaml",
+], expand = true }
 
 [dotfiles]
 "~/.zshenv/lang" = { block = '''
@@ -150,7 +136,7 @@ export LC_ALL="zh_CN.UTF-8"
 ''' }
 
 "~/.zshenv/path" = { block = '''
-export PATH="$HOME/.local/bin:$PATH"
+path+=("$HOME/.local/bin")
 ''' }
 
 "~/.zshenv/zsh_cache_folder" = { block = '''
@@ -281,16 +267,10 @@ zinit light zsh-users/zsh-autosuggestions
 ''' }
 
 "~/.zshrc/path" = { block = '''
-export PNPM_HOME="$HOME/.cache/.pnpm" # pnpm
-path+=("$PNPM_HOME/bin")
-
-# Added by MiniMax Code
-export PATH="/Users/shimenghao/.minimax/bin:$PATH"
-''' }
-
-"~/.bashrc/path" = { block = '''
-# Added by MiniMax Code
-export PATH="/Users/shimenghao/.minimax/bin:$PATH"
+export PNPM_HOME="$HOME/.cache/pnpm"
+path+=(
+  "$PNPM_HOME/bin"
+)
 ''' }
 
 "~/.config/starship.toml" = { mode = "copy" }
@@ -483,7 +463,7 @@ run = "curl https://mise.run | sh"
 
 [tasks.mise-update]
 description = "更新mise的包到最新版本"
-run = "mise cache clear && mise upgrade --bump"
+run = "mise cache clear && mise upgrade --prune"
 
 [tasks.i-x64]
 description = "安装64位系统的工具包: mise run install-x64 [tool@version]"

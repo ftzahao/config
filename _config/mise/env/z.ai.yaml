@@ -1,0 +1,4 @@
+# https://bigmodel.cn/apikey/platform
+GLM_BASE_URL: https://open.bigmodel.cn/api/paas/v4
+GLM_ANTHROPIC_BASE_URL: https://open.bigmodel.cn/api/anthropic
+GLM_API_KEY:
