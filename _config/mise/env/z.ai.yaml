@@ -1,4 +1,6 @@
 # https://bigmodel.cn/apikey/platform
-GLM_BASE_URL: https://open.bigmodel.cn/api/paas/v4
-GLM_ANTHROPIC_BASE_URL: https://open.bigmodel.cn/api/anthropic
+GLM_ANTHROPIC_MESSAGE_BASE_URL: https://open.bigmodel.cn/api/anthropic
+GLM_OPENAI_CHAT_COMPLETION_BASE_URL: https://open.bigmodel.cn/api/paas/v4
+GLM_OPENAI_RESPONSE_BASE_URL: https://open.bigmodel.cn/api/v1
+GLM_BASE_URL: $GLM_OPENAI_CHAT_COMPLETION_BASE_URL
 GLM_API_KEY:

@@ -5,20 +5,16 @@
 ## 目录结构
 
 ```
-.
-├── .config/
-│   └── mise/
-│       ├── config.toml            # mise 主配置：工具、设置、环境变量
-│       └── .dotfiles/             # 由 mise dotfiles 功能管理的配置文件
-│           ├── .gitconfig         # 全局 Git 配置
-│           ├── .gitignore_global  # 全局 Git 忽略规则
-│           └── .config/
-│               └── starship.toml  # Starship 终端提示符配置
-└── zsh-completion/
-    ├── build.sh                   # 从 usage.kdl 重新生成补全文件的脚本
-    ├── mlx_lm.server/             # mlx_lm.server 的 zsh 补全
-    ├── mlx_lm.chat/               # mlx_lm.chat 的 zsh 补全
-    └── mlx_lm.dynamic_quant/      # mlx_lm.dynamic_quant 的 zsh 补全
+config/
+├── shadowrocket/
+│   ├── rules.list
+│   └── 自用配置.conf
+├── zsh-completion/
+├── README.md
+└── _config/
+    └── mise/
+        ├── env/
+        └── config.toml
 ```
 
 ## mise 配置
@@ -37,7 +33,7 @@
 
 ```sh
 # 安装 mise（macOS）
-brew install mise
+curl https://mise.run | sh
 
 # 应用 `[dotfiles]` 中的 dotfiles
 mise bootstrap dotfiles apply

@@ -124,10 +124,12 @@ _.file = { paths = [
   "~/.config/mise/env/hf.yaml",
   "~/.config/mise/env/tavily.yaml",
   "~/.config/mise/env/exa.yaml",
-  # "~/.config/mise/env/claude.deepseek.yaml",
-  "~/.config/mise/env/claude.local.yaml",
-  # "~/.config/mise/env/claude.xiaomi.yaml",
+  # "~/.config/mise/env/claude/deepseek.yaml",
+  "~/.config/mise/env/claude/local.yaml",
+  # "~/.config/mise/env/claude/xiaomi.yaml",
+  # "~/.config/mise/env/claude/z.ai.yaml",
 ], expand = true }
+_.path = { paths = [], tools = true }
 
 [dotfiles]
 "~/.zshenv/lang" = { block = '''
