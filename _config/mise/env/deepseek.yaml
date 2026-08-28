@@ -1,6 +1,6 @@
 # https://api-docs.deepseek.com/zh-cn/quick_start/pricing
-DEEPSEEK_ANTHROPIC_MESSAGE_BASE_URL: https://api.deepseek.com/anthropic
-DEEPSEEK_OPENAI_CHAT_COMPLETION_BASE_URL: https://api.deepseek.com
-DEEPSEEK_OPENAI_RESPONSE_BASE_URL: https://api.deepseek.com
-DEEPSEEK_BASE_URL: $DEEPSEEK_OPENAI_CHAT_COMPLETION_BASE_URL
+DEEPSEEK_MESSAGE_BASE_URL: https://api.deepseek.com/anthropic
+DEEPSEEK_CHAT_COMPLETION_BASE_URL: https://api.deepseek.com
+DEEPSEEK_RESPONSE_BASE_URL: https://api.deepseek.com
+DEEPSEEK_BASE_URL: $DEEPSEEK_CHAT_COMPLETION_BASE_URL
 DEEPSEEK_API_KEY:
