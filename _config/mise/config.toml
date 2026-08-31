@@ -13,6 +13,7 @@ fd = "latest"
 gh = "latest"
 "github:anthropics/claude-code" = "latest"
 "github:nubjs/nub" = "latest"
+"github:openai/codex" = "latest"
 "github:pnpm/pnpm" = "latest"
 java = "latest"
 jq = "latest"
@@ -21,20 +22,23 @@ miniserve = "latest"
 mkcert = "latest"
 node = "latest"
 "npm:@deepseek-ai/dsh" = "latest"
+"npm:@tiny-fish/cli" = "latest"
 "npm:@vscode/vsce" = "latest"
 "npm:npkill" = "latest"
 "npm:nrm" = "latest"
+"npm:prettier" = "latest"
 "npm:skills" = "latest"
+"npm:vite-plus" = "latest"
 oha = "latest"
+"pipx:hf" = "latest"
+"pipx:modelscope" = "latest"
 pkl = "latest"
-prettier = "latest"
 python = "latest"
 ripgrep = "latest"
 ruby = "latest"
 rust = "stable"
 usage = "latest"
 uv = "latest"
-vp = "latest"
 watchexec = "latest"
 yq = "latest"
 
@@ -64,7 +68,6 @@ yq = "latest"
 "brew-cask:brave-browser" = "latest"
 "brew-cask:cleanmymac" = "latest"
 "brew-cask:cleanshot" = "latest"
-"brew-cask:coteditor" = "latest"
 "brew-cask:crossover" = "latest"
 "brew-cask:dbx" = "latest"
 "brew-cask:downie" = "latest"
@@ -123,11 +126,13 @@ _.file = { paths = [
   "~/.config/mise/env/hf.yaml",
   "~/.config/mise/env/tavily.yaml",
   "~/.config/mise/env/exa.yaml",
+  "~/.config/mise/env/tinyfish.yaml",
   # "~/.config/mise/env/claude/deepseek.yaml",
   "~/.config/mise/env/claude/local.yaml",
   # "~/.config/mise/env/claude/xiaomi.yaml",
   # "~/.config/mise/env/claude/z.ai.yaml",
 ], expand = true }
+
 _.path = { paths = [], tools = true }
 
 [dotfiles]
@@ -158,7 +163,7 @@ unset -f ensure_directory
 
 "~/.zprofile/activate" = { block = '''
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-# eval "$(mise activate zsh --shims)"
+eval "$(mise activate zsh --shims)"
 ''' }
 
 "~/.zshrc/zinit" = { block = '''
@@ -492,8 +497,8 @@ run = "mise install"
 
 [tasks.i-node-14-arm64]
 description = "仅用于安装 arm64 版本的 Node 14（走非官方镜像源）"
-env = { MISE_NODE_MIRROR_URL = "https://nodejs.raccoon-tw.dev/release/", MISE_NODE_VERIFY = 0 }
-run = "mise install node@14"
+env = { MISE_NODE_MIRROR_URL = "https://raw.githubusercontent.com/ftzahao/node14-apple-silicon-build/refs/heads/master/release/", MISE_NODE_VERIFY = 0 }
+run = "mise install"
 
 [tasks.hf-i-mlx]
 description = "使用 hf ci 下载模型到 ~/.cache/MLXModels"
