@@ -1,0 +1,153 @@
+tap "antoniorodr/memo"
+# Bourne-Again SHell, a UNIX command interpreter
+brew "bash"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@3"
+# Audio codec
+brew "opus"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# Distributed revision control system
+brew "git"
+# GNU Privacy Guard (OpenPGP)
+brew "gnupg"
+# Kubernetes package manager
+brew "helm"
+# Kubernetes CLI To Manage Your Clusters In Style!
+brew "k9s"
+# Kubernetes command-line interface
+brew "kubernetes-cli"
+# Deep clean and optimize your Mac
+brew "mole"
+# Simple text editor with clickable interface
+brew "msedit"
+# Simple, correct PEP 517 build frontend
+brew "python-build"
+# Install various Ruby versions and implementations
+brew "ruby-build"
+# Cross-shell prompt for astronauts
+brew "starship"
+# Formatting technology for Swift source code
+brew "swift-format"
+# Program that allows you to count code, quickly
+brew "tokei"
+# Why is this running?
+brew "witr"
+# Little beautifier tool for xcodebuild
+brew "xcbeautify"
+# Flexible and fast Zsh plugin manager
+brew "zinit"
+# CLI app to manage your Apple Notes and Apple reminders
+brew "antoniorodr/memo/memo", trusted: true
+# Stand alone ad blocker
+cask "adguard"
+# AirPods companion app
+cask "airbuddy"
+# Platform for API documentation, debugging, and testing
+cask "apifox"
+# Display management tool
+cask "betterdisplay"
+# Web browser focusing on privacy
+cask "brave-browser"
+# OpenAI's official ChatGPT desktop app
+cask "chatgpt"
+# Tool to remove unnecessary files and folders from disk
+cask "cleanmymac"
+# Screen capturing tool
+cask "cleanshot"
+# Tool to run Windows software
+cask "crossover"
+# Database management tool
+cask "dbx"
+# Downloads videos from different websites
+cask "downie"
+# Create dynamic wallpapers
+cask "equinox"
+cask "font-maple-mono-nf-cn"
+# JetBrains tools manager
+cask "jetbrains-toolbox"
+# File archiver
+cask "keka"
+# Launchpad alternative
+cask "launchos"
+# Markdown previewer with bundled Quick Look extension
+cask "markdown-preview"
+# Deep clean, analyze, and optimize app
+cask "mole-app"
+# Organise all your reference images in one place
+cask "ogdesign-eagle"
+# Second-display utility for iPhone and iPad over USB and Wi-Fi
+cask "opendisplay"
+# LLM server built on MLX
+cask "osaurus"
+# Desktop virtualization software
+cask "parallels"
+# Converts and edits video, audio or image files
+cask "permute"
+# Used to access context-specific actions when text is selected
+cask "popclip"
+# HTTP debugging proxy
+cask "proxyman"
+# Instant messaging tool
+cask "qq"
+# Tool that provides consistent, highly configurable symbols for apps
+cask "sf-symbols"
+# Network tool based on Clash
+cask "stash"
+# Video game digital distribution service
+cask "steam"
+# Quicklook extension for source files
+cask "syntax-highlight"
+# Native database client for many database types
+cask "tablepro"
+# Messaging app with a focus on speed and security
+cask "telegram"
+# Cloud video conferencing
+cask "tencent-meeting"
+# Open-source code editor
+cask "visual-studio-code"
+# Free messaging and calling application
+cask "wechat"
+# Wechat DevTools for Official Account and Mini Program development
+cask "wechatwebdevtools"
+# Messaging and calling application
+cask "wechatwork"
+# AI-assisted development environment
+cask "zcode"
+# Multiplayer code editor
+cask "zed"
+vscode "alefragnani.project-manager"
+vscode "antfu.iconify"
+vscode "antfu.unocss"
+vscode "anthropic.claude-code"
+vscode "dbaeumer.vscode-eslint"
+vscode "eamodio.gitlens"
+vscode "editorconfig.editorconfig"
+vscode "esbenp.prettier-vscode"
+vscode "fanaticpythoner.better-todo-tree"
+vscode "ftzahao.sparrow"
+vscode "github.vscode-pull-request-github"
+vscode "hverlin.mise-vscode"
+vscode "keyshout.sqlite-db-viewer"
+vscode "llvm-vs-code-extensions.lldb-dap"
+vscode "lokalise.i18n-ally"
+vscode "ms-azuretools.vscode-containers"
+vscode "ms-ceintl.vscode-language-pack-zh-hans"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
+vscode "ms-vscode-remote.remote-ssh"
+vscode "ms-vscode-remote.remote-ssh-edit"
+vscode "ms-vscode.remote-explorer"
+vscode "openai.chatgpt"
+vscode "oven.bun-vscode"
+vscode "pflannery.vscode-versionlens"
+vscode "rust-lang.rust-analyzer"
+vscode "subframe7536.codeimg"
+vscode "swiftlang.swift-vscode"
+vscode "tombi-toml.tombi"
+vscode "vicanent.gcmp"
+vscode "vscode-icons-team.vscode-icons"
+vscode "vue.volar"
+uv "browser-use"

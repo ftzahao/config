@@ -1,0 +1,4 @@
+# https://portal.nousresearch.com/api-docs
+HERMES_AGENT_CHAT_COMPLETION_BASE_URL: https://inference-api.nousresearch.com/v1
+HERMES_AGENT_BASE_URL: $HERMES_AGENT_CHAT_COMPLETION_BASE_URL
+HERMES_AGENT_API_KEY:

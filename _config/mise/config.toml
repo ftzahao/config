@@ -1,5 +1,3 @@
-redactions = ["*_TOKEN", "*_API_KEY", "*_AUTH_TOKEN"]
-
 [tools]
 aube = "latest"
 bat = "latest"
@@ -15,6 +13,8 @@ gh = "latest"
 "github:nubjs/nub" = "latest"
 "github:openai/codex" = "latest"
 "github:pnpm/pnpm" = "latest"
+"github:router-for-me/CLIProxyAPI" = "latest"
+"github:showwin/speedtest-go" = "latest"
 java = "latest"
 jq = "latest"
 lefthook = "latest"
@@ -22,7 +22,6 @@ miniserve = "latest"
 mkcert = "latest"
 node = "latest"
 "npm:@deepseek-ai/dsh" = "latest"
-"npm:@tiny-fish/cli" = "latest"
 "npm:@vscode/vsce" = "latest"
 "npm:npkill" = "latest"
 "npm:nrm" = "latest"
@@ -33,7 +32,7 @@ oha = "latest"
 "pipx:hf" = "latest"
 "pipx:modelscope" = "latest"
 pkl = "latest"
-python = "latest"
+python = ["latest", "3.11", "3.10"]
 ripgrep = "latest"
 ruby = "latest"
 rust = "stable"
@@ -42,13 +41,15 @@ uv = "latest"
 watchexec = "latest"
 yq = "latest"
 
+[bootstrap.brew.taps]
+"antoniorodr/memo" = "https://github.com/antoniorodr/homebrew-memo.git"
+
 [bootstrap.packages]
 "brew:bash" = "latest"
 "brew:ffmpeg" = "latest"
 "brew:git" = "latest"
 "brew:gnupg" = "latest"
 "brew:helm" = "latest"
-"brew:hf" = "latest"
 "brew:k9s" = "latest"
 "brew:kubernetes-cli" = "latest"
 "brew:mole" = "latest"
@@ -63,6 +64,7 @@ yq = "latest"
 "brew:witr" = "latest"
 "brew:xcbeautify" = "latest"
 "brew:zinit" = "latest"
+"brew:antoniorodr/memo/memo" = "latest"
 "brew-cask:apifox" = "latest"
 "brew-cask:betterdisplay" = "latest"
 "brew-cask:brave-browser" = "latest"
@@ -84,7 +86,6 @@ yq = "latest"
 "brew-cask:popclip" = "latest"
 "brew-cask:proxyman" = "latest"
 "brew-cask:qq" = "latest"
-"brew-cask:screenkite" = "latest"
 "brew-cask:sf-symbols" = "latest"
 "brew-cask:stash" = "latest"
 "brew-cask:steam" = "latest"
@@ -103,8 +104,7 @@ yq = "latest"
 auto_update = true
 auto_install = false
 experimental = true
-lockfile = true
-idiomatic_version_file_enable_tools = ["node", "python", "ruby", "go", "java"]
+idiomatic_version_file_enable_tools = ["node", "python", "ruby", "java"]
 trusted_config_paths = ["/"]
 npm.package_manager = "auto"
 npm.shell_out = true
@@ -119,16 +119,17 @@ registry_floating = true
 
 [env]
 _.file = { paths = [
-  "~/.config/mise/env/github.yaml",
-  "~/.config/mise/env/deepseek.yaml",
-  "~/.config/mise/env/xiaomi.yaml",
-  "~/.config/mise/env/z.ai.yaml",
-  "~/.config/mise/env/hf.yaml",
-  "~/.config/mise/env/tavily.yaml",
-  "~/.config/mise/env/exa.yaml",
-  "~/.config/mise/env/tinyfish.yaml",
+  # "~/.config/mise/env/github.yaml",
+  #   "~/.config/mise/env/deepseek.yaml",
+  #   "~/.config/mise/env/xiaomi.yaml",
+  #   "~/.config/mise/env/z.ai.yaml",
+  #   "~/.config/mise/env/hf.yaml",
+  #   "~/.config/mise/env/tavily.yaml",
+  #   "~/.config/mise/env/exa.yaml",
+  #   "~/.config/mise/env/tinyfish.yaml",
+  #   "~/.config/mise/env/hermes-agent.yaml",
   # "~/.config/mise/env/claude/deepseek.yaml",
-  "~/.config/mise/env/claude/local.yaml",
+  #   "~/.config/mise/env/claude/local.yaml",
   # "~/.config/mise/env/claude/xiaomi.yaml",
   # "~/.config/mise/env/claude/z.ai.yaml",
 ], expand = true }
@@ -292,8 +293,10 @@ zinit light zsh-users/zsh-autosuggestions
 ''' }
 
 "~/.zshrc/path" = { block = '''
+export BUN_INSTALL="$HOME/.cache/bun"
 export PNPM_HOME="$HOME/.cache/pnpm"
 path+=(
+  "$BUN_INSTALL/bin"
   "$PNPM_HOME/bin"
 )
 ''' }
@@ -351,14 +354,19 @@ has_system_completion() {
     return 1
 }
 
-# 通用并发控制：超过上限时等待最早完成的任务
-PENDING=0
+# 通用并发控制：超过上限时等待最早启动的任务
+# 注意：zsh 没有 bash 的 wait -n（会报 "job not found" 且被静默吞掉），
+# 导致并发上限失效、全部任务同时启动。改用 PID 队列：
+# 始终 wait 最早启动的后台任务，完成后从队首移除。
+# 另外：zsh 取数组长度写法是 $# 加变量名（如 $#PIDS），不能用美元符大括号井号
+# 的形式——井号紧跟大括号会被 Tera 模板当成注释开头，导致整个任务无法解析。
+PIDS=()
 spawn() {
     "$@" &
-    PENDING=$((PENDING + 1))
-    if (( PENDING >= CONCURRENCY )); then
-        wait -n 2>/dev/null
-        PENDING=$((PENDING - 1))
+    PIDS+=("$!")
+    if (( $#PIDS >= CONCURRENCY )); then
+        wait "${PIDS[1]}" 2>/dev/null || true
+        PIDS[1]=()
     fi
 }
 
@@ -477,9 +485,15 @@ STAGING_DIR=""
 echo ""
 echo "✅ ${success_count} 个补全脚本已生成至 $ZSH_COMPLETION_DIR"
 
-# 刷新补全缓存，让新补全对后续会话立即生效
+# 刷新补全缓存，让新补全对后续 shell 立即生效。两个关键点：
+# 1. 必须用 -d 指定与 ~/.zshrc 相同的 dump 路径；裸 compinit 只会写 ~/.zcompdump，
+#    而 .zshrc 加载的是 zcompdump-$ZSH_VERSION，等于刷了个寂寞（原 bug 所在）。
+# 2. 不能用 -C：-C 只加载已有 dump，不会重扫 fpath、发现不了新生成的补全文件。
+_comp_dump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
+rm -f -- "$_comp_dump" # 删旧 dump，强制本次 compinit 做全量重扫
 fpath+=("$ZSH_COMPLETION_DIR")
-autoload -Uz compinit && compinit
+autoload -Uz compinit && compinit -d "$_comp_dump"
+unset _comp_dump
 '''
 
 [tasks.i-mise-cli]
@@ -491,7 +505,7 @@ description = "更新mise的包到最新版本"
 run = "mise cache clear && mise upgrade --prune"
 
 [tasks.i-x64]
-description = "安装64位系统的工具包: mise run install-x64 [tool@version]"
+description = "安装64位系统的工具包: mise run i-x64 [tool@version]"
 env = { MISE_ARCH = "x86_64" }
 run = "mise install"
 
@@ -508,4 +522,14 @@ run = '''
 echo "> 模型仓库: https://huggingface.co/$1"
 echo "> hf download $1 --local-dir ~/.cache/MLXModels/$1"
 hf download $1 --local-dir ~/.cache/MLXModels/$1
+'''
+
+[tasks.cli-proxy-api]
+description = "运行 cli-proxy-api"
+run = '''
+#!/usr/bin/env zsh
+echo "运行 cli-proxy-api 密码: 000"
+kill -9 $(lsof -ti :8317)
+echo "WEB: http://$(yq -r '.host // "" | select(length > 0) // "127.0.0.1"' ~/.config/cli-proxy-api/config.yaml):$(yq -r '.port // 8317' ~/.config/cli-proxy-api/config.yaml)/management.html"
+cli-proxy-api -config ~/.config/cli-proxy-api/config.yaml
 '''
