@@ -1,0 +1,4 @@
+RUSTUP_HOME: $HOME/.local/share/rustup
+CARGO_HOME: $HOME/.local/share/cargo
+MISE_RUSTUP_HOME: $HOME/.local/share/rustup
+MISE_CARGO_HOME: $HOME/.local/share/cargo

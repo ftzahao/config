@@ -1,45 +1,44 @@
 [tools]
-aube = "latest"
-bat = "latest"
 bun = "latest"
-cargo-binstall = "latest"
 "cargo:cargo-cache" = "latest"
-curlie = "latest"
 deno = "latest"
-dust = "latest"
-fd = "latest"
-gh = "latest"
+"github:BurntSushi/ripgrep" = "latest"
+"github:FiloSottile/mkcert" = "latest"
+"github:Willxup/cpa-usage-keeper" = "latest"
 "github:anthropics/claude-code" = "latest"
+"github:apple/pkl" = "latest"
+"github:astral-sh/uv" = "latest"
+"github:aubepkg/aube" = "latest"
+"github:bootandy/dust" = "latest"
+"github:cargo-bins/cargo-binstall" = "latest"
+"github:cli/cli" = { version = "latest", rename_exe = "gh" }
+"github:evilmartians/lefthook" = { version = "latest", rename_exe = "lefthook" }
+"github:hatoo/oha" = "latest"
+"github:jqlang/jq" = { version = "latest", rename_exe = "jq" }
+"github:mikefarah/yq" = { version = "latest", rename_exe = "yq" }
 "github:nubjs/nub" = "latest"
-"github:openai/codex" = "latest"
 "github:pnpm/pnpm" = "latest"
 "github:router-for-me/CLIProxyAPI" = "latest"
+"github:rs/curlie" = "latest"
+"github:sharkdp/bat" = "latest"
+"github:sharkdp/fd" = "latest"
 "github:showwin/speedtest-go" = "latest"
+"github:svenstaro/miniserve" = "latest"
+"github:watchexec/watchexec" = "latest"
 java = "latest"
-jq = "latest"
-lefthook = "latest"
-miniserve = "latest"
-mkcert = "latest"
 node = "latest"
-"npm:@deepseek-ai/dsh" = "latest"
 "npm:@vscode/vsce" = "latest"
 "npm:npkill" = "latest"
 "npm:nrm" = "latest"
 "npm:prettier" = "latest"
 "npm:skills" = "latest"
 "npm:vite-plus" = "latest"
-oha = "latest"
 "pipx:hf" = "latest"
 "pipx:modelscope" = "latest"
-pkl = "latest"
 python = ["latest", "3.11", "3.10"]
-ripgrep = "latest"
 ruby = "latest"
 rust = "stable"
 usage = "latest"
-uv = "latest"
-watchexec = "latest"
-yq = "latest"
 
 [bootstrap.brew.taps]
 "antoniorodr/memo" = "https://github.com/antoniorodr/homebrew-memo.git"
@@ -119,19 +118,19 @@ registry_floating = true
 
 [env]
 _.file = { paths = [
-  # "~/.config/mise/env/github.yaml",
-  #   "~/.config/mise/env/deepseek.yaml",
+  "~/.config/mise/env/github.yaml",
+  "~/.config/mise/env/rust.yaml",
+  "~/.config/mise/env/npm.yaml",
+  "~/.config/mise/env/k9s.yaml",
+  # "~/.config/mise/env/deepseek.yaml",
   #   "~/.config/mise/env/xiaomi.yaml",
-  #   "~/.config/mise/env/z.ai.yaml",
-  #   "~/.config/mise/env/hf.yaml",
-  #   "~/.config/mise/env/tavily.yaml",
-  #   "~/.config/mise/env/exa.yaml",
-  #   "~/.config/mise/env/tinyfish.yaml",
-  #   "~/.config/mise/env/hermes-agent.yaml",
-  # "~/.config/mise/env/claude/deepseek.yaml",
-  #   "~/.config/mise/env/claude/local.yaml",
-  # "~/.config/mise/env/claude/xiaomi.yaml",
-  # "~/.config/mise/env/claude/z.ai.yaml",
+  # "~/.config/mise/env/z.ai.yaml",
+  "~/.config/mise/env/hf.yaml",
+  "~/.config/mise/env/tavily.yaml",
+  "~/.config/mise/env/exa.yaml",
+  "~/.config/mise/env/tinyfish.yaml",
+  "~/.config/mise/env/hermes-agent.yaml",
+  "~/.config/mise/env/claude.yaml",
 ], expand = true }
 
 _.path = { paths = [], tools = true }
@@ -526,10 +525,70 @@ hf download $1 --local-dir ~/.cache/MLXModels/$1
 
 [tasks.cli-proxy-api]
 description = "运行 cli-proxy-api"
+env = { CPA_BASE_URL = "http://127.0.0.1:8317", CPA_MANAGEMENT_KEY = "000", LOGIN_PASSWORD = "000", CPA_PUBLIC_URL = "http://127.0.0.1:8317", AUTH_ENABLED = false, TLS_SKIP_VERIFY = true, WORK_DIR = "/Users/shimenghao/.cache/cli-proxy-api/data", APP_HOST = "127.0.0.1", APP_PORT = "8318" }
 run = '''
 #!/usr/bin/env zsh
+
+cd ~/.config/cli-proxy-api
+echo "cd $(pwd)"
 echo "运行 cli-proxy-api 密码: 000"
-kill -9 $(lsof -ti :8317)
-echo "WEB: http://$(yq -r '.host // "" | select(length > 0) // "127.0.0.1"' ~/.config/cli-proxy-api/config.yaml):$(yq -r '.port // 8317' ~/.config/cli-proxy-api/config.yaml)/management.html"
-cli-proxy-api -config ~/.config/cli-proxy-api/config.yaml
+# 停止旧的 CPA
+pids=$(lsof -ti :8317)
+if [ -n "$pids" ]; then
+    kill -9 $=pids
+fi
+echo "停止 8317 端口"
+
+pids=$(lsof -ti :8318)
+if [ -n "$pids" ]; then
+    kill -9 $=pids
+fi
+echo "停止 8318 端口"
+
+host=$(yq -r '.host // "" | select(length > 0) // "127.0.0.1"' ~/.config/cli-proxy-api/config.yaml)
+port=$(yq -r '.port // 8317' ~/.config/cli-proxy-api/config.yaml)
+echo "WEB: http://${host}:${port}/management.html"
+
+# 启动 CPA
+cli-proxy-api -config ~/.config/cli-proxy-api/config.yaml &
+cpa_pid=$!
+
+# CPA 退出时清理
+cleanup() {
+    echo "停止 cli-proxy-api (PID: ${cpa_pid})"
+    kill "$cpa_pid" 2>/dev/null
+}
+
+trap cleanup EXIT INT TERM
+
+echo "等待 cli-proxy-api 启动..."
+
+# 等待 CPA HTTP API 真正可用
+for i in {1..30}; do
+
+    if curl -fsS --max-time 1 \
+        "http://127.0.0.1:${port}/v1/models" \
+        >/dev/null 2>&1
+    then
+        echo "cli-proxy-api 已启动 (${port})"
+        break
+    fi
+
+    # CPA 进程已经挂了
+    if ! kill -0 "$cpa_pid" 2>/dev/null; then
+        echo "错误: cli-proxy-api 已退出"
+        exit 1
+    fi
+
+    # 30 秒超时
+    if [ "$i" -eq 30 ]; then
+        echo "错误: cli-proxy-api 启动超时"
+        exit 1
+    fi
+
+    sleep 1
+done
+
+echo "启动 cpa-usage-keeper"
+cpa-usage-keeper
 '''

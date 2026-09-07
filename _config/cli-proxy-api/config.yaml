@@ -26,13 +26,13 @@ auth-dir: "~/.config/cli-proxy-api"
 # 是否启用调试日志
 debug: false
 # 为 true 时禁用高开销 HTTP 中间件以降低高并发下的内存占用
-commercial-mode: false
+commercial-mode: true
 # 为 true 时将应用日志写入滚动文件而非 stdout
 logging-to-file: false
 # 日志目录的最大总大小（MB）；超过后会删除最旧的日志。0 表示不限制。
 logs-max-total-size-mb: 0
 # 为 false 时禁用内存用量统计聚合
-usage-statistics-enabled: false
+usage-statistics-enabled: true
 # 代理地址。支持 socks5/http/https，例如 socks5://user:pass@192.168.1.1:1080/
 proxy-url: ""
 # 为 true 时，无前缀模型请求只会匹配无前缀凭据（除非前缀与模型名相同）。
@@ -80,6 +80,84 @@ codex-api-key: []
 claude-api-key: []
 # OpenAI 兼容提供商
 openai-compatibility:
+  - name: HERMES_AGENT
+    base-url: https://inference-api.nousresearch.com/v1
+    api-key-entries:
+      - api-key:
+    models:
+      - name: inclusionai/ling-3.0-flash-fin:free
+        alias: ""
+      - name: poolside/laguna-s-2.1:free
+        alias: ""
+      - name: poolside/laguna-xs-2.1:free
+        alias: ""
+      - name: stepfun/step-3.7-flash:free
+        alias: ""
+        thinking:
+          levels:
+            - low
+            - medium
+            - high
+      - name: upstage/solar-pro4:free
+        alias: ""
+      - name: meituan/longcat-2.0:free
+        alias: ""
+      - name: xiaomi/mimo-v2.5-pro
+        alias: "claude-xiaomi/mimo-v2.5-pro[1m]"
+      - name: xiaomi/mimo-v2.5
+        alias: "claude-xiaomi/mimo-v2.5[1m]"
+      - name: deepseek/deepseek-v4-pro-0813
+        alias: ""
+        thinking:
+          levels:
+            - low
+            - high
+            - max
+      - name: ~deepseek/deepseek-v4-flash-latest
+        alias: ""
+        thinking:
+          levels:
+            - low
+            - high
+            - max
+      - name: deepseek/deepseek-v4-flash
+        alias: ""
+        thinking:
+          levels:
+            - high
+            - xhigh
+      - name: minimax/minimax-m3
+        alias: ""
+      - name: openai/gpt-5.6-luna-pro
+        alias: "claude-openai/gpt-5.6-luna-pro[1m]"
+        thinking:
+          levels:
+            - low
+            - medium
+            - high
+            - xhigh
+            - max
+            - none
+      - name: openai/gpt-5.6-luna
+        alias: "claude-openai/gpt-5.6-luna[1m]"
+        thinking:
+          levels:
+            - low
+            - medium
+            - high
+            - xhigh
+            - max
+            - none
+      - name: z-ai/glm-5.3-flash
+        alias: "claude-z-ai/glm-5.3-flash[1m]"
+        thinking:
+          levels:
+            - low
+            - high
+            - max
+    headers:
+      User-Agent: HermesAgent/0.21.0
+      Authorization: Bearer
 # Vertex API 密钥（Vertex 兼容端点，使用 API key + base URL）
 vertex-api-key: []
 # 全局 OAuth 模型名称别名（按渠道）
@@ -109,3 +187,29 @@ credential-in-flight:
   max-string-bytes: 256
   staging-retention: 1m
 redis-usage-queue-retention-seconds: 60
+plugins:
+  enabled: true
+  # ~ 需要自行展开
+  dir: "~/.config/cli-proxy-api/plugins"
+  configs:
+    keeper:
+      enabled: true
+      store:
+        id: keeper
+        name: CPA Usage Keeper
+        description: Adds a CPAMC entry for opening CPA Usage Keeper from the management center. Requires CPA Usage Keeper v1.12.2 or later.
+        author: Willxup
+        version: 0.1.0
+        release-tag: v0.1.0
+        repository: https://github.com/Willxup/cpa-plugin-usage-keeper
+        homepage: https://github.com/Willxup/cpa-plugin-usage-keeper
+        license: MIT
+        tags:
+          - Management
+          - Keeper
+        source-id: official
+        source-name: Official
+        source-url: https://raw.githubusercontent.com/router-for-me/CLIProxyAPI-Plugins-Store/main/registry.json
+        install:
+          type: github-release
+      keeper_url: "http://127.0.0.1:8318"

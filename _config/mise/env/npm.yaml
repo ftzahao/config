@@ -1,0 +1,4 @@
+NPM_CONFIG_CACHE: $HOME/.cache/npm
+NPM_CONFIG_USERCONFIG: $HOME/.config/npm/.npmrc
+# NPM_CONFIG_REGISTRY: https://registry.npmjs.org/
+NPM_CONFIG_INIT_MODULE: $HOME/.config/npm/npm-init.js
