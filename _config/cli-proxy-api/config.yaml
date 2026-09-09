@@ -103,33 +103,11 @@ openai-compatibility:
       - name: meituan/longcat-2.0:free
         alias: ""
       - name: xiaomi/mimo-v2.5-pro
-        alias: "claude-xiaomi/mimo-v2.5-pro[1m]"
+        alias: ""
       - name: xiaomi/mimo-v2.5
-        alias: "claude-xiaomi/mimo-v2.5[1m]"
-      - name: deepseek/deepseek-v4-pro-0813
-        alias: ""
-        thinking:
-          levels:
-            - low
-            - high
-            - max
-      - name: ~deepseek/deepseek-v4-flash-latest
-        alias: ""
-        thinking:
-          levels:
-            - low
-            - high
-            - max
-      - name: deepseek/deepseek-v4-flash
-        alias: ""
-        thinking:
-          levels:
-            - high
-            - xhigh
-      - name: minimax/minimax-m3
         alias: ""
       - name: openai/gpt-5.6-luna-pro
-        alias: "claude-openai/gpt-5.6-luna-pro[1m]"
+        alias: ""
         thinking:
           levels:
             - low
@@ -139,7 +117,7 @@ openai-compatibility:
             - max
             - none
       - name: openai/gpt-5.6-luna
-        alias: "claude-openai/gpt-5.6-luna[1m]"
+        alias: ""
         thinking:
           levels:
             - low
@@ -149,14 +127,14 @@ openai-compatibility:
             - max
             - none
       - name: z-ai/glm-5.3-flash
-        alias: "claude-z-ai/glm-5.3-flash[1m]"
+        alias: ""
         thinking:
           levels:
             - low
             - high
             - max
     headers:
-      User-Agent: HermesAgent/0.21.0
+      User-Agent: HermesAgent/0.21.1
       Authorization: Bearer
 # Vertex API 密钥（Vertex 兼容端点，使用 API key + base URL）
 vertex-api-key: []
