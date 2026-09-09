@@ -1,0 +1,62 @@
+name "MLX LoRA"
+bin "mlx_lm.lora"
+about "LoRA 或 QLoRA 微调。"
+version "0.31.3"
+
+flag "-h --help" help="显示此帮助信息并退出"
+
+flag "--model <MODEL>" help="本地模型目录或 Hugging Face 仓库的路径。"
+
+flag "--train" help="执行训练"
+
+flag "--data <DATA>" help="包含 {train, valid, test}.jsonl 文件的目录，或 Hugging Face 数据集名称（例如 'mlx-community/wikisql'）"
+
+flag "--fine-tune-type <FINE_TUNE_TYPE>" help="微调类型：lora、dora 或 full。" {
+    choices "lora" "dora" "full"
+}
+
+flag "--optimizer <OPTIMIZER>" help="训练使用的优化器：adam、adamw、sgd 或 adafactor。" {
+    choices "adam" "adamw" "muon" "sgd" "adafactor"
+}
+
+flag "--mask-prompt" help="训练时在损失计算中屏蔽提示词"
+
+flag "--num-layers <NUM_LAYERS>" help="微调的层数。默认 16，-1 表示所有层。"
+
+flag "--batch-size <BATCH_SIZE>" help="小批量大小。"
+
+flag "--iters <ITERS>" help="训练迭代次数。"
+
+flag "--val-batches <VAL_BATCHES>" help="验证批数量，-1 表示使用整个验证集。"
+
+flag "--learning-rate <LEARNING_RATE>" help="Adam 学习率。"
+
+flag "--steps-per-report <STEPS_PER_REPORT>" help="两次损失报告之间的训练步数。"
+
+flag "--steps-per-eval <STEPS_PER_EVAL>" help="两次验证之间的训练步数。"
+
+flag "--grad-accumulation-steps <GRAD_ACCUMULATION_STEPS>" help="每次优化器更新前累积的步数。"
+
+flag "--resume-adapter-file <RESUME_ADAPTER_FILE>" help="从给定微调权重恢复训练的加载路径。"
+
+flag "--adapter-path <ADAPTER_PATH>" help="微调权重的保存/加载路径。"
+
+flag "--save-every <SAVE_EVERY>" help="每 N 次迭代保存一次模型。"
+
+flag "--test" help="训练后在测试集上评估"
+
+flag "--test-batches <TEST_BATCHES>" help="测试集批数量，-1 表示使用整个测试集。"
+
+flag "--max-seq-length <MAX_SEQ_LENGTH>" help="最大序列长度。"
+
+flag "-c --config <CONFIG>" help="包含训练选项的 YAML 配置文件"
+
+flag "--grad-checkpoint" help="使用梯度检查点以减少内存占用。"
+
+flag "--clear-cache-threshold <CLEAR_CACHE_THRESHOLD>" help="当分配器缓存增长过大时，在步间清空缓存。"
+
+flag "--report-to <REPORT_TO>" help="日志上报的服务（'wandb'、'swanlab' 或 'wandb,swanlab'）。"
+
+flag "--project-name <PROJECT_NAME>" help="日志记录的项目名称。默认为根目录名。"
+
+flag "--seed <SEED>" help="PRNG 随机种子"

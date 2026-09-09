@@ -1,0 +1,20 @@
+name "MLX Fuse"
+bin "mlx_lm.fuse"
+about "Fuse fine-tuned adapters into the base model."
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--model <MODEL>" help="The path to the local model directory or Hugging Face repo."
+
+flag "--save-path <SAVE_PATH>" help="The path to save the fused model."
+
+flag "--adapter-path <ADAPTER_PATH>" help="Path to the trained adapter weights and config."
+
+flag "--upload-repo <UPLOAD_REPO>" help="The Hugging Face repo to upload the model to."
+
+flag "--dequantize" help="Generate a dequantized model."
+
+flag "--export-gguf" help="Export model weights in GGUF format."
+
+flag "--gguf-path <GGUF_PATH>" help="Path to save the exported GGUF format model weights. Default is ggml-model-f16.gguf."

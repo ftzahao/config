@@ -1,0 +1,16 @@
+name "MLX 分发"
+bin "mlx_lm.share"
+about "使用 MLX 分布式将模型分发到其他节点。"
+version "0.31.3"
+
+flag "-h --help" help="显示此帮助信息并退出"
+
+flag "--path <PATH>" help="要分发的文件或目录的路径。"
+
+flag "--model <MODEL>" help="本地模型路径或 Hugging Face 仓库"
+
+flag "--hostfile <HOSTFILE>" help="包含主机及连接信息的文件"
+
+flag "--dst <DST>" help="其他节点上的目标路径（默认为 --path 或 --model）"
+
+flag "--tmpdir <TMPDIR>" help="确保传输成功的中转临时目录"

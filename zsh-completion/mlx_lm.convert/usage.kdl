@@ -1,0 +1,34 @@
+name "MLX Convert"
+bin "mlx_lm.convert"
+about "Convert Hugging Face model to MLX format"
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--hf-path --model <HF_PATH>" required help="Path to the model. This can be a local path or a Hugging Face Hub model identifier."
+
+flag "--mlx-path <MLX_PATH>" help="Path to save the MLX model."
+
+flag "-q --quantize" help="Generate a quantized model."
+
+flag "--q-group-size <Q_GROUP_SIZE>" help="Group size for quantization."
+
+flag "--q-bits <Q_BITS>" help="Bits per weight for quantization."
+
+flag "--q-mode <Q_MODE>" help="The quantization mode." {
+    choices "affine" "mxfp4" "nvfp4" "mxfp8"
+}
+
+flag "--quant-predicate <QUANT_PREDICATE>" help="Mixed-bit quantization recipe." {
+    choices "mixed_2_6" "mixed_3_4" "mixed_3_6" "mixed_4_6"
+}
+
+flag "--dtype <DTYPE>" help="Type to save the non-quantized parameters. Defaults to config.json's `torch_dtype` or the current model weights dtype." {
+    choices "float16" "bfloat16" "float32"
+}
+
+flag "--upload-repo <UPLOAD_REPO>" help="The Hugging Face repo to upload the model to."
+
+flag "-d --dequantize" help="Dequantize a quantized model."
+
+flag "--trust-remote-code" help="Trust remote code when loading tokenizer."

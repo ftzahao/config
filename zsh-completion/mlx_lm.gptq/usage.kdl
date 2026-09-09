@@ -1,0 +1,23 @@
+name "MLX GPTQ"
+bin "mlx_lm.gptq"
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--model -m <MODEL>"
+
+flag "--mlx-path <MLX_PATH>"
+
+flag "--bits <BITS>" help="Quantization bits for GPTQ layers"
+
+flag "--group-size <GROUP_SIZE>" help="Quantization group size for GPTQ layers"
+
+flag "--fallback-bits <FALLBACK_BITS>" help="Quantization bits for non-GPTQ layers"
+
+flag "--fallback-group-size <FALLBACK_GROUP_SIZE>" help="Quantization group size for non-GPTQ layers"
+
+flag "--num-samples <NUM_SAMPLES>" help="Number of samples from the calibration dataset, use -1 for all."
+
+flag "--sequence-length <SEQUENCE_LENGTH>" help="Sequence length for the calibration data."
+
+flag "--seed <SEED>"

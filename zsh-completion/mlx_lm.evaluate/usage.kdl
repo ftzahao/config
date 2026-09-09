@@ -1,0 +1,40 @@
+name "MLX Evaluate"
+bin "mlx_lm.evaluate"
+about "Evaluate an MLX model using lm-evaluation-harness."
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--model <MODEL>" required help="Model to evaluate"
+
+flag "--tasks <TASKS>..." required
+
+flag "--output-dir <OUTPUT_DIR>" help="Output directory for result files." default="."
+
+flag "--batch-size <BATCH_SIZE>" help="Batch size" default="16"
+
+flag "--num-shots <NUM_SHOTS>" help="Number of shots"
+
+flag "--max-tokens <MAX_TOKENS>" help="Maximum number of tokens to generate. When set, this value takes precedence over task specific defaults."
+
+flag "--limit <LIMIT>" help="Limit the number of examples per task."
+
+flag "--seed <SEED>" help="Random seed." default="123"
+
+flag "--fewshot-as-multiturn" help="Whether to provide the fewshot examples as a multiturn conversation or a single user turn."
+
+flag "--apply-chat-template" help="Specifies whether to apply a chat template to the prompt. If the model has a chat template, this defaults to `True`, otherwise `False`."
+
+flag "--no-apply-chat-template" help="Specifies whether to apply a chat template to the prompt. If the model has a chat template, this defaults to `True`, otherwise `False`."
+
+flag "--chat-template-args <CHAT_TEMPLATE_ARGS>" help="A JSON formatted string of arguments for the tokenizer's apply_chat_template, e.g. '{\"enable_thinking\":false}'" default="{}"
+
+flag "--confirm-run-unsafe-code" help="Confirm that you want to run tasks that execute untrusted code."
+
+flag "--trust-remote-code" help="Enable trusting remote code for tokenizer"
+
+flag "--temp <TEMP>" help="Sampling temperature" default="0.0"
+
+flag "--top-p <TOP_P>" help="Sampling top-p" default="1.0"
+
+flag "--top-k <TOP_K>" help="Sampling top-k" default="0"

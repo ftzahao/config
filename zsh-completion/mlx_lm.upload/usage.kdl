@@ -1,0 +1,10 @@
+name "MLX Upload"
+bin "mlx_lm.upload"
+about "Upload a model to the Hugging Face Hub"
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--path <PATH>" help="Path to the MLX model."
+
+flag "--upload-repo <UPLOAD_REPO>" help="The Hugging Face repo to upload the model to."

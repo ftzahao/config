@@ -1,0 +1,35 @@
+name "MLX DWQ"
+bin "mlx_lm.dwq"
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--model -m <MODEL>" required help="A model to distill from for DWQ. If `quantized-model` is not given the student model will be this model quantized according to `bits` and `group-size`."
+
+flag "--quantized-model <QUANTIZED_MODEL>" help="An already quantized model (the student model) to improve with DWQ."
+
+flag "--mlx-path <MLX_PATH>" help="Path to save the quantized model."
+
+flag "--bits <BITS>" help="Bits per weight for quantization."
+
+flag "--group-size <GROUP_SIZE>" help="Group size for quantization."
+
+flag "--num-samples <NUM_SAMPLES>" help="Number of samples to use for training."
+
+flag "--max-seq-length <MAX_SEQ_LENGTH>"
+
+flag "--seed <SEED>"
+
+flag "--learning-rate <LEARNING_RATE>"
+
+flag "--batch-size <BATCH_SIZE>"
+
+flag "--data-path <DATA_PATH>" help="A Hugging Face dataset which is compatible with an mlx-lm dataset format."
+
+flag "--grad-checkpoint" help="Use gradient checkpointing to reduce memory use."
+
+flag "--target-dir <TARGET_DIR>" help="Directory to save/load targets."
+
+flag "--targets-only" help="Compute the targets and exit."
+
+flag "--pipeline" help="Use pipeline parallel instead of data parallel."

@@ -1,0 +1,25 @@
+name "MLX AWQ"
+bin "mlx_lm.awq"
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--model -m <MODEL>"
+
+flag "--mlx-path <MLX_PATH>"
+
+flag "--bits <BITS>"
+
+flag "--group-size <GROUP_SIZE>"
+
+flag "--embed-bits <EMBED_BITS>"
+
+flag "--embed-group-size <EMBED_GROUP_SIZE>"
+
+flag "--num-samples <NUM_SAMPLES>"
+
+flag "--sequence-length <SEQUENCE_LENGTH>"
+
+flag "--n-grid <N_GRID>"
+
+flag "--seed <SEED>"

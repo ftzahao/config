@@ -1,0 +1,25 @@
+name "MLX AWQ 量化"
+bin "mlx_lm.awq"
+version "0.31.3"
+
+flag "-h --help" help="显示此帮助信息并退出"
+
+flag "--model -m <MODEL>"
+
+flag "--mlx-path <MLX_PATH>" help="保存模型的路径"
+
+flag "--bits <BITS>" help="量化位数"
+
+flag "--group-size <GROUP_SIZE>" help="量化的组大小"
+
+flag "--embed-bits <EMBED_BITS>" help="嵌入层的量化位数"
+
+flag "--embed-group-size <EMBED_GROUP_SIZE>" help="嵌入层的量化组大小"
+
+flag "--num-samples <NUM_SAMPLES>" help="校准样本数量"
+
+flag "--sequence-length <SEQUENCE_LENGTH>" help="校准数据的序列长度"
+
+flag "--n-grid <N_GRID>" help="网格搜索数量"
+
+flag "--seed <SEED>" help="随机种子"

@@ -1,0 +1,20 @@
+name "MLX 困惑度"
+bin "mlx_lm.perplexity"
+about "评估 MLX 模型的困惑度"
+version "0.31.3"
+
+flag "-h --help" help="显示此帮助信息并退出"
+
+flag "--model <MODEL>" required help="模型路径或 Hugging Face 模型 ID"
+
+flag "--trust-remote-code" help="从 Hugging Face 加载分词器/模型时允许信任远程代码。"
+
+flag "--batch-size <BATCH_SIZE>" help="评估的批大小"
+
+flag "--sequence-length <SEQUENCE_LENGTH>" help="评估的序列长度"
+
+flag "--num-samples <NUM_SAMPLES>" help="使用的样本数量（-1 表示全部可用样本）"
+
+flag "--data-path <DATA_PATH>" help="兼容 mlx-lm 数据集格式的 Hugging Face 数据集。"
+
+flag "--seed <SEED>" help="数据采样的随机种子"

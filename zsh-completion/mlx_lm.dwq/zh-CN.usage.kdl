@@ -1,0 +1,35 @@
+name "MLX DWQ 量化"
+bin "mlx_lm.dwq"
+version "0.31.3"
+
+flag "-h --help" help="显示此帮助信息并退出"
+
+flag "--model -m <MODEL>" required help="DWQ 蒸馏所用的模型。若未指定 `quantized-model`，学生模型将按 `bits` 和 `group-size` 对此模型量化。"
+
+flag "--quantized-model <QUANTIZED_MODEL>" help="已量化的模型（学生模型），用 DWQ 进行改进。"
+
+flag "--mlx-path <MLX_PATH>" help="保存量化模型的路径。"
+
+flag "--bits <BITS>" help="每个权重的量化位数。"
+
+flag "--group-size <GROUP_SIZE>" help="量化的组大小。"
+
+flag "--num-samples <NUM_SAMPLES>" help="训练使用的样本数量。"
+
+flag "--max-seq-length <MAX_SEQ_LENGTH>" help="最大序列长度"
+
+flag "--seed <SEED>" help="随机种子"
+
+flag "--learning-rate <LEARNING_RATE>" help="学习率"
+
+flag "--batch-size <BATCH_SIZE>" help="批大小"
+
+flag "--data-path <DATA_PATH>" help="兼容 mlx-lm 数据集格式的 Hugging Face 数据集。"
+
+flag "--grad-checkpoint" help="使用梯度检查点以减少内存占用。"
+
+flag "--target-dir <TARGET_DIR>" help="保存/加载目标的目录。"
+
+flag "--targets-only" help="仅计算目标后退出。"
+
+flag "--pipeline" help="使用流水线并行而非数据并行。"

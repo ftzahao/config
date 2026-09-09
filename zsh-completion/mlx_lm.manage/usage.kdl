@@ -1,0 +1,12 @@
+name "MLX Manage"
+bin "mlx_lm.manage"
+about "MLX Model Cache."
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--scan" help="Scan Hugging Face cache for mlx models."
+
+flag "--delete" help="Delete models matching the given pattern."
+
+flag "--pattern <PATTERN>" help="Model repos contain the pattern."

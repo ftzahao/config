@@ -1,0 +1,62 @@
+name "MLX LoRA"
+bin "mlx_lm.lora"
+about "LoRA or QLoRA finetuning."
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--model <MODEL>" help="The path to the local model directory or Hugging Face repo."
+
+flag "--train" help="Do training"
+
+flag "--data <DATA>" help="Directory with {train, valid, test}.jsonl files or the name of a Hugging Face dataset (e.g., 'mlx-community/wikisql')"
+
+flag "--fine-tune-type <FINE_TUNE_TYPE>" help="Type of fine-tuning to perform: lora, dora, or full." {
+    choices "lora" "dora" "full"
+}
+
+flag "--optimizer <OPTIMIZER>" help="Optimizer to use for training: adam, adamw, sgd, or adafactor." {
+    choices "adam" "adamw" "muon" "sgd" "adafactor"
+}
+
+flag "--mask-prompt" help="Mask the prompt in the loss when training"
+
+flag "--num-layers <NUM_LAYERS>" help="Number of layers to fine-tune. Default is 16, use -1 for all."
+
+flag "--batch-size <BATCH_SIZE>" help="Minibatch size."
+
+flag "--iters <ITERS>" help="Iterations to train for."
+
+flag "--val-batches <VAL_BATCHES>" help="Number of validation batches, -1 uses the entire validation set."
+
+flag "--learning-rate <LEARNING_RATE>" help="Adam learning rate."
+
+flag "--steps-per-report <STEPS_PER_REPORT>" help="Number of training steps between loss reporting."
+
+flag "--steps-per-eval <STEPS_PER_EVAL>" help="Number of training steps between validations."
+
+flag "--grad-accumulation-steps <GRAD_ACCUMULATION_STEPS>" help="Number of steps to accumulate before each optimizer update."
+
+flag "--resume-adapter-file <RESUME_ADAPTER_FILE>" help="Load path to resume training from the given fine-tuned weights."
+
+flag "--adapter-path <ADAPTER_PATH>" help="Save/load path for the fine-tuned weights."
+
+flag "--save-every <SAVE_EVERY>" help="Save the model every N iterations."
+
+flag "--test" help="Evaluate on the test set after training"
+
+flag "--test-batches <TEST_BATCHES>" help="Number of test set batches, -1 uses the entire test set."
+
+flag "--max-seq-length <MAX_SEQ_LENGTH>" help="Maximum sequence length."
+
+flag "-c --config <CONFIG>" help="A YAML configuration file with the training options"
+
+flag "--grad-checkpoint" help="Use gradient checkpointing to reduce memory use."
+
+flag "--clear-cache-threshold <CLEAR_CACHE_THRESHOLD>" help="Clear the allocator cache between steps if it grows too large."
+
+flag "--report-to <REPORT_TO>" help="Services to report logs to ('wandb', 'swanlab', or 'wandb,swanlab')."
+
+flag "--project-name <PROJECT_NAME>" help="Project name for logging. Defaults to the name of the root directory."
+
+flag "--seed <SEED>" help="The PRNG seed"

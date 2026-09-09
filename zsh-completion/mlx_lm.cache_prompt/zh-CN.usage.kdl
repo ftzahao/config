@@ -1,0 +1,26 @@
+name "MLX 提示词缓存"
+bin "mlx_lm.cache_prompt"
+about "缓存提示词的状态，供 mlx_lm.generate 复用"
+version "0.31.3"
+
+flag "-h --help" help="显示此帮助信息并退出"
+
+flag "--model <MODEL>" help="本地模型目录或 Hugging Face 仓库的路径。"
+
+flag "--adapter-path <ADAPTER_PATH>" help="已训练适配器权重和配置的可选路径。"
+
+flag "--trust-remote-code" help="允许信任分词器的远程代码"
+
+flag "--eos-token <EOS_TOKEN>" help="分词器的序列结束 token"
+
+flag "--max-kv-size <MAX_KV_SIZE>" help="设置最大键值缓存大小"
+
+flag "--prompt-cache-file <PROMPT_CACHE_FILE>" required help="保存提示词缓存的文件"
+
+flag "--prompt <PROMPT>" required help="要交给模型处理的消息（'-' 表示从 stdin 读取）"
+
+flag "--kv-bits <KV_BITS>" help="KV 缓存量化位数。默认不量化。"
+
+flag "--kv-group-size <KV_GROUP_SIZE>" help="KV 缓存分组的组大小。"
+
+flag "--quantized-kv-start <QUANTIZED_KV_START>" help="设置 --kv-bits 后，从此步开始量化 KV 缓存。"

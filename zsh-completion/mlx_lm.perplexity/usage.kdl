@@ -1,0 +1,20 @@
+name "MLX Perplexity"
+bin "mlx_lm.perplexity"
+about "Evaluate perplexity of MLX models"
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--model <MODEL>" required help="Path to model or Hugging Face model ID"
+
+flag "--trust-remote-code" help="Enable trusting remote code for tokenizer/model loading from Hugging Face."
+
+flag "--batch-size <BATCH_SIZE>" help="Batch size for evaluation"
+
+flag "--sequence-length <SEQUENCE_LENGTH>" help="Sequence length for evaluation"
+
+flag "--num-samples <NUM_SAMPLES>" help="Number of samples to use (-1 for all available)"
+
+flag "--data-path <DATA_PATH>" help="A Hugging Face dataset which is compatible with an mlx-lm dataset format."
+
+flag "--seed <SEED>" help="Random seed for data sampling"

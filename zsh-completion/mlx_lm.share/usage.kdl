@@ -1,0 +1,16 @@
+name "MLX Share"
+bin "mlx_lm.share"
+about "Distribute a model to other nodes using MLX distributed."
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--path <PATH>" help="Path to a file or folder to share."
+
+flag "--model <MODEL>" help="The path to a local model or Hugging Face repo"
+
+flag "--hostfile <HOSTFILE>" help="The file containing the hosts and connection information"
+
+flag "--dst <DST>" help="The destination path in other nodes (defaults to --path or --model)"
+
+flag "--tmpdir <TMPDIR>" help="Intermediate temporary directory to ensure successfull transfer"

@@ -1,0 +1,20 @@
+name "MLX 权重合并"
+bin "mlx_lm.fuse"
+about "将微调的适配器合并进基础模型。"
+version "0.31.3"
+
+flag "-h --help" help="显示此帮助信息并退出"
+
+flag "--model <MODEL>" help="本地模型目录或 Hugging Face 仓库的路径。"
+
+flag "--save-path <SAVE_PATH>" help="保存合并后模型的路径。"
+
+flag "--adapter-path <ADAPTER_PATH>" help="已训练适配器权重和配置的路径。"
+
+flag "--upload-repo <UPLOAD_REPO>" help="要上传模型到的 Hugging Face 仓库。"
+
+flag "--dequantize" help="生成反量化模型。"
+
+flag "--export-gguf" help="以 GGUF 格式导出模型权重。"
+
+flag "--gguf-path <GGUF_PATH>" help="保存导出的 GGUF 格式模型权重的路径。默认为 ggml-model-f16.gguf。"

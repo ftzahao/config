@@ -1,0 +1,26 @@
+name "MLX Cache Prompt"
+bin "mlx_lm.cache_prompt"
+about "Cache the state of a prompt to be reused with mlx_lm.generate"
+version "0.31.3"
+
+flag "-h --help" help="show this help message and exit"
+
+flag "--model <MODEL>" help="The path to the local model directory or Hugging Face repo."
+
+flag "--adapter-path <ADAPTER_PATH>" help="Optional path for the trained adapter weights and config."
+
+flag "--trust-remote-code" help="Enable trusting remote code for tokenizer"
+
+flag "--eos-token <EOS_TOKEN>" help="End of sequence token for tokenizer"
+
+flag "--max-kv-size <MAX_KV_SIZE>" help="Set the maximum key-value cache size"
+
+flag "--prompt-cache-file <PROMPT_CACHE_FILE>" required help="The file to save the prompt cache in"
+
+flag "--prompt <PROMPT>" required help="Message to be processed by the model ('-' reads from stdin)"
+
+flag "--kv-bits <KV_BITS>" help="Number of bits for KV cache quantization. Defaults to no quantization."
+
+flag "--kv-group-size <KV_GROUP_SIZE>" help="Group size for KV cache quantization."
+
+flag "--quantized-kv-start <QUANTIZED_KV_START>" help="When --kv-bits is set, start quantizing the KV cache from this step onwards."

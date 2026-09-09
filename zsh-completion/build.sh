@@ -1,8 +1,28 @@
-usage g completion zsh mlx_lm.server -f mlx_lm.server/usage.kdl > mlx_lm.server/_mlx_lm.server
-usage g completion zsh mlx_lm.server -f ./mlx_lm.server/zh-CN.usage.kdl > mlx_lm.server/_mlx_lm.server.zh-CN
+#!/usr/bin/env bash
+set -e
+cd "$(dirname "$0")"
 
-usage g completion zsh mlx_lm.chat -f mlx_lm.chat/usage.kdl > mlx_lm.chat/_mlx_lm.chat
-usage g completion zsh mlx_lm.chat -f ./mlx_lm.chat/zh-CN.usage.kdl > mlx_lm.chat/_mlx_lm.chat.zh-CN
+tools=(
+  mlx_lm.server
+  mlx_lm.chat
+  mlx_lm.dynamic_quant
+  mlx_lm.benchmark
+  mlx_lm.cache_prompt
+  mlx_lm.convert
+  mlx_lm.evaluate
+  mlx_lm.fuse
+  mlx_lm.generate
+  mlx_lm.lora
+  mlx_lm.manage
+  mlx_lm.perplexity
+  mlx_lm.awq
+  mlx_lm.dwq
+  mlx_lm.gptq
+  mlx_lm.upload
+  mlx_lm.share
+)
 
-usage g completion zsh mlx_lm.dynamic_quant -f mlx_lm.dynamic_quant/usage.kdl > mlx_lm.dynamic_quant/_mlx_lm.dynamic_quant
-usage g completion zsh mlx_lm.dynamic_quant -f ./mlx_lm.dynamic_quant/zh-CN.usage.kdl > mlx_lm.dynamic_quant/_mlx_lm.dynamic_quant.zh-CN
+for tool in "${tools[@]}"; do
+  usage g completion zsh "$tool" -f "$tool/usage.kdl" > "$tool/_$tool"
+  usage g completion zsh "$tool" -f "$tool/zh-CN.usage.kdl" > "$tool/_$tool.zh-CN"
+done
