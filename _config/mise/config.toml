@@ -15,6 +15,7 @@ deno = "latest"
 "github:cargo-bins/cargo-binstall" = "latest"
 "github:cli/cli" = { version = "latest", rename_exe = "gh" }
 "github:evilmartians/lefthook" = { version = "latest", rename_exe = "lefthook" }
+"github:ggml-org/llama.cpp" = "b10868"
 "github:hatoo/oha" = "latest"
 "github:jqlang/jq" = { version = "latest", rename_exe = "jq" }
 "github:mikefarah/yq" = { version = "latest", rename_exe = "yq" }
@@ -36,14 +37,12 @@ node = "latest"
 "npm:skills" = "latest"
 "npm:vite-plus" = "latest"
 "pipx:hf" = "latest"
-"pipx:modelscope" = "latest"
+"pipx:mlx-lm" = "latest"
+"pipx:modelscope-hub" = "latest"
 python = ["latest", "3.11", "3.10"]
 ruby = "latest"
 rust = "stable"
 usage = "latest"
-
-[bootstrap.brew.taps]
-"antoniorodr/memo" = "https://github.com/antoniorodr/homebrew-memo.git"
 
 [bootstrap.packages]
 "brew:bash" = "latest"
@@ -65,7 +64,6 @@ usage = "latest"
 "brew:witr" = "latest"
 "brew:xcbeautify" = "latest"
 "brew:zinit" = "latest"
-"brew:antoniorodr/memo/memo" = "latest"
 "brew-cask:apifox" = "latest"
 "brew-cask:betterdisplay" = "latest"
 "brew-cask:brave-browser" = "latest"
@@ -126,6 +124,7 @@ _.file = { paths = [
   "~/.config/mise/env/rust.yaml",
   "~/.config/mise/env/npm.yaml",
   "~/.config/mise/env/k9s.yaml",
+  "~/.config/mise/env/modelscope.yaml",
   # "~/.config/mise/env/deepseek.yaml",
   # "~/.config/mise/env/xiaomi.yaml",
   # "~/.config/mise/env/z.ai.yaml",
@@ -300,9 +299,23 @@ spawn gen_local_completion xcbeautify "xcbeautify --generate-completion-script"
 spawn fetch_url_completion dust "https://raw.githubusercontent.com/bootandy/dust/refs/heads/master/completions/_dust"
 spawn fetch_url_completion yarn "https://raw.githubusercontent.com/zsh-users/zsh-completions/refs/heads/master/src/_yarn"
 spawn fetch_url_completion claude "https://raw.githubusercontent.com/1160054/claude-code-zsh-completion/refs/heads/main/completions/_claude.zh-CN"
-spawn fetch_url_completion mlx_lm.server "https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.server/_mlx_lm.server.zh-CN"
-spawn fetch_url_completion mlx_lm.chat "https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.chat/_mlx_lm.chat.zh-CN"
-spawn fetch_url_completion mlx_lm.dynamic_quant "https://raw.githubusercontent.com/ftzahao/config/refs/heads/main/zsh-completion/mlx_lm.dynamic_quant/_mlx_lm.dynamic_quant.zh-CN"
+spawn fetch_url_completion mlx_lm.awq "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.awq/_mlx_lm.awq.zh-CN"
+spawn fetch_url_completion mlx_lm.chat "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.chat/_mlx_lm.chat.zh-CN"
+spawn fetch_url_completion mlx_lm.dynamic_quant "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.dynamic_quant/_mlx_lm.dynamic_quant.zh-CN"
+spawn fetch_url_completion mlx_lm.generate  "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.generate/_mlx_lm.generate.zh-CN"
+spawn fetch_url_completion mlx_lm.manage  "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.manage/_mlx_lm.manage.zh-CN"
+spawn fetch_url_completion mlx_lm.share  "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.share/_mlx_lm.share.zh-CN"
+spawn fetch_url_completion mlx_lm.benchmark  "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.benchmark/_mlx_lm.benchmark.zh-CN"
+spawn fetch_url_completion mlx_lm.convert  "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.convert/_mlx_lm.convert.zh-CN"
+spawn fetch_url_completion mlx_lm.evaluate  "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.evaluate/_mlx_lm.evaluate.zh-CN"
+spawn fetch_url_completion mlx_lm.gptq  "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.gptq/_mlx_lm.gptq.zh-CN"
+spawn fetch_url_completion mlx_lm.perplexity  "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.perplexity/_mlx_lm.perplexity.zh-CN"
+spawn fetch_url_completion mlx_lm.upload  "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.upload/_mlx_lm.upload.zh-CN"
+spawn fetch_url_completion mlx_lm.cache_prompt  "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.cache_prompt/_mlx_lm.cache_prompt.zh-CN"
+spawn fetch_url_completion mlx_lm.dwq  "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.dwq/_mlx_lm.dwq.zh-CN"
+spawn fetch_url_completion mlx_lm.fuse  "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.fuse/_mlx_lm.fuse.zh-CN"
+spawn fetch_url_completion mlx_lm.lora  "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.lora/_mlx_lm.lora.zh-CN"
+spawn fetch_url_completion mlx_lm.server "https://cdn.jsdelivr.net/gh/ftzahao/config@main/zsh-completion/mlx_lm.server/_mlx_lm.server.zh-CN"
 
 wait
 
