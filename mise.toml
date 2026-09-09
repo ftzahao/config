@@ -1,0 +1,2 @@
+[tasks.build-t-c]
+run = "cd ./terminal-completion && sh ./build.sh"
