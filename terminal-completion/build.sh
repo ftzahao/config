@@ -4,40 +4,41 @@ cd "$(dirname "$0")"
 
 tools=(
   llama
-  mlx_lm.server
-  mlx_lm.chat
-  mlx_lm.dynamic_quant
+  llama-batched-bench
+  llama-bench
+  llama-cli
+  llama-completion
+  llama-cvector-generator
+  llama-download
+  llama-export-lora
+  llama-fit-params
+  llama-gguf-split
+  llama-imatrix
+  llama-mtmd-cli
+  llama-mtmd-debug
+  llama-perplexity
+  llama-quantize
+  llama-results
+  llama-server
+  llama-tokenize
+  llama-tts
+  mlx_lm.awq
   mlx_lm.benchmark
   mlx_lm.cache_prompt
+  mlx_lm.chat
   mlx_lm.convert
+  mlx_lm.dwq
+  mlx_lm.dynamic_quant
   mlx_lm.evaluate
   mlx_lm.fuse
   mlx_lm.generate
+  mlx_lm.gptq
   mlx_lm.lora
   mlx_lm.manage
   mlx_lm.perplexity
-  mlx_lm.awq
-  mlx_lm.dwq
-  mlx_lm.gptq
-  mlx_lm.upload
+  mlx_lm.server
   mlx_lm.share
-  llama-cli
-  llama-server
-  llama-quantize
-  llama-perplexity
-  llama-bench
-  llama-gguf-split
-  llama-mtmd-cli
-  llama-imatrix
-  llama-batched-bench
-  llama-completion
-  llama-cvector-generator
-  llama-export-lora
-  llama-fit-params
-  llama-mtmd-debug
-  llama-results
-  llama-tokenize
-  llama-tts
+  mlx_lm.upload
 )
 
 for tool in "${tools[@]}"; do
