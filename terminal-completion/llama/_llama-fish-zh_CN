@@ -64,8 +64,8 @@ cmd serve help="HTTP API 服务器" {
     flag --keep help="从初始提示词中保留的 token 数（默认：0，-1 = 全部）" {
         arg <N>
     }
-    flag "--perf --no-perf" help="whether to enable internal libllama performance timings (default: false)"
-    flag "-e --escape --no-escape" help="whether to process escapes sequences (\\n, \\r, \\t, \\\', \\\", \\\\) (default: true)"
+    flag "--perf --no-perf" help="是否启用内部 libllama 性能计时（默认：false）"
+    flag "-e --escape --no-escape" help="是否处理转义序列 (\\n, \\r, \\t, \\\', \\\", \\\\) （默认：true）"
     flag --override-tensor help=覆盖张量缓冲区类型 {
         arg <TENSOR>
     }
@@ -87,10 +87,10 @@ cmd serve help="HTTP API 服务器" {
     flag --model-url help="模型下载 URL（默认：未使用）" {
         arg <MODEL_URL>
     }
-    flag --hf-file help="Hugging Face model file. If specified, it will override the quant in --hf-repo (default: unused)" {
+    flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
         arg <FILE>
     }
-    flag --hf-token help="Hugging Face access token (default: value from HF_TOKEN environment variable)" {
+    flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量的值）" {
         arg <TOKEN>
     }
     flag "--spec-draft-override-tensor --override-tensor-draft" help=覆盖草稿模型的张量缓冲区类型 {
@@ -152,19 +152,19 @@ cmd serve help="HTTP API 服务器" {
     flag --checkpoint-min-step help=上下文检查点的最小间距（默认：8192） {
         arg <N>
     }
-    flag --cache-ram help="set the maximum cache size in MiB (default: 8192, -1 - no limit, 0 - disable)" {
+    flag --cache-ram help="设置最大缓存大小（MiB，默认：8192，-1 = 无限制，0 = 禁用）" {
         arg <N>
     }
     flag "--cache-prompt --no-cache-prompt" help=是否启用提示词缓存（默认：启用）
-    flag --cache-reuse help="min chunk size to attempt reusing from the cache via KV shifting, requires prompt caching to be enabled (default: 0)" {
+    flag --cache-reuse help="通过 KV 移位尝试从缓存中重用的最小块大小，需要启用提示词缓存（默认：0）" {
         arg <N>
     }
-    flag --swa-full help="use full-size SWA cache (default: false) info)](https://github.com/ggml-org/llama.cpp/pull/13194#issuecomment-2868343055)"
+    flag --swa-full help="使用完整大小的 SWA 缓存（默认：false）"
     flag --rpc help="RPC 服务器列表，逗号分隔（host:port）" {
         arg <SERVERS>
     }
-    flag --mlock help="DEPRECATED in favor of `--load-mode`: force system to keep model in RAM rather than swapping or compressing"
-    flag "--mmap --no-mmap" help="DEPRECATED in favor of `--load-mode`: whether to memory-map model. (if mmap disabled, slower load but may reduce pageouts if not using mlock)"
+    flag --mlock help="已弃用，请使用 `--load-mode`：强制系统将模型保留在内存中，而不是交换或压缩"
+    flag "--mmap --no-mmap" help="已弃用，请使用 `--load-mode`：是否将模型映射到内存（如果禁用 mmap，加载较慢，但如果未使用 mlock，可能会减少页面换出）"
     flag --load-mode help=模型加载模式（默认：auto） {
         arg <MODE>
     }
@@ -201,7 +201,7 @@ cmd serve help="HTTP API 服务器" {
     flag --control-vector-layer-range help=应用控制向量的层范围（含首尾） {
         arg <START>
     }
-    flag --lora-init-without-apply help="load LoRA adapters without applying them (apply later via POST /lora-adapters) (default: disabled)"
+    flag --lora-init-without-apply help="加载 LoRA 适配器但不应用它们（稍后通过 POST /lora-adapters 应用）（默认：禁用）"
     flag "--spec-draft-poll --poll-draft" help="草稿模型轮询等待（默认：与 --poll 相同）" {
         arg <N>
     }
@@ -211,10 +211,10 @@ cmd serve help="HTTP API 服务器" {
     flag --spec-draft-n-min help="投机解码的最小草稿 token 数（默认：0）" {
         arg <N>
     }
-    flag --spec-synth-len help="target mean synthetic acceptance length, including the target token (benchmarking only)" {
+    flag --spec-synth-len help=目标平均合成接受长度，包括目标令牌（仅用于基准测试） {
         arg <L>
     }
-    flag --spec-synth-rates help="comma-separated unconditional per-position synthetic acceptance probabilities (benchmarking only)" {
+    flag --spec-synth-rates help=逗号分隔的无条件逐位置合成接受概率（仅用于基准测试） {
         arg <P0_P1>
     }
     flag "--spec-draft-p-split --draft-p-split" help=投机解码分割概率（默认：0.10） {
@@ -263,19 +263,19 @@ cmd serve help="HTTP API 服务器" {
     flag --spec-ngram-map-k4v-min-hits help="ngram-map-k4v 最小命中数（默认：1）" {
         arg <N>
     }
-    flag "--draft --draft-n --draft-max" help="the argument has been removed. use --spec-draft-n-max or --spec-ngram-mod-n-max" {
+    flag "--draft --draft-n --draft-max" help="该参数已移除。请使用 --spec-draft-n-max 或 --spec-ngram-mod-n-max" {
         arg <N>
     }
-    flag "--draft-min --draft-n-min" help="the argument has been removed. use --spec-draft-n-min or --spec-ngram-mod-n-min" {
+    flag "--draft-min --draft-n-min" help="该参数已移除。请使用 --spec-draft-n-min 或 --spec-ngram-mod-n-min" {
         arg <N>
     }
-    flag --spec-ngram-size-n help="the argument has been removed. use the respective --spec-ngram-*-size-n or --spec-ngram-mod-n-match" {
+    flag --spec-ngram-size-n help="该参数已移除。请使用对应的 --spec-ngram-*-size-n 或 --spec-ngram-mod-n-match" {
         arg <N>
     }
-    flag --spec-ngram-size-m help="the argument has been removed. use the respective --spec-ngram-*-size-m" {
+    flag --spec-ngram-size-m help="该参数已移除。请使用对应的 --spec-ngram-*-size-m" {
         arg <N>
     }
-    flag --spec-ngram-min-hits help="the argument has been removed. use the respective --spec-ngram-*-min-hits" {
+    flag --spec-ngram-min-hits help="该参数已移除。请使用对应的 --spec-ngram-*-min-hits" {
         arg <N>
     }
     flag --samplers help=按顺序使用的采样器，用分号分隔 {
@@ -336,10 +336,10 @@ cmd serve help="HTTP API 服务器" {
     flag --dry-sequence-breaker help="添加 DRY 采样的序列中断器" {
         arg <STRING>
     }
-    flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00)" {
+    flag --adaptive-target help="adaptive-p：选择接近此概率的令牌（有效范围 0.0 到 1.0；负数 = 禁用）（默认：-1.00）" {
         arg <N>
     }
-    flag --adaptive-decay help="adaptive-p: decay rate for target adaptation over time. lower values are more reactive, higher values are more stable. (valid range 0.0 to 0.99) (default: 0.90)" {
+    flag --adaptive-decay help="adaptive-p：目标适应的衰减率。值越低反应越快，值越高越稳定。（有效范围 0.0 到 0.99）（默认：0.90）" {
         arg <N>
     }
     flag --dynatemp-range help=动态温度范围（默认：0.00，禁用） {
@@ -357,7 +357,7 @@ cmd serve help="HTTP API 服务器" {
     flag --mirostat-ent help="Mirostat 目标熵（默认：5.00）" {
         arg <N>
     }
-    flag "-l --logit-bias" help="modifies the likelihood of token appearing in the completion, i.e. `--logit-bias 15043+1` to increase likelihood of token \' Hello\', or `--logit-bias 15043-1` to decrease likelihood of token \' Hello\'" {
+    flag "-l --logit-bias" help="修改令牌在完成中出现的可能性，例如 `--logit-bias 15043+1` 增加令牌 \' Hello\' 的可能性，或 `--logit-bias 15043-1` 降低令牌 \' Hello\' 的可能性" {
         arg <TOKEN_ID_BIAS>
     }
     flag --grammar help="用于约束生成的 BNF 风格语法" {
@@ -413,7 +413,7 @@ cmd serve help="HTTP API 服务器" {
     flag --reasoning-budget-message help=推理预算耗尽时注入的消息（默认：无） {
         arg <MESSAGE>
     }
-    flag "--reasoning-preserve --no-reasoning-preserve" help="preserve reasoning trace in the full history, not just the last assistant message (default: enabled) compatible with certain templates having \'supports_preserve_reasoning\' capability example: https://docs.z.ai/guides/capabilities/thinking-mode#preserved-thinking"
+    flag "--reasoning-preserve --no-reasoning-preserve" help=在完整历史中保留推理轨迹，而不仅仅是最后一条助手消息（默认：启用）
     flag --parallel help=服务器槽位数（默认：-1，自动） {
         arg <N>
     }
@@ -531,12 +531,12 @@ cmd serve help="HTTP API 服务器" {
     flag --cpu-range-batch help="批处理 CPU 亲和性范围。与 --cpu-mask-batch 互补" {
         arg <LO_HI>
     }
-    flag --flash-attn help="set Flash Attention use (\'on\', \'off\', or \'auto\', default: \'auto\')" {
+    flag --flash-attn help="设置闪存注意力使用（\'on\'、\'off\' 或 \'auto\'，默认：\'auto\'）" {
         arg <ON_OFF_AUTO>
     }
     flag "--kv-offload --no-kv-offload" help="是否启用 KV 缓存卸载（默认：启用）"
-    flag "--direct-io --no-direct-io" help="DEPRECATED in favor of `--load-mode`: use DirectIO if available"
-    flag --numa help="attempt optimizations that help on some NUMA systems - distribute: spread execution evenly over all nodes - isolate: only spawn threads on CPUs on the node that execution started on - numactl: use the CPU map provided by numactl if run without this previously, it is recommended to drop the system page cache before using this see https://github.com/ggml-org/llama.cpp/issues/1437" {
+    flag "--direct-io --no-direct-io" help="已弃用，请使用 `--load-mode`：如果可用，使用 DirectIO"
+    flag --numa help="尝试优化某些 NUMA 系统上的性能 - distribute：在所有节点上均匀分布执行 - isolate：仅在执行开始的节点上的 CPU 上生成线程 - numactl：使用 numactl 提供的 CPU 映射。如果之前未运行此命令，建议在使用此命令前丢弃系统页面缓存。参见 https://github.com/ggml-org/llama.cpp/issues/1437" {
         arg <TYPE>
     }
     flag --list-devices help=列出可用设备并退出
@@ -549,10 +549,10 @@ cmd serve help="HTTP API 服务器" {
     flag --control-vector-scaled help=添加带缩放的控制向量（格式：FNAME:SCALE,...） {
         arg <FNAME_SCALE>
     }
-    flag --docker-repo help="Docker Hub model repository. repo is optional, default to ai/. quant is optional, default to :latest. example: gemma3 (default: unused)" {
+    flag --docker-repo help="Docker Hub 模型仓库。repo 可选，默认为 ai/。quant 可选，默认为 :latest。示例：gemma3（默认：未使用）" {
         arg <REPO_MODEL_QUANT>
     }
-    flag --hf-repo help="Hugging Face model repository; quant is optional, case-insensitive, default to Q4_K_M, or falls back to the first file in the repo if Q4_K_M doesn\'t exist. mmproj is also downloaded automatically if available. to disable, add --no-mmproj example: ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M (default: unused)" {
+    flag --hf-repo help="Hugging Face 模型仓库；quant 可选，不区分大小写，默认 Q4_K_M，如果 Q4_K_M 不存在则回退到仓库中的第一个文件。mmproj 如果可用也会自动下载。要禁用，请添加 --no-mmproj。示例：ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M（默认：未使用）" {
         arg <USER_MODEL_QUANT>
     }
     flag "--spec-draft-type-k --cache-type-k-draft" help="草稿模型 K 的 KV 缓存数据类型（默认：f16）" {
@@ -616,12 +616,12 @@ cmd serve help="HTTP API 服务器" {
     flag --lookup-cache-dynamic help="path to dynamic lookup cache to use for lookup decoding (updated by generation)" {
         arg <FNAME>
     }
-    flag "--ctx-checkpoints --swa-checkpoints" help="max number of context checkpoints to create per slot (default: 32)" {
+    flag "--ctx-checkpoints --swa-checkpoints" help=每个槽位要创建的最大上下文检查点数（默认：32） {
         arg <N>
     }
     flag "--kv-unified --no-kv-unified" help="使用跨所有序列共享的统一 KV 缓冲区"
     flag "--cache-idle-slots --no-cache-idle-slots" help=空闲槽位保存到提示词缓存（默认：启用）
-    flag "--context-shift --no-context-shift" help="whether to use context shift on infinite text generation (default: disabled)"
+    flag "--context-shift --no-context-shift" help=是否在无限文本生成时使用上下文移位（默认：禁用）
     flag --spm-infill help="use Suffix/Prefix/Middle pattern for infill (instead of Prefix/Suffix/Middle) as some models prefer this. (default: disabled)"
     flag --pooling help=嵌入池化类型（默认：使用模型默认） {
         arg <NONE_MEAN_CLS_LAST_RANK>
@@ -645,16 +645,16 @@ cmd serve help="HTTP API 服务器" {
         arg <PATH>
     }
     flag "--ui-mcp-proxy --webui-mcp-proxy --no-ui-mcp-proxy --no-webui-mcp-proxy" help="实验性：是否启用 MCP CORS 代理（默认：禁用）"
-    flag --reasoning-format help="controls whether thought tags are allowed and/or extracted from the response, and in which format they\'re returned; one of: - none: leaves thoughts unparsed in `message.content` - deepseek: puts thoughts in `message.reasoning_content` - deepseek-legacy: keeps `<think>` tags in `message.content` while also populating `message.reasoning_content` (default: auto)" {
+    flag --reasoning-format help="控制是否允许从响应中提取思考标签，以及以哪种格式返回；选项之一：- none：将思考保留在 `message.content` 中未解析 - deepseek：将思考放在 `message.reasoning_content` 中 - deepseek-legacy：在 `message.content` 中保留 `<think>` 标签，同时填充 `message.reasoning_content`（默认：auto）" {
         arg <FORMAT>
     }
-    flag --chat-template help="set custom jinja chat template (default: template taken from model\'s metadata) if suffix/prefix are specified, template will be disabled only commonly used templates are accepted (unless --jinja is set before this flag): list of built-in templates: bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
+    flag --chat-template help="设置自定义 Jinja 聊天模板（默认：从模型元数据获取的模板）。如果指定了 suffix/prefix，模板将被禁用。仅接受常用模板（除非在此标志之前设置了 --jinja）：内置模板列表： bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
         arg <JINJA_TEMPLATE>
     }
-    flag --chat-template-file help="set custom jinja chat template file (default: template taken from model\'s metadata) if suffix/prefix are specified, template will be disabled only commonly used templates are accepted (unless --jinja is set before this flag): list of built-in templates: bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
+    flag --chat-template-file help="设置自定义 Jinja 聊天模板文件（默认：从模型元数据获取的模板）。如果指定了 suffix/prefix，模板将被禁用。仅接受常用模板（除非在此标志之前设置了 --jinja）：内置模板列表： bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
         arg <JINJA_TEMPLATE_FILE>
     }
-    flag "--skip-chat-parsing --no-skip-chat-parsing" help="force a pure content parser, even if a Jinja template is specified; model will output everything in the content section, including any reasoning and/or tool calls (default: disabled)"
+    flag "--skip-chat-parsing --no-skip-chat-parsing" help="强制使用纯内容解析器，即使指定了 Jinja 模板；模型将在内容部分输出所有内容，包括任何推理和/或工具调用（默认：禁用）"
     flag "--prefill-assistant --no-prefill-assistant" help=是否预填充助手响应（默认：启用）
     flag --slot-prompt-similarity help=请求与槽位的匹配阈值（默认：0.10） {
         arg <SIMILARITY>
@@ -710,8 +710,8 @@ cmd cli help=命令行交互界面 {
     flag --keep help="从初始提示词中保留的 token 数（默认：0，-1 = 全部）" {
         arg <N>
     }
-    flag "--perf --no-perf" help="whether to enable internal libllama performance timings (default: false)"
-    flag "-e --escape --no-escape" help="whether to process escapes sequences (\\n, \\r, \\t, \\\', \\\", \\\\) (default: true)"
+    flag "--perf --no-perf" help="是否启用内部 libllama 性能计时（默认：false）"
+    flag "-e --escape --no-escape" help="是否处理转义序列 (\\n, \\r, \\t, \\\', \\\", \\\\) （默认：true）"
     flag --parallel help=并行解码的序列数（默认：1） {
         arg <N>
     }
@@ -736,10 +736,10 @@ cmd cli help=命令行交互界面 {
     flag --model-url help="模型下载 URL（默认：未使用）" {
         arg <MODEL_URL>
     }
-    flag --hf-file help="Hugging Face model file. If specified, it will override the quant in --hf-repo (default: unused)" {
+    flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
         arg <FILE>
     }
-    flag --hf-token help="Hugging Face access token (default: value from HF_TOKEN environment variable)" {
+    flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量的值）" {
         arg <TOKEN>
     }
     flag "--spec-draft-override-tensor --override-tensor-draft" help=覆盖草稿模型的张量缓冲区类型 {
@@ -788,15 +788,15 @@ cmd cli help=命令行交互界面 {
     flag --defrag-thold help="KV 缓存碎片整理阈值（已弃用）" {
         arg <N>
     }
-    flag --cache-ram help="set the maximum cache size in MiB (default: 8192, -1 - no limit, 0 - disable)" {
+    flag --cache-ram help="设置最大缓存大小（MiB，默认：8192，-1 = 无限制，0 = 禁用）" {
         arg <N>
     }
-    flag --swa-full help="use full-size SWA cache (default: false) info)](https://github.com/ggml-org/llama.cpp/pull/13194#issuecomment-2868343055)"
+    flag --swa-full help="使用完整大小的 SWA 缓存（默认：false）"
     flag --rpc help="RPC 服务器列表，逗号分隔（host:port）" {
         arg <SERVERS>
     }
-    flag --mlock help="DEPRECATED in favor of `--load-mode`: force system to keep model in RAM rather than swapping or compressing"
-    flag "--mmap --no-mmap" help="DEPRECATED in favor of `--load-mode`: whether to memory-map model. (if mmap disabled, slower load but may reduce pageouts if not using mlock)"
+    flag --mlock help="已弃用，请使用 `--load-mode`：强制系统将模型保留在内存中，而不是交换或压缩"
+    flag "--mmap --no-mmap" help="已弃用，请使用 `--load-mode`：是否将模型映射到内存（如果禁用 mmap，加载较慢，但如果未使用 mlock，可能会减少页面换出）"
     flag --load-mode help=模型加载模式（默认：auto） {
         arg <MODE>
     }
@@ -842,10 +842,10 @@ cmd cli help=命令行交互界面 {
     flag --spec-draft-n-min help="投机解码的最小草稿 token 数（默认：0）" {
         arg <N>
     }
-    flag --spec-synth-len help="target mean synthetic acceptance length, including the target token (benchmarking only)" {
+    flag --spec-synth-len help=目标平均合成接受长度，包括目标令牌（仅用于基准测试） {
         arg <L>
     }
-    flag --spec-synth-rates help="comma-separated unconditional per-position synthetic acceptance probabilities (benchmarking only)" {
+    flag --spec-synth-rates help=逗号分隔的无条件逐位置合成接受概率（仅用于基准测试） {
         arg <P0_P1>
     }
     flag "--spec-draft-p-split --draft-p-split" help=投机解码分割概率（默认：0.10） {
@@ -894,10 +894,10 @@ cmd cli help=命令行交互界面 {
     flag --spec-ngram-map-k4v-min-hits help="ngram-map-k4v 最小命中数（默认：1）" {
         arg <N>
     }
-    flag "--draft --draft-n --draft-max" help="the argument has been removed. use --spec-draft-n-max or --spec-ngram-mod-n-max" {
+    flag "--draft --draft-n --draft-max" help="该参数已移除。请使用 --spec-draft-n-max 或 --spec-ngram-mod-n-max" {
         arg <N>
     }
-    flag "--draft-min --draft-n-min" help="the argument has been removed. use --spec-draft-n-min or --spec-ngram-mod-n-min" {
+    flag "--draft-min --draft-n-min" help="该参数已移除。请使用 --spec-draft-n-min 或 --spec-ngram-mod-n-min" {
         arg <N>
     }
     flag --samplers help=按顺序使用的采样器，用分号分隔 {
@@ -958,10 +958,10 @@ cmd cli help=命令行交互界面 {
     flag --dry-sequence-breaker help="添加 DRY 采样的序列中断器" {
         arg <STRING>
     }
-    flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00)" {
+    flag --adaptive-target help="adaptive-p：选择接近此概率的令牌（有效范围 0.0 到 1.0；负数 = 禁用）（默认：-1.00）" {
         arg <N>
     }
-    flag --adaptive-decay help="adaptive-p: decay rate for target adaptation over time. lower values are more reactive, higher values are more stable. (valid range 0.0 to 0.99) (default: 0.90)" {
+    flag --adaptive-decay help="adaptive-p：目标适应的衰减率。值越低反应越快，值越高越稳定。（有效范围 0.0 到 0.99）（默认：0.90）" {
         arg <N>
     }
     flag --dynatemp-range help=动态温度范围（默认：0.00，禁用） {
@@ -979,7 +979,7 @@ cmd cli help=命令行交互界面 {
     flag --mirostat-ent help="Mirostat 目标熵（默认：5.00）" {
         arg <N>
     }
-    flag "-l --logit-bias" help="modifies the likelihood of token appearing in the completion, i.e. `--logit-bias 15043+1` to increase likelihood of token \' Hello\', or `--logit-bias 15043-1` to decrease likelihood of token \' Hello\'" {
+    flag "-l --logit-bias" help="修改令牌在完成中出现的可能性，例如 `--logit-bias 15043+1` 增加令牌 \' Hello\' 的可能性，或 `--logit-bias 15043-1` 降低令牌 \' Hello\' 的可能性" {
         arg <TOKEN_ID_BIAS>
     }
     flag --grammar help="用于约束生成的 BNF 风格语法" {
@@ -1035,7 +1035,7 @@ cmd cli help=命令行交互界面 {
     flag --reasoning-budget-message help=推理预算耗尽时注入的消息（默认：无） {
         arg <MESSAGE>
     }
-    flag "--reasoning-preserve --no-reasoning-preserve" help="preserve reasoning trace in the full history, not just the last assistant message (default: enabled) compatible with certain templates having \'supports_preserve_reasoning\' capability example: https://docs.z.ai/guides/capabilities/thinking-mode#preserved-thinking"
+    flag "--reasoning-preserve --no-reasoning-preserve" help=在完整历史中保留推理轨迹，而不仅仅是最后一条助手消息（默认：启用）
     flag "-p --prompt" help="起始生成的提示词；系统消息请用 -sys" {
         arg <PROMPT>
     }
@@ -1092,12 +1092,12 @@ cmd cli help=命令行交互界面 {
     flag --cpu-range-batch help="批处理 CPU 亲和性范围。与 --cpu-mask-batch 互补" {
         arg <LO_HI>
     }
-    flag --flash-attn help="set Flash Attention use (\'on\', \'off\', or \'auto\', default: \'auto\')" {
+    flag --flash-attn help="设置闪存注意力使用（\'on\'、\'off\' 或 \'auto\'，默认：\'auto\'）" {
         arg <ON_OFF_AUTO>
     }
     flag "--kv-offload --no-kv-offload" help="是否启用 KV 缓存卸载（默认：启用）"
-    flag "--direct-io --no-direct-io" help="DEPRECATED in favor of `--load-mode`: use DirectIO if available"
-    flag --numa help="attempt optimizations that help on some NUMA systems - distribute: spread execution evenly over all nodes - isolate: only spawn threads on CPUs on the node that execution started on - numactl: use the CPU map provided by numactl if run without this previously, it is recommended to drop the system page cache before using this see https://github.com/ggml-org/llama.cpp/issues/1437" {
+    flag "--direct-io --no-direct-io" help="已弃用，请使用 `--load-mode`：如果可用，使用 DirectIO"
+    flag --numa help="尝试优化某些 NUMA 系统上的性能 - distribute：在所有节点上均匀分布执行 - isolate：仅在执行开始的节点上的 CPU 上生成线程 - numactl：使用 numactl 提供的 CPU 映射。如果之前未运行此命令，建议在使用此命令前丢弃系统页面缓存。参见 https://github.com/ggml-org/llama.cpp/issues/1437" {
         arg <TYPE>
     }
     flag --list-devices help=列出可用设备并退出
@@ -1110,10 +1110,10 @@ cmd cli help=命令行交互界面 {
     flag --control-vector-scaled help=添加带缩放的控制向量（格式：FNAME:SCALE,...） {
         arg <FNAME_SCALE>
     }
-    flag --docker-repo help="Docker Hub model repository. repo is optional, default to ai/. quant is optional, default to :latest. example: gemma3 (default: unused)" {
+    flag --docker-repo help="Docker Hub 模型仓库。repo 可选，默认为 ai/。quant 可选，默认为 :latest。示例：gemma3（默认：未使用）" {
         arg <REPO_MODEL_QUANT>
     }
-    flag --hf-repo help="Hugging Face model repository; quant is optional, case-insensitive, default to Q4_K_M, or falls back to the first file in the repo if Q4_K_M doesn\'t exist. mmproj is also downloaded automatically if available. to disable, add --no-mmproj example: ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M (default: unused)" {
+    flag --hf-repo help="Hugging Face 模型仓库；quant 可选，不区分大小写，默认 Q4_K_M，如果 Q4_K_M 不存在则回退到仓库中的第一个文件。mmproj 如果可用也会自动下载。要禁用，请添加 --no-mmproj。示例：ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M（默认：未使用）" {
         arg <USER_MODEL_QUANT>
     }
     flag "--spec-draft-type-k --cache-type-k-draft" help="草稿模型 K 的 KV 缓存数据类型（默认：f16）" {
@@ -1171,10 +1171,10 @@ cmd cli help=命令行交互界面 {
     flag "--spec-draft-model --model-draft" help=投机解码草稿模型（默认：未使用） {
         arg <FNAME>
     }
-    flag "--ctx-checkpoints --swa-checkpoints" help="max number of context checkpoints to create per slot (default: 32)" {
+    flag "--ctx-checkpoints --swa-checkpoints" help=每个槽位要创建的最大上下文检查点数（默认：32） {
         arg <N>
     }
-    flag "--context-shift --no-context-shift" help="whether to use context shift on infinite text generation (default: disabled)"
+    flag "--context-shift --no-context-shift" help=是否在无限文本生成时使用上下文移位（默认：禁用）
     flag --system-prompt-file help="a file containing the system prompt (default: none)" {
         arg <FNAME>
     }
@@ -1182,16 +1182,16 @@ cmd cli help=命令行交互界面 {
     flag "-o --output --output-file" help=输出文件（默认：空） {
         arg <FNAME>
     }
-    flag --reasoning-format help="controls whether thought tags are allowed and/or extracted from the response, and in which format they\'re returned; one of: - none: leaves thoughts unparsed in `message.content` - deepseek: puts thoughts in `message.reasoning_content` - deepseek-legacy: keeps `<think>` tags in `message.content` while also populating `message.reasoning_content` (default: auto)" {
+    flag --reasoning-format help="控制是否允许从响应中提取思考标签，以及以哪种格式返回；选项之一：- none：将思考保留在 `message.content` 中未解析 - deepseek：将思考放在 `message.reasoning_content` 中 - deepseek-legacy：在 `message.content` 中保留 `<think>` 标签，同时填充 `message.reasoning_content`（默认：auto）" {
         arg <FORMAT>
     }
-    flag --chat-template help="set custom jinja chat template (default: template taken from model\'s metadata) if suffix/prefix are specified, template will be disabled only commonly used templates are accepted (unless --jinja is set before this flag): list of built-in templates: bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
+    flag --chat-template help="设置自定义 Jinja 聊天模板（默认：从模型元数据获取的模板）。如果指定了 suffix/prefix，模板将被禁用。仅接受常用模板（除非在此标志之前设置了 --jinja）：内置模板列表： bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
         arg <JINJA_TEMPLATE>
     }
-    flag --chat-template-file help="set custom jinja chat template file (default: template taken from model\'s metadata) if suffix/prefix are specified, template will be disabled only commonly used templates are accepted (unless --jinja is set before this flag): list of built-in templates: bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
+    flag --chat-template-file help="设置自定义 Jinja 聊天模板文件（默认：从模型元数据获取的模板）。如果指定了 suffix/prefix，模板将被禁用。仅接受常用模板（除非在此标志之前设置了 --jinja）：内置模板列表： bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
         arg <JINJA_TEMPLATE_FILE>
     }
-    flag "--skip-chat-parsing --no-skip-chat-parsing" help="force a pure content parser, even if a Jinja template is specified; model will output everything in the content section, including any reasoning and/or tool calls (default: disabled)"
+    flag "--skip-chat-parsing --no-skip-chat-parsing" help="强制使用纯内容解析器，即使指定了 Jinja 模板；模型将在内容部分输出所有内容，包括任何推理和/或工具调用（默认：禁用）"
     flag --simple-io help="使用基本 I/O 以获得更好的兼容性"
 }
 cmd download help=下载模型 {
@@ -1271,8 +1271,8 @@ cmd completion help=文本补全 {
     flag --keep help="从初始提示词中保留的 token 数（默认：0，-1 = 全部）" {
         arg <N>
     }
-    flag "--perf --no-perf" help="whether to enable internal libllama performance timings (default: false)"
-    flag "-e --escape --no-escape" help="whether to process escapes sequences (\\n, \\r, \\t, \\\', \\\", \\\\) (default: true)"
+    flag "--perf --no-perf" help="是否启用内部 libllama 性能计时（默认：false）"
+    flag "-e --escape --no-escape" help="是否处理转义序列 (\\n, \\r, \\t, \\\', \\\", \\\\) （默认：true）"
     flag --parallel help=并行解码的序列数（默认：1） {
         arg <N>
     }
@@ -1297,10 +1297,10 @@ cmd completion help=文本补全 {
     flag --model-url help="模型下载 URL（默认：未使用）" {
         arg <MODEL_URL>
     }
-    flag --hf-file help="Hugging Face model file. If specified, it will override the quant in --hf-repo (default: unused)" {
+    flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
         arg <FILE>
     }
-    flag --hf-token help="Hugging Face access token (default: value from HF_TOKEN environment variable)" {
+    flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量的值）" {
         arg <TOKEN>
     }
     flag "--spec-draft-override-tensor --override-tensor-draft" help=覆盖草稿模型的张量缓冲区类型 {
@@ -1349,15 +1349,15 @@ cmd completion help=文本补全 {
     flag --defrag-thold help="KV 缓存碎片整理阈值（已弃用）" {
         arg <N>
     }
-    flag --cache-ram help="set the maximum cache size in MiB (default: 8192, -1 - no limit, 0 - disable)" {
+    flag --cache-ram help="设置最大缓存大小（MiB，默认：8192，-1 = 无限制，0 = 禁用）" {
         arg <N>
     }
-    flag --swa-full help="use full-size SWA cache (default: false) info)](https://github.com/ggml-org/llama.cpp/pull/13194#issuecomment-2868343055)"
+    flag --swa-full help="使用完整大小的 SWA 缓存（默认：false）"
     flag --rpc help="RPC 服务器列表，逗号分隔（host:port）" {
         arg <SERVERS>
     }
-    flag --mlock help="DEPRECATED in favor of `--load-mode`: force system to keep model in RAM rather than swapping or compressing"
-    flag "--mmap --no-mmap" help="DEPRECATED in favor of `--load-mode`: whether to memory-map model. (if mmap disabled, slower load but may reduce pageouts if not using mlock)"
+    flag --mlock help="已弃用，请使用 `--load-mode`：强制系统将模型保留在内存中，而不是交换或压缩"
+    flag "--mmap --no-mmap" help="已弃用，请使用 `--load-mode`：是否将模型映射到内存（如果禁用 mmap，加载较慢，但如果未使用 mlock，可能会减少页面换出）"
     flag --load-mode help=模型加载模式（默认：auto） {
         arg <MODE>
     }
@@ -1403,10 +1403,10 @@ cmd completion help=文本补全 {
     flag --spec-draft-n-min help="投机解码的最小草稿 token 数（默认：0）" {
         arg <N>
     }
-    flag --spec-synth-len help="target mean synthetic acceptance length, including the target token (benchmarking only)" {
+    flag --spec-synth-len help=目标平均合成接受长度，包括目标令牌（仅用于基准测试） {
         arg <L>
     }
-    flag --spec-synth-rates help="comma-separated unconditional per-position synthetic acceptance probabilities (benchmarking only)" {
+    flag --spec-synth-rates help=逗号分隔的无条件逐位置合成接受概率（仅用于基准测试） {
         arg <P0_P1>
     }
     flag "--spec-draft-p-split --draft-p-split" help=投机解码分割概率（默认：0.10） {
@@ -1455,10 +1455,10 @@ cmd completion help=文本补全 {
     flag --spec-ngram-map-k4v-min-hits help="ngram-map-k4v 最小命中数（默认：1）" {
         arg <N>
     }
-    flag "--draft --draft-n --draft-max" help="the argument has been removed. use --spec-draft-n-max or --spec-ngram-mod-n-max" {
+    flag "--draft --draft-n --draft-max" help="该参数已移除。请使用 --spec-draft-n-max 或 --spec-ngram-mod-n-max" {
         arg <N>
     }
-    flag "--draft-min --draft-n-min" help="the argument has been removed. use --spec-draft-n-min or --spec-ngram-mod-n-min" {
+    flag "--draft-min --draft-n-min" help="该参数已移除。请使用 --spec-draft-n-min 或 --spec-ngram-mod-n-min" {
         arg <N>
     }
     flag --samplers help=按顺序使用的采样器，用分号分隔 {
@@ -1519,10 +1519,10 @@ cmd completion help=文本补全 {
     flag --dry-sequence-breaker help="添加 DRY 采样的序列中断器" {
         arg <STRING>
     }
-    flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00)" {
+    flag --adaptive-target help="adaptive-p：选择接近此概率的令牌（有效范围 0.0 到 1.0；负数 = 禁用）（默认：-1.00）" {
         arg <N>
     }
-    flag --adaptive-decay help="adaptive-p: decay rate for target adaptation over time. lower values are more reactive, higher values are more stable. (valid range 0.0 to 0.99) (default: 0.90)" {
+    flag --adaptive-decay help="adaptive-p：目标适应的衰减率。值越低反应越快，值越高越稳定。（有效范围 0.0 到 0.99）（默认：0.90）" {
         arg <N>
     }
     flag --dynatemp-range help=动态温度范围（默认：0.00，禁用） {
@@ -1540,7 +1540,7 @@ cmd completion help=文本补全 {
     flag --mirostat-ent help="Mirostat 目标熵（默认：5.00）" {
         arg <N>
     }
-    flag "-l --logit-bias" help="modifies the likelihood of token appearing in the completion, i.e. `--logit-bias 15043+1` to increase likelihood of token \' Hello\', or `--logit-bias 15043-1` to decrease likelihood of token \' Hello\'" {
+    flag "-l --logit-bias" help="修改令牌在完成中出现的可能性，例如 `--logit-bias 15043+1` 增加令牌 \' Hello\' 的可能性，或 `--logit-bias 15043-1` 降低令牌 \' Hello\' 的可能性" {
         arg <TOKEN_ID_BIAS>
     }
     flag --grammar help="用于约束生成的 BNF 风格语法" {
@@ -1596,7 +1596,7 @@ cmd completion help=文本补全 {
     flag --reasoning-budget-message help=推理预算耗尽时注入的消息（默认：无） {
         arg <MESSAGE>
     }
-    flag "--reasoning-preserve --no-reasoning-preserve" help="preserve reasoning trace in the full history, not just the last assistant message (default: enabled) compatible with certain templates having \'supports_preserve_reasoning\' capability example: https://docs.z.ai/guides/capabilities/thinking-mode#preserved-thinking"
+    flag "--reasoning-preserve --no-reasoning-preserve" help=在完整历史中保留推理轨迹，而不仅仅是最后一条助手消息（默认：启用）
     flag "-p --prompt" help="起始生成的提示词；系统消息请用 -sys" {
         arg <PROMPT>
     }
@@ -1653,12 +1653,12 @@ cmd completion help=文本补全 {
     flag --cpu-range-batch help="批处理 CPU 亲和性范围。与 --cpu-mask-batch 互补" {
         arg <LO_HI>
     }
-    flag --flash-attn help="set Flash Attention use (\'on\', \'off\', or \'auto\', default: \'auto\')" {
+    flag --flash-attn help="设置闪存注意力使用（\'on\'、\'off\' 或 \'auto\'，默认：\'auto\'）" {
         arg <ON_OFF_AUTO>
     }
     flag "--kv-offload --no-kv-offload" help="是否启用 KV 缓存卸载（默认：启用）"
-    flag "--direct-io --no-direct-io" help="DEPRECATED in favor of `--load-mode`: use DirectIO if available"
-    flag --numa help="attempt optimizations that help on some NUMA systems - distribute: spread execution evenly over all nodes - isolate: only spawn threads on CPUs on the node that execution started on - numactl: use the CPU map provided by numactl if run without this previously, it is recommended to drop the system page cache before using this see https://github.com/ggml-org/llama.cpp/issues/1437" {
+    flag "--direct-io --no-direct-io" help="已弃用，请使用 `--load-mode`：如果可用，使用 DirectIO"
+    flag --numa help="尝试优化某些 NUMA 系统上的性能 - distribute：在所有节点上均匀分布执行 - isolate：仅在执行开始的节点上的 CPU 上生成线程 - numactl：使用 numactl 提供的 CPU 映射。如果之前未运行此命令，建议在使用此命令前丢弃系统页面缓存。参见 https://github.com/ggml-org/llama.cpp/issues/1437" {
         arg <TYPE>
     }
     flag --list-devices help=列出可用设备并退出
@@ -1671,10 +1671,10 @@ cmd completion help=文本补全 {
     flag --control-vector-scaled help=添加带缩放的控制向量（格式：FNAME:SCALE,...） {
         arg <FNAME_SCALE>
     }
-    flag --docker-repo help="Docker Hub model repository. repo is optional, default to ai/. quant is optional, default to :latest. example: gemma3 (default: unused)" {
+    flag --docker-repo help="Docker Hub 模型仓库。repo 可选，默认为 ai/。quant 可选，默认为 :latest。示例：gemma3（默认：未使用）" {
         arg <REPO_MODEL_QUANT>
     }
-    flag --hf-repo help="Hugging Face model repository; quant is optional, case-insensitive, default to Q4_K_M, or falls back to the first file in the repo if Q4_K_M doesn\'t exist. mmproj is also downloaded automatically if available. to disable, add --no-mmproj example: ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M (default: unused)" {
+    flag --hf-repo help="Hugging Face 模型仓库；quant 可选，不区分大小写，默认 Q4_K_M，如果 Q4_K_M 不存在则回退到仓库中的第一个文件。mmproj 如果可用也会自动下载。要禁用，请添加 --no-mmproj。示例：ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M（默认：未使用）" {
         arg <USER_MODEL_QUANT>
     }
     flag "--spec-draft-type-k --cache-type-k-draft" help="草稿模型 K 的 KV 缓存数据类型（默认：f16）" {
@@ -1732,10 +1732,10 @@ cmd completion help=文本补全 {
     flag "--spec-draft-model --model-draft" help=投机解码草稿模型（默认：未使用） {
         arg <FNAME>
     }
-    flag "--ctx-checkpoints --swa-checkpoints" help="max number of context checkpoints to create per slot (default: 32)" {
+    flag "--ctx-checkpoints --swa-checkpoints" help=每个槽位要创建的最大上下文检查点数（默认：32） {
         arg <N>
     }
-    flag "--context-shift --no-context-shift" help="whether to use context shift on infinite text generation (default: disabled)"
+    flag "--context-shift --no-context-shift" help=是否在无限文本生成时使用上下文移位（默认：禁用）
     flag --system-prompt-file help="a file containing the system prompt (default: none)" {
         arg <FNAME>
     }
@@ -1743,16 +1743,16 @@ cmd completion help=文本补全 {
     flag "-o --output --output-file" help=输出文件（默认：空） {
         arg <FNAME>
     }
-    flag --reasoning-format help="controls whether thought tags are allowed and/or extracted from the response, and in which format they\'re returned; one of: - none: leaves thoughts unparsed in `message.content` - deepseek: puts thoughts in `message.reasoning_content` - deepseek-legacy: keeps `<think>` tags in `message.content` while also populating `message.reasoning_content` (default: auto)" {
+    flag --reasoning-format help="控制是否允许从响应中提取思考标签，以及以哪种格式返回；选项之一：- none：将思考保留在 `message.content` 中未解析 - deepseek：将思考放在 `message.reasoning_content` 中 - deepseek-legacy：在 `message.content` 中保留 `<think>` 标签，同时填充 `message.reasoning_content`（默认：auto）" {
         arg <FORMAT>
     }
-    flag --chat-template help="set custom jinja chat template (default: template taken from model\'s metadata) if suffix/prefix are specified, template will be disabled only commonly used templates are accepted (unless --jinja is set before this flag): list of built-in templates: bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
+    flag --chat-template help="设置自定义 Jinja 聊天模板（默认：从模型元数据获取的模板）。如果指定了 suffix/prefix，模板将被禁用。仅接受常用模板（除非在此标志之前设置了 --jinja）：内置模板列表： bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
         arg <JINJA_TEMPLATE>
     }
-    flag --chat-template-file help="set custom jinja chat template file (default: template taken from model\'s metadata) if suffix/prefix are specified, template will be disabled only commonly used templates are accepted (unless --jinja is set before this flag): list of built-in templates: bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
+    flag --chat-template-file help="设置自定义 Jinja 聊天模板文件（默认：从模型元数据获取的模板）。如果指定了 suffix/prefix，模板将被禁用。仅接受常用模板（除非在此标志之前设置了 --jinja）：内置模板列表： bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
         arg <JINJA_TEMPLATE_FILE>
     }
-    flag "--skip-chat-parsing --no-skip-chat-parsing" help="force a pure content parser, even if a Jinja template is specified; model will output everything in the content section, including any reasoning and/or tool calls (default: disabled)"
+    flag "--skip-chat-parsing --no-skip-chat-parsing" help="强制使用纯内容解析器，即使指定了 Jinja 模板；模型将在内容部分输出所有内容，包括任何推理和/或工具调用（默认：禁用）"
     flag --simple-io help="使用基本 I/O 以获得更好的兼容性"
 }
 cmd bench help=模型性能基准测试 {
@@ -1769,13 +1769,13 @@ cmd bench help=模型性能基准测试 {
         arg <0_N>
     }
     flag --list-devices help=列出可用设备并退出
-    flag --hf-repo help="Hugging Face model repository; quant is optional, case-insensitive default to Q4_K_M, or falls back to the first file in the repo if Q4_K_M doesn\'t exist. example: ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M (default: unused)" {
+    flag --hf-repo help="Hugging Face 模型仓库；quant 可选，不区分大小写，默认 Q4_K_M，如果 Q4_K_M 不存在则回退到仓库中的第一个文件。示例：ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M（默认：未使用）" {
         arg <USER_MODEL_QUANT>
     }
-    flag --hf-file help="Hugging Face model file. If specified, it will override the quant in --hf-repo (default: unused)" {
+    flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
         arg <FILE>
     }
-    flag --hf-token help="Hugging Face access token (default: value from HF_TOKEN environment variable)" {
+    flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量的值）" {
         arg <TOKEN>
     }
     flag --rpc help="注册 RPC 设备（逗号分隔）" {
@@ -1939,21 +1939,21 @@ cmd batched-bench help=批处理解码性能基准测试 {
     flag --keep help="从初始提示词中保留的 token 数（默认：0，-1 = 全部）" {
         arg <N>
     }
-    flag --swa-full help="use full-size SWA cache (default: false) info)](https://github.com/ggml-org/llama.cpp/pull/13194#issuecomment-2868343055)"
+    flag --swa-full help="使用完整大小的 SWA 缓存（默认：false）"
     flag --flash-attn help="(default: auto)" {
         arg <ON_OFF_AUTO>
     }
     flag "-p --prompt" help="起始生成的提示词；系统消息请用 -sys" {
         arg <PROMPT>
     }
-    flag "--perf --no-perf" help="whether to enable internal libllama performance timings (default: false)"
+    flag "--perf --no-perf" help="是否启用内部 libllama 性能计时（默认：false）"
     flag "-f --file" help=包含提示词的文件（默认：无） {
         arg <FNAME>
     }
     flag --binary-file help=包含提示词的二进制文件（默认：无） {
         arg <FNAME>
     }
-    flag "-e --escape --no-escape" help="whether to process escapes sequences (\\\\n, \\\\r, \\\\t, \\\\\', \\\\\", \\\\\\\\) (default: true)"
+    flag "-e --escape --no-escape" help="是否处理转义序列 (\\\\n, \\\\r, \\\\t, \\\\\', \\\\\", \\\\\\\\) （默认：true）"
     flag --rope-scaling help="RoPE 频率缩放方法（默认：linear）" {
         arg <NONE_LINEAR_YARN>
     }
@@ -1999,9 +1999,9 @@ cmd batched-bench help=批处理解码性能基准测试 {
     flag --rpc help="注册 RPC 设备（逗号分隔）" {
         arg <SERVERS>
     }
-    flag --mlock help="DEPRECATED in favor of `--load-mode`: force system to keep model in RAM rather than swapping or compressing"
-    flag "--mmap --no-mmap" help="DEPRECATED in favor of `--load-mode`: whether to memory-map model. (if mmap disabled, slower load but may reduce pageouts if not using mlock)"
-    flag "--direct-io --no-direct-io" help="DEPRECATED in favor of `--load-mode`: use DirectIO if available"
+    flag --mlock help="已弃用，请使用 `--load-mode`：强制系统将模型保留在内存中，而不是交换或压缩"
+    flag "--mmap --no-mmap" help="已弃用，请使用 `--load-mode`：是否将模型映射到内存（如果禁用 mmap，加载较慢，但如果未使用 mlock，可能会减少页面换出）"
+    flag "--direct-io --no-direct-io" help="已弃用，请使用 `--load-mode`：如果可用，使用 DirectIO"
     flag --load-mode help=模型加载模式（默认：auto） {
         arg <MODE>
     }
@@ -2072,13 +2072,13 @@ cmd batched-bench help=批处理解码性能基准测试 {
     flag --model-url help="模型下载 URL（默认：未使用）" {
         arg <MODEL_URL>
     }
-    flag --docker-repo help="Docker Hub model repository. repo is optional, default to ai/. quant is optional, default to :latest. example: gemma3 (default: unused)" {
+    flag --docker-repo help="Docker Hub 模型仓库。repo 可选，默认为 ai/。quant 可选，默认为 :latest。示例：gemma3（默认：未使用）" {
         arg "<REPO>_]<MODEL>[:QUANT>"
     }
-    flag --hf-file help="Hugging Face model file. If specified, it will override the quant in --hf-repo (default: unused)" {
+    flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
         arg <FILE>
     }
-    flag --hf-token help="Hugging Face access token (default: value from HF_TOKEN environment variable)" {
+    flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量的值）" {
         arg <TOKEN>
     }
     flag --log-disable help=禁用日志
@@ -2163,10 +2163,10 @@ cmd batched-bench help=批处理解码性能基准测试 {
     flag --dry-sequence-breaker help="添加 DRY 采样的序列中断器" {
         arg <STRING>
     }
-    flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00)" {
+    flag --adaptive-target help="adaptive-p：选择接近此概率的令牌（有效范围 0.0 到 1.0；负数 = 禁用）（默认：-1.00）" {
         arg <N>
     }
-    flag --adaptive-decay help="adaptive-p: decay rate for target adaptation over time. lower values are more reactive, higher values are more stable. (valid range 0.0 to 0.99) (default: 0.90)" {
+    flag --adaptive-decay help="adaptive-p：目标适应的衰减率。值越低反应越快，值越高越稳定。（有效范围 0.0 到 0.99）（默认：0.90）" {
         arg <N>
     }
     flag --dynatemp-range help=动态温度范围（默认：0.00，禁用） {
@@ -2184,7 +2184,7 @@ cmd batched-bench help=批处理解码性能基准测试 {
     flag --mirostat-ent help="Mirostat 目标熵（默认：5.00）" {
         arg <N>
     }
-    flag "-l --logit-bias" help="modifies the likelihood of token appearing in the completion, i.e. `--logit-bias 15043+1` to increase likelihood of token \' Hello\', or `--logit-bias 15043-1` to decrease likelihood of token \' Hello\'" {
+    flag "-l --logit-bias" help="修改令牌在完成中出现的可能性，例如 `--logit-bias 15043+1` 增加令牌 \' Hello\' 的可能性，或 `--logit-bias 15043-1` 降低令牌 \' Hello\' 的可能性" {
         arg "<TOKEN_ID(+_-)BIAS>"
     }
     flag --grammar help="用于约束生成的 BNF 风格语法" {
@@ -2261,21 +2261,21 @@ cmd fit-params help=计算模型适配设备内存的参数 {
     flag --keep help="从初始提示词中保留的 token 数（默认：0，-1 = 全部）" {
         arg <N>
     }
-    flag --swa-full help="use full-size SWA cache (default: false) info)](https://github.com/ggml-org/llama.cpp/pull/13194#issuecomment-2868343055)"
+    flag --swa-full help="使用完整大小的 SWA 缓存（默认：false）"
     flag --flash-attn help="(default: auto)" {
         arg <ON_OFF_AUTO>
     }
     flag "-p --prompt" help="起始生成的提示词；系统消息请用 -sys" {
         arg <PROMPT>
     }
-    flag "--perf --no-perf" help="whether to enable internal libllama performance timings (default: false)"
+    flag "--perf --no-perf" help="是否启用内部 libllama 性能计时（默认：false）"
     flag "-f --file" help=包含提示词的文件（默认：无） {
         arg <FNAME>
     }
     flag --binary-file help=包含提示词的二进制文件（默认：无） {
         arg <FNAME>
     }
-    flag "-e --escape --no-escape" help="whether to process escapes sequences (\\\\n, \\\\r, \\\\t, \\\\\', \\\\\", \\\\\\\\) (default: true)"
+    flag "-e --escape --no-escape" help="是否处理转义序列 (\\\\n, \\\\r, \\\\t, \\\\\', \\\\\", \\\\\\\\) （默认：true）"
     flag --rope-scaling help="RoPE 频率缩放方法（默认：linear）" {
         arg <NONE_LINEAR_YARN>
     }
@@ -2321,9 +2321,9 @@ cmd fit-params help=计算模型适配设备内存的参数 {
     flag --rpc help="注册 RPC 设备（逗号分隔）" {
         arg <SERVERS>
     }
-    flag --mlock help="DEPRECATED in favor of `--load-mode`: force system to keep model in RAM rather than swapping or compressing"
-    flag "--mmap --no-mmap" help="DEPRECATED in favor of `--load-mode`: whether to memory-map model. (if mmap disabled, slower load but may reduce pageouts if not using mlock)"
-    flag "--direct-io --no-direct-io" help="DEPRECATED in favor of `--load-mode`: use DirectIO if available"
+    flag --mlock help="已弃用，请使用 `--load-mode`：强制系统将模型保留在内存中，而不是交换或压缩"
+    flag "--mmap --no-mmap" help="已弃用，请使用 `--load-mode`：是否将模型映射到内存（如果禁用 mmap，加载较慢，但如果未使用 mlock，可能会减少页面换出）"
+    flag "--direct-io --no-direct-io" help="已弃用，请使用 `--load-mode`：如果可用，使用 DirectIO"
     flag --load-mode help=模型加载模式（默认：auto） {
         arg <MODE>
     }
@@ -2394,13 +2394,13 @@ cmd fit-params help=计算模型适配设备内存的参数 {
     flag --model-url help="模型下载 URL（默认：未使用）" {
         arg <MODEL_URL>
     }
-    flag --docker-repo help="Docker Hub model repository. repo is optional, default to ai/. quant is optional, default to :latest. example: gemma3 (default: unused)" {
+    flag --docker-repo help="Docker Hub 模型仓库。repo 可选，默认为 ai/。quant 可选，默认为 :latest。示例：gemma3（默认：未使用）" {
         arg "<REPO>_]<MODEL>[:QUANT>"
     }
-    flag --hf-file help="Hugging Face model file. If specified, it will override the quant in --hf-repo (default: unused)" {
+    flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
         arg <FILE>
     }
-    flag --hf-token help="Hugging Face access token (default: value from HF_TOKEN environment variable)" {
+    flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量的值）" {
         arg <TOKEN>
     }
     flag --log-disable help=禁用日志
@@ -2485,10 +2485,10 @@ cmd fit-params help=计算模型适配设备内存的参数 {
     flag --dry-sequence-breaker help="添加 DRY 采样的序列中断器" {
         arg <STRING>
     }
-    flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00)" {
+    flag --adaptive-target help="adaptive-p：选择接近此概率的令牌（有效范围 0.0 到 1.0；负数 = 禁用）（默认：-1.00）" {
         arg <N>
     }
-    flag --adaptive-decay help="adaptive-p: decay rate for target adaptation over time. lower values are more reactive, higher values are more stable. (valid range 0.0 to 0.99) (default: 0.90)" {
+    flag --adaptive-decay help="adaptive-p：目标适应的衰减率。值越低反应越快，值越高越稳定。（有效范围 0.0 到 0.99）（默认：0.90）" {
         arg <N>
     }
     flag --dynatemp-range help=动态温度范围（默认：0.00，禁用） {
@@ -2506,7 +2506,7 @@ cmd fit-params help=计算模型适配设备内存的参数 {
     flag --mirostat-ent help="Mirostat 目标熵（默认：5.00）" {
         arg <N>
     }
-    flag "-l --logit-bias" help="modifies the likelihood of token appearing in the completion, i.e. `--logit-bias 15043+1` to increase likelihood of token \' Hello\', or `--logit-bias 15043-1` to decrease likelihood of token \' Hello\'" {
+    flag "-l --logit-bias" help="修改令牌在完成中出现的可能性，例如 `--logit-bias 15043+1` 增加令牌 \' Hello\' 的可能性，或 `--logit-bias 15043-1` 降低令牌 \' Hello\' 的可能性" {
         arg "<TOKEN_ID(+_-)BIAS>"
     }
     flag --grammar help="用于约束生成的 BNF 风格语法" {
@@ -2613,8 +2613,8 @@ cmd perplexity help="计算模型困惑度与 KL 散度" {
     flag --keep help="从初始提示词中保留的 token 数（默认：0，-1 = 全部）" {
         arg <N>
     }
-    flag "--perf --no-perf" help="whether to enable internal libllama performance timings (default: false)"
-    flag "-e --escape --no-escape" help="whether to process escapes sequences (\\n, \\r, \\t, \\\', \\\", \\\\) (default: false)"
+    flag "--perf --no-perf" help="是否启用内部 libllama 性能计时（默认：false）"
+    flag "-e --escape --no-escape" help="是否处理转义序列 (\\n, \\r, \\t, \\\', \\\", \\\\) （默认：false）"
     flag --parallel help=并行解码的序列数（默认：1） {
         arg <N>
     }
@@ -2639,10 +2639,10 @@ cmd perplexity help="计算模型困惑度与 KL 散度" {
     flag --model-url help="模型下载 URL（默认：未使用）" {
         arg <MODEL_URL>
     }
-    flag --hf-file help="Hugging Face model file. If specified, it will override the quant in --hf-repo (default: unused)" {
+    flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
         arg <FILE>
     }
-    flag --hf-token help="Hugging Face access token (default: value from HF_TOKEN environment variable)" {
+    flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量的值）" {
         arg <TOKEN>
     }
     flag --rope-scaling help="RoPE 频率缩放方法（默认：linear）" {
@@ -2683,12 +2683,12 @@ cmd perplexity help="计算模型困惑度与 KL 散度" {
     flag --defrag-thold help="KV 缓存碎片整理阈值（已弃用）" {
         arg <N>
     }
-    flag --swa-full help="use full-size SWA cache (default: false) info)](https://github.com/ggml-org/llama.cpp/pull/13194#issuecomment-2868343055)"
+    flag --swa-full help="使用完整大小的 SWA 缓存（默认：false）"
     flag --rpc help="RPC 服务器列表，逗号分隔（host:port）" {
         arg <SERVERS>
     }
-    flag --mlock help="DEPRECATED in favor of `--load-mode`: force system to keep model in RAM rather than swapping or compressing"
-    flag "--mmap --no-mmap" help="DEPRECATED in favor of `--load-mode`: whether to memory-map model. (if mmap disabled, slower load but may reduce pageouts if not using mlock)"
+    flag --mlock help="已弃用，请使用 `--load-mode`：强制系统将模型保留在内存中，而不是交换或压缩"
+    flag "--mmap --no-mmap" help="已弃用，请使用 `--load-mode`：是否将模型映射到内存（如果禁用 mmap，加载较慢，但如果未使用 mlock，可能会减少页面换出）"
     flag --load-mode help=模型加载模式（默认：auto） {
         arg <MODE>
     }
@@ -2783,10 +2783,10 @@ cmd perplexity help="计算模型困惑度与 KL 散度" {
     flag --dry-sequence-breaker help="添加 DRY 采样的序列中断器" {
         arg <STRING>
     }
-    flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00)" {
+    flag --adaptive-target help="adaptive-p：选择接近此概率的令牌（有效范围 0.0 到 1.0；负数 = 禁用）（默认：-1.00）" {
         arg <N>
     }
-    flag --adaptive-decay help="adaptive-p: decay rate for target adaptation over time. lower values are more reactive, higher values are more stable. (valid range 0.0 to 0.99) (default: 0.90)" {
+    flag --adaptive-decay help="adaptive-p：目标适应的衰减率。值越低反应越快，值越高越稳定。（有效范围 0.0 到 0.99）（默认：0.90）" {
         arg <N>
     }
     flag --dynatemp-range help=动态温度范围（默认：0.00，禁用） {
@@ -2804,7 +2804,7 @@ cmd perplexity help="计算模型困惑度与 KL 散度" {
     flag --mirostat-ent help="Mirostat 目标熵（默认：5.00）" {
         arg <N>
     }
-    flag "-l --logit-bias" help="modifies the likelihood of token appearing in the completion, i.e. `--logit-bias 15043+1` to increase likelihood of token \' Hello\', or `--logit-bias 15043-1` to decrease likelihood of token \' Hello\'" {
+    flag "-l --logit-bias" help="修改令牌在完成中出现的可能性，例如 `--logit-bias 15043+1` 增加令牌 \' Hello\' 的可能性，或 `--logit-bias 15043-1` 降低令牌 \' Hello\' 的可能性" {
         arg <TOKEN_ID_BIAS>
     }
     flag --grammar help="用于约束生成的 BNF 风格语法" {
@@ -2873,12 +2873,12 @@ cmd perplexity help="计算模型困惑度与 KL 散度" {
     flag --cpu-range-batch help="批处理 CPU 亲和性范围。与 --cpu-mask-batch 互补" {
         arg <LO_HI>
     }
-    flag --flash-attn help="set Flash Attention use (\'on\', \'off\', or \'auto\', default: \'auto\')" {
+    flag --flash-attn help="设置闪存注意力使用（\'on\'、\'off\' 或 \'auto\'，默认：\'auto\'）" {
         arg <ON_OFF_AUTO>
     }
     flag "--kv-offload --no-kv-offload" help="是否启用 KV 缓存卸载（默认：启用）"
-    flag "--direct-io --no-direct-io" help="DEPRECATED in favor of `--load-mode`: use DirectIO if available"
-    flag --numa help="attempt optimizations that help on some NUMA systems - distribute: spread execution evenly over all nodes - isolate: only spawn threads on CPUs on the node that execution started on - numactl: use the CPU map provided by numactl if run without this previously, it is recommended to drop the system page cache before using this see https://github.com/ggml-org/llama.cpp/issues/1437" {
+    flag "--direct-io --no-direct-io" help="已弃用，请使用 `--load-mode`：如果可用，使用 DirectIO"
+    flag --numa help="尝试优化某些 NUMA 系统上的性能 - distribute：在所有节点上均匀分布执行 - isolate：仅在执行开始的节点上的 CPU 上生成线程 - numactl：使用 numactl 提供的 CPU 映射。如果之前未运行此命令，建议在使用此命令前丢弃系统页面缓存。参见 https://github.com/ggml-org/llama.cpp/issues/1437" {
         arg <TYPE>
     }
     flag --list-devices help=列出可用设备并退出
@@ -2891,10 +2891,10 @@ cmd perplexity help="计算模型困惑度与 KL 散度" {
     flag --control-vector-scaled help=添加带缩放的控制向量（格式：FNAME:SCALE,...） {
         arg <FNAME_SCALE>
     }
-    flag --docker-repo help="Docker Hub model repository. repo is optional, default to ai/. quant is optional, default to :latest. example: gemma3 (default: unused)" {
+    flag --docker-repo help="Docker Hub 模型仓库。repo 可选，默认为 ai/。quant 可选，默认为 :latest。示例：gemma3（默认：未使用）" {
         arg <REPO_MODEL_QUANT>
     }
-    flag --hf-repo help="Hugging Face model repository; quant is optional, case-insensitive, default to Q4_K_M, or falls back to the first file in the repo if Q4_K_M doesn\'t exist. mmproj is also downloaded automatically if available. to disable, add --no-mmproj example: ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M (default: unused)" {
+    flag --hf-repo help="Hugging Face 模型仓库；quant 可选，不区分大小写，默认 Q4_K_M，如果 Q4_K_M 不存在则回退到仓库中的第一个文件。mmproj 如果可用也会自动下载。要禁用，请添加 --no-mmproj。示例：ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M（默认：未使用）" {
         arg <USER_MODEL_QUANT>
     }
     flag "--spec-draft-type-k --cache-type-k-draft" help="草稿模型 K 的 KV 缓存数据类型（默认：f16）" {
@@ -2907,7 +2907,7 @@ cmd perplexity help="计算模型困惑度与 KL 散度" {
         arg <SEQUENCE>
     }
     flag "--kv-unified --no-kv-unified" help="使用跨所有序列共享的统一 KV 缓冲区"
-    flag "--context-shift --no-context-shift" help="whether to use context shift on infinite text generation (default: disabled)"
+    flag "--context-shift --no-context-shift" help=是否在无限文本生成时使用上下文移位（默认：禁用）
     flag "--save-all-logits --kl-divergence-base" help="设置 logits 文件" {
         arg <FNAME>
     }

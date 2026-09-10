@@ -74,8 +74,8 @@ flag --ubatch-size help=物理最大批处理大小（默认：512） {
 flag --keep help="从初始提示词中保留的 token 数（默认：0，-1 = 全部）" {
     arg <N>
 }
-flag "--perf --no-perf" help="whether to enable internal libllama performance timings (default: false)"
-flag "-e --escape --no-escape" help="whether to process escapes sequences (\\n, \\r, \\t, \\', \\\", \\\\) (default: false)"
+flag "--perf --no-perf" help="是否启用内部 libllama 性能计时（默认：false）"
+flag "-e --escape --no-escape" help="是否处理转义序列（\\n, \\r, \\t, \\', \\\", \\\\)（默认：false）"
 flag --parallel help=并行解码的序列数（默认：1） {
     arg <N>
 }
@@ -100,10 +100,10 @@ flag "-m --model" help=要加载的模型路径 {
 flag --model-url help="模型下载 URL（默认：未使用）" {
     arg <MODEL_URL>
 }
-flag --hf-file help="Hugging Face model file. If specified, it will override the quant in --hf-repo (default: unused)" {
+flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
     arg <FILE>
 }
-flag --hf-token help="Hugging Face access token (default: value from HF_TOKEN environment variable)" {
+flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量的值）" {
     arg <TOKEN>
 }
 flag --rope-scaling help="RoPE 频率缩放方法（默认：linear）" {
@@ -144,12 +144,12 @@ flag --cache-type-v help="V 的 KV 缓存数据类型（默认：f16）" {
 flag --defrag-thold help="KV 缓存碎片整理阈值（已弃用）" {
     arg <N>
 }
-flag --swa-full help="use full-size SWA cache (default: false) info)](https://github.com/ggml-org/llama.cpp/pull/13194#issuecomment-2868343055)"
+flag --swa-full help="使用完整大小的 SWA 缓存（默认：false）"
 flag --rpc help="RPC 服务器列表，逗号分隔（host:port）" {
     arg <SERVERS>
 }
-flag --mlock help="DEPRECATED in favor of `--load-mode`: force system to keep model in RAM rather than swapping or compressing"
-flag "--mmap --no-mmap" help="DEPRECATED in favor of `--load-mode`: whether to memory-map model. (if mmap disabled, slower load but may reduce pageouts if not using mlock)"
+flag --mlock help="已弃用，请使用 `--load-mode`：强制系统将模型保留在内存中，而不是交换或压缩"
+flag "--mmap --no-mmap" help="已弃用，请使用 `--load-mode`：是否将模型映射到内存（如果禁用 mmap，加载较慢，但如果未使用 mlock，可能会减少页面换出）"
 flag --load-mode help=模型加载模式（默认：auto） {
     arg <MODE>
 }
@@ -244,10 +244,10 @@ flag --dry-penalty-last-n help="最近 n 个 token 的 DRY 惩罚（默认：64�
 flag --dry-sequence-breaker help="添加 DRY 采样的序列中断器" {
     arg <STRING>
 }
-flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00)" {
+flag --adaptive-target help="adaptive-p：选择接近此概率的令牌（有效范围 0.0 到 1.0；负数 = 禁用）（默认：-1.00）" {
     arg <N>
 }
-flag --adaptive-decay help="adaptive-p: decay rate for target adaptation over time. lower values are more reactive, higher values are more stable. (valid range 0.0 to 0.99) (default: 0.90)" {
+flag --adaptive-decay help="adaptive-p：目标适应的衰减率。值越低反应越快，值越高越稳定。（有效范围 0.0 到 0.99）（默认：0.90）" {
     arg <N>
 }
 flag --dynatemp-range help=动态温度范围（默认：0.00，禁用） {
@@ -265,7 +265,7 @@ flag --mirostat-lr help="Mirostat 学习率（默认：0.10）" {
 flag --mirostat-ent help="Mirostat 目标熵（默认：5.00）" {
     arg <N>
 }
-flag "-l --logit-bias" help="modifies the likelihood of token appearing in the completion, i.e. `--logit-bias 15043+1` to increase likelihood of token ' Hello', or `--logit-bias 15043-1` to decrease likelihood of token ' Hello'" {
+flag "-l --logit-bias" help="修改令牌在完成中出现的可能性，例如 `--logit-bias 15043+1` 增加令牌 ' Hello' 的可能性，或 `--logit-bias 15043-1` 降低令牌 ' Hello' 的可能性" {
     arg <TOKEN_ID_BIAS>
 }
 flag --grammar help="用于约束生成的 BNF 风格语法" {
@@ -336,12 +336,12 @@ flag --threads-batch help="批处理和提示词处理的线程数（默认：�
 flag --cpu-range-batch help="批处理 CPU 亲和性范围。与 --cpu-mask-batch 互补" {
     arg <LO_HI>
 }
-flag --flash-attn help="set Flash Attention use ('on', 'off', or 'auto', default: 'auto')" {
+flag --flash-attn help="设置闪存注意力使用（'on'、'off' 或 'auto'，默认：'auto'）" {
     arg <ON_OFF_AUTO>
 }
 flag "--kv-offload --no-kv-offload" help="是否启用 KV 缓存卸载（默认：启用）"
-flag "--direct-io --no-direct-io" help="DEPRECATED in favor of `--load-mode`: use DirectIO if available"
-flag --numa help="attempt optimizations that help on some NUMA systems - distribute: spread execution evenly over all nodes - isolate: only spawn threads on CPUs on the node that execution started on - numactl: use the CPU map provided by numactl if run without this previously, it is recommended to drop the system page cache before using this see https://github.com/ggml-org/llama.cpp/issues/1437" {
+flag "--direct-io --no-direct-io" help="已弃用，请使用 `--load-mode`：如果可用，使用 DirectIO"
+flag --numa help="尝试优化某些 NUMA 系统上的性能 - distribute：在所有节点上均匀分布执行 - isolate：仅在执行开始的节点上的 CPU 上生成线程 - numactl：使用 numactl 提供的 CPU 映射。如果之前未运行此命令，建议在使用此命令前丢弃系统页面缓存。参见 https://github.com/ggml-org/llama.cpp/issues/1437" {
     arg <TYPE>
 }
 flag --list-devices help=列出可用设备并退出
@@ -354,10 +354,10 @@ flag --fit-target help=每个设备的目标余量（MiB），默认：1024 {
 flag --control-vector-scaled help=添加带缩放的控制向量（格式：FNAME:SCALE,...） {
     arg <FNAME_SCALE>
 }
-flag --docker-repo help="Docker Hub model repository. repo is optional, default to ai/. quant is optional, default to :latest. example: gemma3 (default: unused)" {
+flag --docker-repo help="Docker Hub 模型仓库。repo 可选，默认为 ai/。quant 可选，默认为 :latest。示例：gemma3（默认：未使用）" {
     arg <REPO_MODEL_QUANT>
 }
-flag --hf-repo help="Hugging Face model repository; quant is optional, case-insensitive, default to Q4_K_M, or falls back to the first file in the repo if Q4_K_M doesn't exist. mmproj is also downloaded automatically if available. to disable, add --no-mmproj example: ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M (default: unused)" {
+flag --hf-repo help="Hugging Face 模型仓库；quant 可选，不区分大小写，默认 Q4_K_M，如果 Q4_K_M 不存在则回退到仓库中的第一个文件。mmproj 如果可用也会自动下载。要禁用，请添加 --no-mmproj。示例：ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M（默认：未使用）" {
     arg <USER_MODEL_QUANT>
 }
 flag "--spec-draft-type-k --cache-type-k-draft" help="草稿模型 K 的 KV 缓存数据类型（默认：f16）" {
@@ -369,7 +369,7 @@ flag "--spec-draft-type-v --cache-type-v-draft" help="草稿模型 V 的 KV 缓�
 flag "--sampler-seq --sampling-seq" help=采样器的简化序列（默认：edskypmxt） {
     arg <SEQUENCE>
 }
-flag "--context-shift --no-context-shift" help="whether to use context shift on infinite text generation (default: disabled)"
+flag "--context-shift --no-context-shift" help=是否在无限文本生成时使用上下文移位（默认：禁用）
 __USAGE_EOF__
     # shellcheck disable=SC2207
 	COMPREPLY=($(compgen -W "$(command usage complete-word --shell bash -f "$spec_file" --cword="$cword" -- "${words[@]}")" -- "$cur"))

@@ -29,25 +29,25 @@ flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
 flag --cache-list help=列出缓存中的模型
 flag --completion-bash help="输出可 source 的 bash 补全脚本"
-flag "-t --threads" help="(default: 10)" {
+flag "-t --threads" help=线程数（默认：10） {
     arg <N>
 }
 flag --threads-batch help="批处理和提示词处理的线程数（默认：与 --threads 相同）" {
     arg <N>
 }
-flag "-C --cpu-mask" help="(default: 0x0)" {
+flag "-C --cpu-mask" help="CPU 亲和性掩码（默认：0x0）" {
     arg <M>
 }
 flag --cpu-range help="CPU 亲和性范围。与 --cpu-mask 互补" {
     arg <LO-HI>
 }
-flag --cpu-strict help="(default: 0)" {
+flag --cpu-strict help="使用严格的 CPU 放置（默认：0）" {
     arg <0_1>
 }
 flag --prio help="进程/线程优先级（默认：0）" {
     arg <N>
 }
-flag --poll help="(default: 50)" {
+flag --poll help=使用轮询级别等待工作（默认：50） {
     arg <0_100>
 }
 flag --cpu-mask-batch help="批处理 CPU 亲和性掩码（默认：与 --cpu-mask 相同）" {
@@ -71,30 +71,30 @@ flag "-c --ctx-size" help="提示词上下文大小（默认：0，0 = 从模型
 flag "-n --predict --n-predict" help="预测的 token 数量（默认：-1，-1 = 无限）" {
     arg <N>
 }
-flag "-b --batch-size" help="(default: 2048)" {
+flag "-b --batch-size" help=逻辑最大批处理大小（默认：2048） {
     arg <N>
 }
-flag --ubatch-size help="(default: 512)" {
+flag --ubatch-size help=物理最大批处理大小（默认：512） {
     arg <N>
 }
 flag --keep help="从初始提示词中保留的 token 数（默认：0，-1 = 全部）" {
     arg <N>
 }
-flag --swa-full help="use full-size SWA cache (default: false) info)](https://github.com/ggml-org/llama.cpp/pull/13194#issuecomment-2868343055)"
-flag --flash-attn help="(default: auto)" {
+flag --swa-full help="使用完整大小的 SWA 缓存（默认：false）"
+flag --flash-attn help=闪存注意力（默认：auto） {
     arg <ON_OFF_AUTO>
 }
 flag "-p --prompt" help="起始生成的提示词；系统消息请用 -sys" {
     arg <PROMPT>
 }
-flag "--perf --no-perf" help="whether to enable internal libllama performance timings (default: false)"
+flag "--perf --no-perf" help="是否启用内部 libllama 性能计时（默认：false）"
 flag "-f --file" help=包含提示词的文件（默认：无） {
     arg <FNAME>
 }
 flag --binary-file help=包含提示词的二进制文件（默认：无） {
     arg <FNAME>
 }
-flag "-e --escape --no-escape" help="whether to process escapes sequences (\\\\n, \\\\r, \\\\t, \\\\', \\\\\", \\\\\\\\) (default: true)"
+flag "-e --escape --no-escape" help="是否处理转义序列（\\n, \\r, \\t, \\', \\\", \\\\)（默认：true）"
 flag --rope-scaling help="RoPE 频率缩放方法（默认：linear）" {
     arg <NONE_LINEAR_YARN>
 }
@@ -124,11 +124,11 @@ flag --yarn-beta-fast help="YaRN：低修正维度或 beta（默认：-1.00）" 
 }
 flag "--kv-offload --no-kv-offload" help="是否启用 KV 缓存卸载（默认：启用）"
 flag "--repack --no-repack" help=是否启用权重重打包（默认：启用）
-flag --no-host help="(default: 0)"
-flag --cache-type-k help="(default: f16)" {
+flag --no-host help=不使用主机（默认：0）
+flag --cache-type-k help="KV 缓存 K 的数据类型（默认：f16）" {
     arg <TYPE>
 }
-flag --cache-type-v help="(default: f16)" {
+flag --cache-type-v help="KV 缓存 V 的数据类型（默认：f16）" {
     arg <TYPE>
 }
 flag --defrag-thold help="KV 缓存碎片整理阈值（已弃用）" {
@@ -140,27 +140,27 @@ flag --parallel help=并行解码的序列数（默认：1） {
 flag --rpc help="注册 RPC 设备（逗号分隔）" {
     arg <SERVERS>
 }
-flag --mlock help="DEPRECATED in favor of `--load-mode`: force system to keep model in RAM rather than swapping or compressing"
-flag "--mmap --no-mmap" help="DEPRECATED in favor of `--load-mode`: whether to memory-map model. (if mmap disabled, slower load but may reduce pageouts if not using mlock)"
-flag "--direct-io --no-direct-io" help="DEPRECATED in favor of `--load-mode`: use DirectIO if available"
+flag --mlock help="已弃用，请使用 `--load-mode`：强制系统将模型保留在内存中，而不是交换或压缩"
+flag "--mmap --no-mmap" help="已弃用，请使用 `--load-mode`：是否将模型映射到内存（如果禁用 mmap，加载较慢，但如果未使用 mlock，可能会减少页面换出）"
+flag "--direct-io --no-direct-io" help="已弃用，请使用 `--load-mode`：如果可用，使用 DirectIO"
 flag --load-mode help=模型加载模式（默认：auto） {
     arg <MODE>
 }
-flag --lazy-mode help="(default: auto)" {
+flag --lazy-mode help=延迟加载模式（默认：auto） {
     arg <MODE>
 }
 flag --numa help="NUMA 模式（默认：禁用）" {
     arg <TYPE>
 }
-flag --device help="(default: auto)" {
+flag --device help=设备（默认：auto） {
     arg <DEV1_DEV2_>
 }
 flag --list-devices help=列出可用设备并退出
-flag --override-tensor help="(default: disabled)" {
+flag --override-tensor help=覆盖张量缓冲区类型（默认：disabled） {
     arg "<TENSOR_NAME_PATTERN>=<BUFFER_TYPE>_>"
 }
 flag --cpu-moe help="将所有 MoE 权重保留在 CPU 中"
-flag --n-cpu-moe help="(default: 0)" {
+flag --n-cpu-moe help="将前 N 层的 MoE 权重保留在 CPU 中（默认：0）" {
     arg <N>
 }
 flag --n-cpu-ffn help="将前 N 层的密集 FFN 权重保留在 CPU 中" {
@@ -169,13 +169,13 @@ flag --n-cpu-ffn help="将前 N 层的密集 FFN 权重保留在 CPU 中" {
 flag "--gpu-layers --n-gpu-layers" help="存储在显存中的最大层数，精确数字、'auto' 或 'all'（默认：auto）" {
     arg <N>
 }
-flag --split-mode help="(default: layer)" {
+flag --split-mode help=分割模式（默认：layer） {
     arg <NONE_LAYER_ROW_TENSOR>
 }
-flag --tensor-split help="(default: 0)" {
+flag --tensor-split help=张量分割比例（默认：0） {
     arg <N0_N1_N2_>
 }
-flag --main-gpu help="(default: 0)" {
+flag --main-gpu help="主 GPU 索引（默认：0）" {
     arg <INDEX>
 }
 flag --fit help=是否自动调整参数以适应显存（默认：on） {
@@ -204,13 +204,13 @@ flag --control-vector-layer-range help=应用控制向量的层范围（含首�
 flag --model-url help="模型下载 URL（默认：未使用）" {
     arg <MODEL_URL>
 }
-flag --docker-repo help="Docker Hub model repository. repo is optional, default to ai/. quant is optional, default to :latest. example: gemma3 (default: unused)" {
+flag --docker-repo help="Docker Hub 模型仓库。repo 可选，默认为 ai/。quant 可选，默认为 :latest。示例：gemma3（默认：未使用）" {
     arg "<REPO>_]<MODEL>[:QUANT>"
 }
-flag --hf-file help="Hugging Face model file. If specified, it will override the quant in --hf-repo (default: unused)" {
+flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
     arg <FILE>
 }
-flag --hf-token help="Hugging Face access token (default: value from HF_TOKEN environment variable)" {
+flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量的值）" {
     arg <TOKEN>
 }
 flag --log-disable help=禁用日志
@@ -295,10 +295,10 @@ flag --dry-penalty-last-n help="最近 n 个 token 的 DRY 惩罚（默认：64�
 flag --dry-sequence-breaker help="添加 DRY 采样的序列中断器" {
     arg <STRING>
 }
-flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00)" {
+flag --adaptive-target help="adaptive-p：选择接近此概率的令牌（有效范围 0.0 到 1.0；负数 = 禁用）（默认：-1.00）" {
     arg <N>
 }
-flag --adaptive-decay help="adaptive-p: decay rate for target adaptation over time. lower values are more reactive, higher values are more stable. (valid range 0.0 to 0.99) (default: 0.90)" {
+flag --adaptive-decay help="adaptive-p：目标适应的衰减率。值越低反应越快，值越高越稳定。（有效范围 0.0 到 0.99）（默认：0.90）" {
     arg <N>
 }
 flag --dynatemp-range help=动态温度范围（默认：0.00，禁用） {
@@ -316,7 +316,7 @@ flag --mirostat-lr help="Mirostat 学习率（默认：0.10）" {
 flag --mirostat-ent help="Mirostat 目标熵（默认：5.00）" {
     arg <N>
 }
-flag "-l --logit-bias" help="modifies the likelihood of token appearing in the completion, i.e. `--logit-bias 15043+1` to increase likelihood of token ' Hello', or `--logit-bias 15043-1` to decrease likelihood of token ' Hello'" {
+flag "-l --logit-bias" help="修改令牌在完成中出现的可能性，例如 `--logit-bias 15043+1` 增加令牌 ' Hello' 的可能性，或 `--logit-bias 15043-1` 降低令牌 ' Hello' 的可能性" {
     arg "<TOKEN_ID(+_-)BIAS>"
 }
 flag --grammar help="用于约束生成的 BNF 风格语法" {
@@ -338,7 +338,7 @@ flag --lora help="LoRA 适配器路径（逗号分隔可加载多个）" {
 flag --lora-scaled help="带缩放系数的 LoRA 适配器路径（格式：FNAME:SCALE,...）" {
     arg <FNAME:SCALE_>
 }
-flag "-m --model" help="(default: models/7B/ggml-model-q4_0.gguf)" {
+flag "-m --model" help="模型文件路径（默认：models/7B/ggml-model-q4_0.gguf）" {
     arg <FNAME>
 }
 flag "-o --output --output-file" help=输出文件（默认：空） {
