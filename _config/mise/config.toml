@@ -15,7 +15,7 @@ deno = "latest"
 "github:cargo-bins/cargo-binstall" = "latest"
 "github:cli/cli" = { version = "latest", rename_exe = "gh" }
 "github:evilmartians/lefthook" = { version = "latest", rename_exe = "lefthook" }
-"github:ggml-org/llama.cpp" = "b10869"
+"github:ggml-org/llama.cpp" = "b10930"
 "github:hatoo/oha" = "latest"
 "github:jqlang/jq" = { version = "latest", rename_exe = "jq" }
 "github:mikefarah/yq" = { version = "latest", rename_exe = "yq" }
@@ -30,6 +30,7 @@ deno = "latest"
 "github:watchexec/watchexec" = "latest"
 java = "latest"
 node = "latest"
+"npm:@deepseek-ai/dsh" = "latest"
 "npm:@vscode/vsce" = "latest"
 "npm:npkill" = "latest"
 "npm:nrm" = "latest"
@@ -123,8 +124,11 @@ _.file = { paths = [
   "~/.config/mise/env/github.yaml",
   "~/.config/mise/env/rust.yaml",
   "~/.config/mise/env/npm.yaml",
+  "~/.config/mise/env/homebrew.yaml",
+  "~/.config/mise/env/copilot.yaml",
   "~/.config/mise/env/k9s.yaml",
   "~/.config/mise/env/modelscope.yaml",
+  "~/.config/mise/env/codex.yaml",
   "~/.config/mise/env/deepseek.yaml",
   "~/.config/mise/env/xiaomi.yaml",
   "~/.config/mise/env/z.ai.yaml",

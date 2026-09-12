@@ -146,6 +146,7 @@ spawn gen_local_completion lefthook "lefthook completion zsh"
 spawn gen_local_completion kubectl "kubectl completion zsh"
 spawn gen_local_completion witr "witr completion zsh"
 spawn gen_local_completion xcbeautify "xcbeautify --generate-completion-script"
+spawn gen_local_completion unsloth "unsloth --show-completion zsh"
 
 # ---- 远程补全（不依赖本地命令是否存在） ----
 spawn fetch_url_completion dust "https://raw.githubusercontent.com/bootandy/dust/refs/heads/master/completions/_dust"

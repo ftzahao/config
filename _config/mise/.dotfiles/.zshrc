@@ -2,6 +2,7 @@
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
+export HISTFILE="$HOME/.cache/zsh_history"
 setopt HIST_EXPIRE_DUPS_FIRST # 当历史记录满时，优先删除重复的旧条目
 setopt HIST_IGNORE_DUPS # 不记录与上一条相同的命令
 setopt HIST_IGNORE_SPACE # 不记录以空格开头的命令
@@ -48,8 +49,9 @@ alias dsstore-clean="find . -name '.DS_Store' -type f -delete" # 清理 .DS_Stor
 [[ -d "$ZSH_COMPLETION_DIR" ]] && fpath+=("$ZSH_COMPLETION_DIR")
 
 autoload -Uz compinit
+_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache" # _store_cache/_retrieve_cache 缓存目录（默认 ~/.zcompcache）
 _comp_dump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
-mkdir -p -- "${_comp_dump:h}"
+mkdir -p -- "${_comp_dump:h}" "$_cache_dir"
 
 # compinit 分级加载：dump 超过 24 小时才做一次全量 compinit
 # （重扫 fpath 以发现新装补全 + compaudit 安全检查 + 重建 dump），
