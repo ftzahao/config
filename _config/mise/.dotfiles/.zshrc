@@ -2,7 +2,7 @@
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-export HISTFILE="$HOME/.cache/zsh_history"
+export HISTFILE="$HOME/.cache/zsh/zsh_history"
 setopt HIST_EXPIRE_DUPS_FIRST # 当历史记录满时，优先删除重复的旧条目
 setopt HIST_IGNORE_DUPS # 不记录与上一条相同的命令
 setopt HIST_IGNORE_SPACE # 不记录以空格开头的命令

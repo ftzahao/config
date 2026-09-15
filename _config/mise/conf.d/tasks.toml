@@ -147,6 +147,7 @@ spawn gen_local_completion kubectl "kubectl completion zsh"
 spawn gen_local_completion witr "witr completion zsh"
 spawn gen_local_completion xcbeautify "xcbeautify --generate-completion-script"
 spawn gen_local_completion unsloth "unsloth --show-completion zsh"
+spawn gen_local_completion mo "mo completion zsh"
 
 # ---- 远程补全（不依赖本地命令是否存在） ----
 spawn fetch_url_completion dust "https://raw.githubusercontent.com/bootandy/dust/refs/heads/master/completions/_dust"
@@ -243,7 +244,7 @@ run = "mise install"
 
 [tasks.cli-proxy-api]
 description = "运行 cli-proxy-api"
-env = { CPA_BASE_URL = "http://127.0.0.1:8317", CPA_MANAGEMENT_KEY = "000", LOGIN_PASSWORD = "000", CPA_PUBLIC_URL = "http://127.0.0.1:8317", AUTH_ENABLED = false, TLS_SKIP_VERIFY = true, WORK_DIR = "/Users/shimenghao/.cache/cli-proxy-api/data", APP_HOST = "127.0.0.1", APP_PORT = "8318" }
+env = { _.file = { paths = ["~/.config/mise/env/cli-proxy-api.yaml"] } }
 run = '''
 #!/usr/bin/env zsh
 

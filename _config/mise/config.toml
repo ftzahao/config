@@ -15,8 +15,9 @@ deno = "latest"
 "github:cargo-bins/cargo-binstall" = "latest"
 "github:cli/cli" = { version = "latest", rename_exe = "gh" }
 "github:evilmartians/lefthook" = { version = "latest", rename_exe = "lefthook" }
-"github:ggml-org/llama.cpp" = "b10930"
+"github:ggml-org/llama.cpp" = "b10976"
 "github:hatoo/oha" = "latest"
+"github:jdx/pitchfork" = "latest"
 "github:jqlang/jq" = { version = "latest", rename_exe = "jq" }
 "github:mikefarah/yq" = { version = "latest", rename_exe = "yq" }
 "github:nubjs/nub" = "latest"
@@ -30,7 +31,7 @@ deno = "latest"
 "github:watchexec/watchexec" = "latest"
 java = "latest"
 node = "latest"
-"npm:@deepseek-ai/dsh" = "latest"
+"npm:@deepseek-ai/dsh" = "alpha"
 "npm:@vscode/vsce" = "latest"
 "npm:npkill" = "latest"
 "npm:nrm" = "latest"
@@ -40,7 +41,7 @@ node = "latest"
 "pipx:hf" = "latest"
 "pipx:mlx-lm" = "latest"
 "pipx:modelscope-hub" = "latest"
-python = ["latest", "3.11", "3.10"]
+python = ["latest", "3.13", "3.11", "3.10"]
 ruby = "latest"
 rust = "stable"
 usage = "latest"
@@ -128,7 +129,6 @@ _.file = { paths = [
   "~/.config/mise/env/copilot.yaml",
   "~/.config/mise/env/k9s.yaml",
   "~/.config/mise/env/modelscope.yaml",
-  "~/.config/mise/env/codex.yaml",
   "~/.config/mise/env/deepseek.yaml",
   "~/.config/mise/env/xiaomi.yaml",
   "~/.config/mise/env/z.ai.yaml",
