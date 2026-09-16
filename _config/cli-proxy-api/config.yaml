@@ -80,7 +80,7 @@ codex-api-key: []
 claude-api-key: []
 # OpenAI 兼容提供商
 openai-compatibility:
-  - name: HERMES_AGENT
+  - name: nous
     base-url: https://inference-api.nousresearch.com/v1
     api-key-entries:
       - api-key:
@@ -133,8 +133,10 @@ openai-compatibility:
             - low
             - high
             - max
+      - name: inclusionai/ling-3.0-flash-sante:free
+        alias: ""
     headers:
-      User-Agent: HermesAgent/0.21.1
+      User-Agent: HermesAgent/0.21.3
       Authorization: Bearer
 # Vertex API 密钥（Vertex 兼容端点，使用 API key + base URL）
 vertex-api-key: []

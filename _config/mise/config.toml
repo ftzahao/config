@@ -15,7 +15,7 @@ deno = "latest"
 "github:cargo-bins/cargo-binstall" = "latest"
 "github:cli/cli" = { version = "latest", rename_exe = "gh" }
 "github:evilmartians/lefthook" = { version = "latest", rename_exe = "lefthook" }
-"github:ggml-org/llama.cpp" = "b10976"
+"github:ggml-org/llama.cpp" = "b10994"
 "github:hatoo/oha" = "latest"
 "github:jdx/pitchfork" = "latest"
 "github:jqlang/jq" = { version = "latest", rename_exe = "jq" }

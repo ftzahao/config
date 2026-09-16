@@ -228,9 +228,21 @@ unset _comp_dump
 description = "安装 mise 到 ~/.local/bin"
 run = "curl https://mise.run | sh"
 
+[tasks.i-unsloth-cli]
+description = "安装 unsloth cli"
+run = "curl -fsSL https://unsloth.ai/install.sh | sh"
+
+[tasks.i-cua-cli]
+description = "安装 Cua 驱动"
+run = """
+#!/usr/bin/env zsh
+
+/bin/bash -c "$(curl -fsSL https://cua.ai/driver/install.sh)"
+"""
+
 [tasks.mise-update]
-description = "更新mise的包到最新版本"
-run = "mise cache clear && mise upgrade --prune"
+description = "更新 mise 的包以及自身到最新版本"
+run = "mise self-update && mise cache clear && mise upgrade --prune"
 
 [tasks.i-x64]
 description = "安装64位系统的工具包: mise run i-x64 [tool@version]"
