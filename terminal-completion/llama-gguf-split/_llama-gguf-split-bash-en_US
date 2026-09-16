@@ -23,7 +23,7 @@ _llama_gguf_split() {
     cat >| "$spec_file" <<'__USAGE_EOF__'
 name "LLaMA GGUF Split (English)"
 bin llama-gguf-split
-version "0.4.0-dev"
+version "0.4.1-dev"
 about "GGUF 文件拆分/合并工具"
 flag "-h --help" help="show this help message and exit"
 flag --version help="show version and build info"

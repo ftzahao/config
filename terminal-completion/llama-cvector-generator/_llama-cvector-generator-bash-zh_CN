@@ -23,7 +23,7 @@ _llama_cvector_generator() {
     cat >| "$spec_file" <<'__USAGE_EOF__'
 name "Control Vector Generator (中文)"
 bin llama-cvector-generator
-version "0.4.0-dev"
+version "0.4.1-dev"
 about 控制向量生成工具
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息

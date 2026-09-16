@@ -10,7 +10,7 @@ end
 
 set _usage_spec_llama_cvector_generator 'name "Control Vector Generator (English)"
 bin llama-cvector-generator
-version "0.4.0-dev"
+version "0.4.1-dev"
 about "LLaMA.cpp llama-cvector-generator tool"
 flag "-h --help --usage" help="print usage and exit"
 flag --version help="show version and build info"

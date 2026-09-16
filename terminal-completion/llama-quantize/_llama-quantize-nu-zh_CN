@@ -2,7 +2,7 @@
 module _llama_quantize_completions {
     const _usage_spec_llama_quantize = r##'name "LLaMA Quantize (中文)"
 bin llama-quantize
-version "0.4.0-dev"
+version "0.4.1-dev"
 about "GGUF 模型量化工具"
 flag --allow-requantize help=""
 flag --leave-output-tensor help=""

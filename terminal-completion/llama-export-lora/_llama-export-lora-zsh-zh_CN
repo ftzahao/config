@@ -20,7 +20,7 @@ _llama_export_lora() {
   cat >| "$spec_file" <<'__USAGE_EOF__'
 name "LoRA Export (中文)"
 bin llama-export-lora
-version "0.4.0-dev"
+version "0.4.1-dev"
 about "LoRA 适配器导出 / 合并工具"
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
@@ -137,9 +137,6 @@ flag --parallel help=并行解码的序列数（默认：1） {
 flag --rpc help="注册 RPC 设备（逗号分隔）" {
     arg <SERVERS>
 }
-flag --mlock help="已弃用，请使用 `--load-mode`：强制系统将模型保留在内存中，而不是交换或压缩"
-flag "--mmap --no-mmap" help="已弃用，请使用 `--load-mode`：是否将模型映射到内存（如果禁用 mmap，加载较慢，但如果未使用 mlock，可能会减少页面换出）"
-flag "--direct-io --no-direct-io" help="已弃用，请使用 `--load-mode`：如果可用，使用 DirectIO"
 flag --load-mode help=模型加载模式（默认：auto） {
     arg <MODE>
 }
@@ -202,7 +199,10 @@ flag --model-url help="模型下载 URL（默认：未使用）" {
     arg <MODEL_URL>
 }
 flag --docker-repo help="Docker Hub 模型仓库。repo 可选，默认为 ai/。quant 可选，默认为 :latest。示例：gemma3（默认：未使用）" {
-    arg "<REPO>_]<MODEL>[:QUANT>"
+    arg <REPO_MODEL_QUANT>
+}
+flag --hf-repo help="Hugging Face 模型仓库；quant 可选，不区分大小写，默认 Q4_K_M，如果 Q4_K_M 不存在则回退到仓库中的第一个文件。mmproj 如果可用也会自动下载。要禁用，请添加 --no-mmproj。示例：ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M（默认：未使用）" {
+    arg <USER_MODEL_QUANT>
 }
 flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
     arg <FILE>

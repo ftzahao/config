@@ -14,9 +14,10 @@ Register-ArgumentCompleter -Native -CommandName 'llama-download' -ScriptBlock {
 
     'name "LLaMA Download"
 bin "llama download"
-version "0.4.0-dev"
+version "0.4.1-dev"
 about "llama.cpp 模型下载工具"
 flag "-h --help --usage" help=打印用法并退出
+flag "--mmproj-auto --no-mmproj --no-mmproj-auto" help="禁用自动下载 mmproj"
 flag "-m --model" help=要加载的模型路径 {
     arg <FNAME>
 }
@@ -38,7 +39,6 @@ flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量
 flag --mtp help="同时下载 MTP 头（如果可用）"
 flag --dflash help="同时下载 DFlash sidecar（如果可用）"
 flag --eagle3 help="同时下载 Eagle3 sidecar（如果可用）"
-flag --no-mmproj help="禁用自动下载 mmproj"
 flag --offline help=离线模式：强制使用缓存，禁止网络访问
 ' | Out-File -FilePath $specFile -Encoding utf8
 

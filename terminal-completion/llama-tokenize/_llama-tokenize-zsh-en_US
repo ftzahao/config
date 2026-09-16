@@ -20,7 +20,7 @@ _llama_tokenize() {
   cat >| "$spec_file" <<'__USAGE_EOF__'
 name "Tokenize (English)"
 bin llama-tokenize
-version "0.4.0-dev"
+version "0.4.1-dev"
 about "LLaMA.cpp llama-tokenize tool"
 flag "-h --help --usage" help="print usage and exit"
 flag --version help="show version and build info"
@@ -137,9 +137,6 @@ flag --parallel help="number of parallel sequences to decode (default: 1)" {
 flag --rpc help="comma-separated list of RPC servers (host:port)" {
     arg <SERVERS>
 }
-flag --mlock help="DEPRECATED in favor of `--load-mode`: force system to keep model in RAM rather than swapping or compressing"
-flag "--mmap --no-mmap" help="DEPRECATED in favor of `--load-mode`: whether to memory-map model. (if mmap disabled, slower load but may reduce pageouts if not using mlock)"
-flag "--direct-io --no-direct-io" help="DEPRECATED in favor of `--load-mode`: use DirectIO if available"
 flag --load-mode help="model loading mode (default: auto) - auto: mmap, unless a device does not support it - none: no special loading mode - mmap: memory-map model (if mmap disabled, slower load but may reduce pageouts if not using mlock) - mlock: force system to keep model in RAM rather than swapping or compressing - mmap+mlock: mmap + force system to keep model in RAM rather than swapping or compressing - dio: use DirectIO if available" {
     arg <MODE>
 }
@@ -328,8 +325,11 @@ flag "-m --model" help="model path to load" {
 flag --model-url help="model download url (default: unused)" {
     arg <MODEL_URL>
 }
-flag --docker-repo help="Docker Hub model repository. repo is optional, default to ai/. quant is optional, default to :latest. example: gemma3 (default: unused) -hf, -hfr, --hf-repo <user>/<model>[:quant] Hugging Face model repository; quant is optional, case-insensitive, default to Q4_K_M, or falls back to the first file in the repo if Q4_K_M doesn't exist. mmproj is also downloaded automatically if available. to disable, add --no-mmproj example: ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M (default: unused)" {
-    arg "<REPO>_]<MODEL>[:QUANT>"
+flag --docker-repo help="Docker Hub model repository. repo is optional, default to ai/. quant is optional, default to :latest. example: gemma3 (default: unused)" {
+    arg <REPO_MODEL_QUANT>
+}
+flag --hf-repo help="Hugging Face model repository; quant is optional, case-insensitive, default to Q4_K_M, or falls back to the first file in the repo if Q4_K_M doesn't exist. mmproj is also downloaded automatically if available. to disable, add --no-mmproj example: ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M (default: unused)" {
+    arg <USER_MODEL_QUANT>
 }
 flag --hf-file help="Hugging Face model file. If specified, it will override the quant in --hf-repo (default: unused)" {
     arg <FILE>

@@ -1,7 +1,7 @@
 name "Control Vector Generator (English)"
 bin "llama-cvector-generator"
 about "LLaMA.cpp llama-cvector-generator tool"
-version "0.4.0-dev"
+version "0.4.1-dev"
 
 flag "-h --help --usage" help="print usage and exit"
 flag "--version" help="show version and build info"

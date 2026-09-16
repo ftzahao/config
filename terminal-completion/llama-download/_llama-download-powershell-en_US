@@ -14,9 +14,10 @@ Register-ArgumentCompleter -Native -CommandName 'llama-download' -ScriptBlock {
 
     'name "LLaMA Download"
 bin "llama download"
-version "0.4.0-dev"
+version "0.4.1-dev"
 about "llama.cpp model download tool"
 flag "-h --help --usage" help="print usage and exit"
+flag "--mmproj-auto --no-mmproj --no-mmproj-auto" help="disable automatic mmproj download"
 flag "-m --model" help="model path to load" {
     arg <FNAME>
 }
@@ -38,7 +39,6 @@ flag --hf-token help="Hugging Face access token (default: HF_TOKEN env var)" {
 flag --mtp help="also download the MTP head, if available"
 flag --dflash help="also download the DFlash sidecar, if available"
 flag --eagle3 help="also download the Eagle3 sidecar, if available"
-flag --no-mmproj help="disable automatic mmproj download"
 flag --offline help="Offline mode: forces use of cache, prevents network access"
 ' | Out-File -FilePath $specFile -Encoding utf8
 

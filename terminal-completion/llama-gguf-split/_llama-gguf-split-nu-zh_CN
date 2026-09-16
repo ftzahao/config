@@ -2,7 +2,7 @@
 module _llama_gguf_split_completions {
     const _usage_spec_llama_gguf_split = r##'name "LLaMA GGUF Split (中文)"
 bin llama-gguf-split
-version "0.4.0-dev"
+version "0.4.1-dev"
 about "GGUF 文件拆分/合并工具"
 flag "-h --help" help=显示帮助信息并退出
 flag --version help=显示版本和构建信息

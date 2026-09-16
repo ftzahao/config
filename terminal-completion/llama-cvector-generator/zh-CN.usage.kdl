@@ -1,7 +1,7 @@
 name "Control Vector Generator (中文)"
 bin "llama-cvector-generator"
 about "控制向量生成工具"
-version "0.4.0-dev"
+version "0.4.1-dev"
 
 flag "-h --help --usage" help="打印用法并退出"
 flag "--version" help="显示版本和构建信息"

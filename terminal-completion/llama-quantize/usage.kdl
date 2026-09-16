@@ -1,7 +1,7 @@
 name "LLaMA Quantize (English)"
 bin "llama-quantize"
 about "GGUF 模型量化工具"
-version "0.4.0-dev"
+version "0.4.1-dev"
 
 flag "--allow-requantize" help=""
 flag "--leave-output-tensor" help=""

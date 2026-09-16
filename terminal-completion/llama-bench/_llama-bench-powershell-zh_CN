@@ -14,8 +14,10 @@ Register-ArgumentCompleter -Native -CommandName 'llama-bench' -ScriptBlock {
 
     'name "LLaMA Bench (中文)"
 bin llama-bench
-version "0.4.0-dev"
+version "0.4.1-dev"
 about 模型性能基准测试工具
+flag "-h --help" help=""
+flag --version help=显示版本和构建信息
 flag --numa help="NUMA 模式（默认：禁用）" {
     arg <TYPE>
 }
@@ -28,25 +30,13 @@ flag --prio help="进程/线程优先级（默认：0）" {
 flag --delay help=每次测试间的延迟（默认：0） {
     arg <0_N>
 }
-flag --list-devices help=列出可用设备并退出
-flag --hf-repo help="Hugging Face 模型仓库；quant 可选，不区分大小写，默认 Q4_K_M，如果 Q4_K_M 不存在则回退到仓库中的第一个文件。示例：ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M（默认：未使用）" {
-    arg <USER_MODEL_QUANT>
-}
-flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
-    arg <FILE>
-}
-flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量的值）" {
-    arg <TOKEN>
-}
-flag --rpc help="注册 RPC 设备（逗号分隔）" {
-    arg <RPC_SERVERS>
-}
 flag "-o --output" help="stdout 输出格式（默认：md）" {
     arg <CSV_JSON_JSONL_MD_SQL>
 }
 flag --output-err help="stderr 输出格式（默认：无）" {
     arg <CSV_JSON_JSONL_MD_SQL>
 }
+flag --list-devices help=列出可用设备并退出
 flag "-v --verbose" help=详细输出
 flag --progress help=打印测试进度指示器
 flag --no-warmup help=跳过基准测试前的预热运行
@@ -56,11 +46,22 @@ flag --fit-target help=适配设备内存的余量（MiB，默认：关闭） {
 flag --fit-ctx help="--fit-target 的最小上下文大小（默认：4096）" {
     arg <N>
 }
-flag --offline help=离线模式：强制使用缓存，禁止网络访问（默认：禁用）
-flag "-h --help" help=""
+flag --rpc help="注册 RPC 设备（逗号分隔）" {
+    arg <RPC_SERVERS>
+}
 flag "-m --model" help="模型文件路径（默认：models/7B/ggml-model-q4_0.gguf）" {
     arg <FILENAME>
 }
+flag --hf-repo help="Hugging Face 模型仓库；quant 可选，不区分大小写，默认 Q4_K_M，如果 Q4_K_M 不存在则回退到仓库中的第一个文件。示例：ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M（默认：未使用）" {
+    arg <USER_MODEL_QUANT>
+}
+flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
+    arg <FILE>
+}
+flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量的值）" {
+    arg <TOKEN>
+}
+flag --offline help=离线模式：强制使用缓存，禁止网络访问（默认：禁用）
 flag "-p --n-prompt" help=提示词大小（默认：512） {
     arg <N>
 }
@@ -120,12 +121,6 @@ flag --load-mode help="" {
 }
 flag --lazy-mode help=延迟加载模式（默认：auto） {
     arg <ON_AUTO_OFF>
-}
-flag --mmap help="已弃用，请使用 --load-mode" {
-    arg <N>
-}
-flag --direct-io help="已弃用，请使用 --load-mode" {
-    arg <N>
 }
 flag --embeddings help=是否返回嵌入（默认：0） {
     arg <N>

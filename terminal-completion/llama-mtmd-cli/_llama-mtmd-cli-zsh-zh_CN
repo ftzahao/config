@@ -20,13 +20,16 @@ _llama_mtmd_cli() {
   cat >| "$spec_file" <<'__USAGE_EOF__'
 name "LLaMA Multimodal CLI (中文)"
 bin llama-mtmd-cli
-version "0.4.0-dev"
+version "0.4.1-dev"
 about 多模态模型命令行工具
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
 flag --cache-list help=列出缓存中的模型
 flag --completion-bash help="输出可 source 的 bash 补全脚本"
 flag "-t --threads" help="生成时使用的 CPU 线程数（默认：-1）" {
+    arg <N>
+}
+flag --threads-batch help="批处理和提示词处理的线程数（默认：与 --threads 相同）" {
     arg <N>
 }
 flag "-C --cpu-mask" help="CPU 亲和性掩码：任意长度十六进制。与 cpu-range 互补（默认：\"\")" {
@@ -46,6 +49,9 @@ flag --poll help="使用轮询级别等待工作（0 - 不轮询，默认：50�
 }
 flag --cpu-mask-batch help="批处理 CPU 亲和性掩码（默认：与 --cpu-mask 相同）" {
     arg <M>
+}
+flag --cpu-range-batch help="批处理 CPU 亲和性范围。与 --cpu-mask-batch 互补" {
+    arg <LO_HI>
 }
 flag --cpu-strict-batch help="使用严格的 CPU 放置（默认：与 --cpu-strict 相同）" {
     arg <N>
@@ -71,38 +77,21 @@ flag --ubatch-size help=物理最大批处理大小（默认：512） {
 flag --keep help="从初始提示词中保留的 token 数（默认：0，-1 = 全部）" {
     arg <N>
 }
+flag --swa-full help="使用完整大小的 SWA 缓存（默认：false）"
+flag --flash-attn help="设置闪存注意力使用（'on'、'off' 或 'auto'，默认：'auto'）" {
+    arg <ON_OFF_AUTO>
+}
+flag "-p --prompt" help="起始生成的提示词；系统消息请用 -sys" {
+    arg <PROMPT>
+}
 flag "--perf --no-perf" help="是否启用内部 libllama 性能计时（默认：false）"
-flag "-e --escape --no-escape" help="是否处理转义序列（\\n, \\r, \\t, \\', \\\", \\\\)（默认：true）"
-flag --parallel help=并行解码的序列数（默认：1） {
-    arg <N>
-}
-flag --override-tensor help=覆盖张量缓冲区类型 {
-    arg <TENSOR>
-}
-flag --cpu-moe help="将所有 MoE 权重保留在 CPU 中"
-flag --n-cpu-moe help="将前 N 层的 MoE 权重保留在 CPU 中" {
-    arg <N>
-}
-flag --n-cpu-ffn help="将前 N 层的密集 FFN 权重保留在 CPU 中" {
-    arg <N>
-}
-flag --check-tensors help=检查模型张量数据中的无效值（默认：false）
-flag --override-kv help=按键覆盖模型元数据的高级选项 {
-    arg <KEY_TYPE_VALUE>
-}
-flag "--op-offload --no-op-offload" help=是否将主机张量操作卸载到设备（默认：true）
-flag "-m --model" help=要加载的模型路径 {
+flag "-f --file" help=包含提示词的文件（默认：无） {
     arg <FNAME>
 }
-flag --model-url help="模型下载 URL（默认：未使用）" {
-    arg <MODEL_URL>
+flag --binary-file help=包含提示词的二进制文件（默认：无） {
+    arg <FNAME>
 }
-flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
-    arg <FILE>
-}
-flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量的值）" {
-    arg <TOKEN>
-}
+flag "-e --escape --no-escape" help="是否处理转义序列（\\n, \\r, \\t, \\', \\\", \\\\)（默认：true）"
 flag --rope-scaling help="RoPE 频率缩放方法（默认：linear）" {
     arg <NONE_LINEAR_YARN>
 }
@@ -130,6 +119,7 @@ flag --yarn-beta-slow help="YaRN：高修正维度或 alpha（默认：-1.00）"
 flag --yarn-beta-fast help="YaRN：低修正维度或 beta（默认：-1.00）" {
     arg <N>
 }
+flag "--kv-offload --no-kv-offload" help="是否启用 KV 缓存卸载（默认：启用）"
 flag "--repack --no-repack" help=是否启用权重重打包（默认：启用）
 flag --no-host help=绕过主机缓冲区以允许使用额外缓冲区
 flag --cache-type-k help="K 的 KV 缓存数据类型（默认：f16）" {
@@ -141,23 +131,40 @@ flag --cache-type-v help="V 的 KV 缓存数据类型（默认：f16）" {
 flag --defrag-thold help="KV 缓存碎片整理阈值（已弃用）" {
     arg <N>
 }
-flag --swa-full help="使用完整大小的 SWA 缓存（默认：false）"
+flag --parallel help=并行解码的序列数（默认：1） {
+    arg <N>
+}
 flag --rpc help="RPC 服务器列表，逗号分隔（host:port）" {
     arg <SERVERS>
 }
-flag --mlock help="已弃用，请使用 `--load-mode`：强制系统将模型保留在内存中，而不是交换或压缩"
-flag "--mmap --no-mmap" help="已弃用，请使用 `--load-mode`：是否将模型映射到内存（如果禁用 mmap，加载较慢，但如果未使用 mlock，可能会减少页面换出）"
 flag --load-mode help=模型加载模式（默认：auto） {
     arg <MODE>
 }
 flag --lazy-mode help=按需读取特定张量（默认：auto） {
     arg <MODE>
 }
+flag --numa help="尝试优化某些 NUMA 系统上的性能 - distribute：在所有节点上均匀分布执行 - isolate：仅在执行开始的节点上的 CPU 上生成线程 - numactl：使用 numactl 提供的 CPU 映射。如果之前未运行此命令，建议在使用此命令前丢弃系统页面缓存。参见 https://github.com/ggml-org/llama.cpp/issues/1437" {
+    arg <TYPE>
+}
 flag --device help="用于卸载的设备列表，逗号分隔（none = 不卸载）" {
     arg <DEV1_DEV2>
 }
+flag --list-devices help=列出可用设备并退出
+flag --override-tensor help=覆盖张量缓冲区类型 {
+    arg <TENSOR>
+}
+flag --cpu-moe help="将所有 MoE 权重保留在 CPU 中"
+flag --n-cpu-moe help="将前 N 层的 MoE 权重保留在 CPU 中" {
+    arg <N>
+}
+flag --n-cpu-ffn help="将前 N 层的密集 FFN 权重保留在 CPU 中" {
+    arg <N>
+}
 flag "--gpu-layers --n-gpu-layers" help="存储在显存中的最大层数，精确数字、'auto' 或 'all'（默认：auto）" {
     arg <N>
+}
+flag --split-mode help="多 GPU 模型分割方式（默认：layer）" {
+    arg <NONE_LAYER_ROW_TENSOR>
 }
 flag --tensor-split help="各 GPU 卸载比例，逗号分隔，如 3,1" {
     arg <N0_N1_N2>
@@ -168,9 +175,17 @@ flag --main-gpu help="用于模型的 GPU（默认：0）" {
 flag --fit help=是否自动调整参数以适应显存（默认：on） {
     arg <ON_OFF>
 }
+flag --fit-target help=每个设备的目标余量（MiB），默认：1024 {
+    arg <MIB0_MIB1_MIB2>
+}
 flag --fit-ctx help="可由 --fit 设置的最小上下文大小（默认：4096）" {
     arg <N>
 }
+flag --check-tensors help=检查模型张量数据中的无效值（默认：false）
+flag --override-kv help=按键覆盖模型元数据的高级选项 {
+    arg <KEY_TYPE_VALUE>
+}
+flag "--op-offload --no-op-offload" help=是否将主机张量操作卸载到设备（默认：true）
 flag --lora help="LoRA 适配器路径（逗号分隔可加载多个）" {
     arg <FNAME>
 }
@@ -180,14 +195,59 @@ flag --lora-scaled help="带缩放系数的 LoRA 适配器路径（格式：FNAM
 flag --control-vector help=添加控制向量（逗号分隔可添加多个） {
     arg <FNAME>
 }
+flag --control-vector-scaled help=添加带缩放的控制向量（格式：FNAME:SCALE,...） {
+    arg <FNAME_SCALE>
+}
 flag --control-vector-layer-range help=应用控制向量的层范围（含首尾） {
     arg <START>
+}
+flag "-m --model" help=要加载的模型路径 {
+    arg <FNAME>
+}
+flag --model-url help="模型下载 URL（默认：未使用）" {
+    arg <MODEL_URL>
+}
+flag --docker-repo help="Docker Hub 模型仓库。repo 可选，默认为 ai/。quant 可选，默认为 :latest。示例：gemma3（默认：未使用）" {
+    arg <REPO_MODEL_QUANT>
+}
+flag --hf-repo help="Hugging Face 模型仓库；quant 可选，不区分大小写，默认 Q4_K_M，如果 Q4_K_M 不存在则回退到仓库中的第一个文件。mmproj 如果可用也会自动下载。要禁用，请添加 --no-mmproj。示例：ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M（默认：未使用）" {
+    arg <USER_MODEL_QUANT>
+}
+flag --hf-file help="Hugging Face 模型文件。如果指定，将覆盖 --hf-repo 中的 quant（默认：未使用）" {
+    arg <FILE>
+}
+flag --hf-token help="Hugging Face 访问令牌（默认：HF_TOKEN 环境变量的值）" {
+    arg <TOKEN>
+}
+flag --log-disable help=禁用日志
+flag --log-file help=日志输出到文件 {
+    arg <FNAME>
+}
+flag "--log-jsonl --no-log-jsonl" help="以 JSONL 格式记录日志（默认：禁用）"
+flag --log-colors help=设置彩色日志（默认：auto） {
+    arg <ON_OFF_AUTO>
+}
+flag "-v --verbose --log-verbose" help=设置最大详细级别（用于调试）
+flag --offline help=离线模式：强制使用缓存，禁止网络访问
+flag "--verbosity --log-verbosity" help="详细级别阈值（默认：3，0=通用输出, 1=错误, 2=警告, 3=信息, 4=跟踪, 5=调试）" {
+    arg <N>
+}
+flag "--log-prefix --no-log-prefix" help=在日志消息中启用前缀
+flag "--log-timestamps --no-log-timestamps" help=在日志消息中启用时间戳
+flag "--spec-draft-type-k --cache-type-k-draft" help="草稿模型 K 的 KV 缓存数据类型（默认：f16）" {
+    arg <TYPE>
+}
+flag "--spec-draft-type-v --cache-type-v-draft" help="草稿模型 V 的 KV 缓存数据类型（默认：f16）" {
+    arg <TYPE>
 }
 flag --samplers help=按顺序使用的采样器，用分号分隔 {
     arg <SAMPLERS>
 }
 flag "-s --seed" help="随机数种子（默认：-1，-1 为随机）" {
     arg <SEED>
+}
+flag "--sampler-seq --sampling-seq" help=采样器的简化序列（默认：edskypmxt） {
+    arg <SEQUENCE>
 }
 flag --ignore-eos help="忽略流结束 token 并继续生成"
 flag "--temp --temperature" help=温度（默认：0.20） {
@@ -278,12 +338,17 @@ flag --json-schema-file help="包含 JSON Schema 的文件" {
     arg <FILE>
 }
 flag --backend-sampling help=启用后端采样（实验性，默认：禁用）
+flag --system-prompt help=用于模型的系统提示词 {
+    arg <PROMPT>
+}
+flag "--warmup --no-warmup" help=是否用空运行进行预热（默认：启用）
 flag --mmproj help=多模态投影器文件路径 {
     arg <FILE>
 }
 flag --mmproj-url help="多模态投影器文件 URL" {
     arg <URL>
 }
+flag "--mmproj-auto --no-mmproj --no-mmproj-auto" help=是否使用多模态投影器文件（默认：启用）
 flag "--mmproj-offload --no-mmproj-offload" help="是否为多模态投影器启用 GPU 卸载（默认：启用）"
 flag --mmproj-device help=多模态投影器使用的设备 {
     arg <DEVICE>
@@ -306,75 +371,7 @@ flag --video-timestamp-interval help=文本时间戳之间的间隔（毫秒，�
 flag --video-ffmpeg-dir help="ffmpeg 和 ffprobe 所在目录路径（默认：在 PATH 中搜索）" {
     arg <DIR>
 }
-flag "-p --prompt" help="起始生成的提示词；系统消息请用 -sys" {
-    arg <PROMPT>
-}
-flag "-f --file" help=包含提示词的文件（默认：无） {
-    arg <FNAME>
-}
-flag --binary-file help=包含提示词的二进制文件（默认：无） {
-    arg <FNAME>
-}
-flag --system-prompt help=用于模型的系统提示词 {
-    arg <PROMPT>
-}
-flag "--warmup --no-warmup" help=是否用空运行进行预热（默认：启用）
 flag "--jinja --no-jinja" help="是否使用 Jinja 模板引擎（默认：禁用）"
-flag --log-disable help=禁用日志
-flag --log-file help=日志输出到文件 {
-    arg <FNAME>
-}
-flag "--log-jsonl --no-log-jsonl" help="以 JSONL 格式记录日志（默认：禁用）"
-flag --log-colors help=设置彩色日志（默认：auto） {
-    arg <ON_OFF_AUTO>
-}
-flag "-v --verbose --log-verbose" help=设置最大详细级别（用于调试）
-flag --offline help=离线模式：强制使用缓存，禁止网络访问
-flag "--verbosity --log-verbosity" help="详细级别阈值（默认：3，0=通用输出, 1=错误, 2=警告, 3=信息, 4=跟踪, 5=调试）" {
-    arg <N>
-}
-flag "--log-prefix --no-log-prefix" help=在日志消息中启用前缀
-flag "--log-timestamps --no-log-timestamps" help=在日志消息中启用时间戳
-flag --threads-batch help="批处理和提示词处理的线程数（默认：与 --threads 相同）" {
-    arg <N>
-}
-flag --cpu-range-batch help="批处理 CPU 亲和性范围。与 --cpu-mask-batch 互补" {
-    arg <LO_HI>
-}
-flag --flash-attn help="设置闪存注意力使用（'on'、'off' 或 'auto'，默认：'auto'）" {
-    arg <ON_OFF_AUTO>
-}
-flag "--kv-offload --no-kv-offload" help="是否启用 KV 缓存卸载（默认：启用）"
-flag "--direct-io --no-direct-io" help="已弃用，请使用 `--load-mode`：如果可用，使用 DirectIO"
-flag --numa help="尝试优化某些 NUMA 系统上的性能 - distribute：在所有节点上均匀分布执行 - isolate：仅在执行开始的节点上的 CPU 上生成线程 - numactl：使用 numactl 提供的 CPU 映射。如果之前未运行此命令，建议在使用此命令前丢弃系统页面缓存。参见 https://github.com/ggml-org/llama.cpp/issues/1437" {
-    arg <TYPE>
-}
-flag --list-devices help=列出可用设备并退出
-flag --split-mode help="多 GPU 模型分割方式（默认：layer）" {
-    arg <NONE_LAYER_ROW_TENSOR>
-}
-flag --fit-target help=每个设备的目标余量（MiB），默认：1024 {
-    arg <MIB0_MIB1_MIB2>
-}
-flag --control-vector-scaled help=添加带缩放的控制向量（格式：FNAME:SCALE,...） {
-    arg <FNAME_SCALE>
-}
-flag --docker-repo help="Docker Hub 模型仓库。repo 可选，默认为 ai/。quant 可选，默认为 :latest。示例：gemma3（默认：未使用）" {
-    arg <REPO_MODEL_QUANT>
-}
-flag --hf-repo help="Hugging Face 模型仓库；quant 可选，不区分大小写，默认 Q4_K_M，如果 Q4_K_M 不存在则回退到仓库中的第一个文件。mmproj 如果可用也会自动下载。要禁用，请添加 --no-mmproj。示例：ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M（默认：未使用）" {
-    arg <USER_MODEL_QUANT>
-}
-flag "--spec-draft-type-k --cache-type-k-draft" help="草稿模型 K 的 KV 缓存数据类型（默认：f16）" {
-    arg <TYPE>
-}
-flag "--spec-draft-type-v --cache-type-v-draft" help="草稿模型 V 的 KV 缓存数据类型（默认：f16）" {
-    arg <TYPE>
-}
-flag "--sampler-seq --sampling-seq" help=采样器的简化序列（默认：edskypmxt） {
-    arg <SEQUENCE>
-}
-flag "--mmproj-auto --no-mmproj --no-mmproj-auto" help=是否使用多模态投影器文件（默认：启用）
 flag --chat-template help="set custom jinja chat template (default: template taken from model's metadata) if suffix/prefix are specified, template will be disabled only commonly used templates are accepted (unless --jinja is set before this flag): list of built-in templates: bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
     arg <JINJA_TEMPLATE>
 }
