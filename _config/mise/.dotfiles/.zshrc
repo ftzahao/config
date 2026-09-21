@@ -45,24 +45,9 @@ alias dsstore-clean="find . -name '.DS_Store' -type f -delete" # 清理 .DS_Stor
 # ============================================================
 # zsh 补全系统
 # ============================================================
-# 用户补全目录加入 fpath（目录不存在时不加，避免 fpath 混入无效路径）
-[[ -d "$ZSH_COMPLETION_DIR" ]] && fpath+=("$ZSH_COMPLETION_DIR")
 
-autoload -Uz compinit
-_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache" # _store_cache/_retrieve_cache 缓存目录（默认 ~/.zcompcache）
-_comp_dump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
-mkdir -p -- "${_comp_dump:h}" "$_cache_dir"
-
-# compinit 分级加载：dump 超过 24 小时才做一次全量 compinit
-# （重扫 fpath 以发现新装补全 + compaudit 安全检查 + 重建 dump），
-# 日常启动走 compinit -C 直接加载 dump，明显更快。
-# 注意 -C 不会发现当天新装的补全，次日全量扫描自动兜底；
-# 新装补全想立即生效可执行：rm "$_comp_dump" && exec zsh
-for _comp_stale in "$_comp_dump"(N.mh+24); do
-  compinit -d "$_comp_dump"
-done
-compinit -C -d "$_comp_dump"
-unset _comp_dump _comp_stale
+# 用户补全目录加入 fpath
+fpath+=~/.cache/zsh/zfunc; autoload -Uz compinit; compinit
 
 # ---- 编辑行为（配合补全）----
 setopt auto_menu                       # 多次 Tab 在备选项间循环

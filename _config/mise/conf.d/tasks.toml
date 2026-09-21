@@ -5,11 +5,11 @@ run = '''
 set -u
 
 # 补全目录与缓存路径（未加载 dotfiles 时使用默认值兜底）
-ZSH_COMPLETION_DIR="${ZSH_COMPLETION_DIR:-$HOME/.cache/zsh/site-functions}"
+ZSH_FUNC=~/.cache/zsh/zfunc
 CONCURRENCY=8 # 并发上限，curl 下载较多，串行太慢
 
 # 临时目录：所有补全先写到这里，全部跑完后再原子替换到目标目录
-# 任务中途失败（Ctrl+C / 任意一步报错）都不会污染 $ZSH_COMPLETION_DIR
+# 任务中途失败（Ctrl+C / 任意一步报错）都不会污染 $ZSH_FUNC
 STAGING_DIR="$(mktemp -d -t zsh-completions)"
 cleanup() {
     if [ -n "${STAGING_DIR:-}" ] && [ -d "$STAGING_DIR" ]; then
@@ -18,7 +18,7 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-mkdir -p -- "$ZSH_COMPLETION_DIR"
+mkdir -p -- "$ZSH_FUNC"
 
 echo "🔄 生成常用工具的zsh补全..."
 
@@ -129,7 +129,7 @@ spawn gen_local_completion miniserve "miniserve --print-completions zsh"
 spawn gen_local_completion deno "deno completions zsh"
 spawn gen_local_completion fd "fd --gen-completions zsh"
 spawn gen_local_completion gh "gh completion -s zsh"
-spawn gen_local_completion opencode "opencode completion"
+spawn gen_local_completion opencode "opencode --completions zsh"
 spawn gen_local_completion npm "npm completion"
 spawn gen_local_completion pkl "pkl shell-completion zsh"
 spawn gen_local_completion pnpm "pnpm completion zsh"
@@ -197,31 +197,21 @@ success_count=$(ls -1 "$STAGING_DIR"/_* 2>/dev/null | wc -l | tr -d ' ')
 
 if (( success_count == 0 )); then
     echo ""
-    echo "❌ 没有任何补全生成成功，保留 $ZSH_COMPLETION_DIR 不变"
+    echo "❌ 没有任何补全生成成功，保留 $ZSH_FUNC 不变"
     exit 1
 fi
 
 # 原子替换：先清空旧的补全文件，再把 staging 中的内容移过去
-# 这是脚本里唯一会动 $ZSH_COMPLETION_DIR 的地方
-rm -f -- "$ZSH_COMPLETION_DIR"/_* 2>/dev/null
-mv "$STAGING_DIR"/* "$ZSH_COMPLETION_DIR"/
+# 这是脚本里唯一会动 $ZSH_FUNC 的地方
+rm -f -- "$ZSH_FUNC"/_* 2>/dev/null
+mv "$STAGING_DIR"/* "$ZSH_FUNC"/
 
 # 清空 staging，让 trap 知道不需要再清理
 rmdir "$STAGING_DIR" 2>/dev/null || rm -rf -- "$STAGING_DIR"
 STAGING_DIR=""
 
 echo ""
-echo "✅ ${success_count} 个补全脚本已生成至 $ZSH_COMPLETION_DIR"
-
-# 刷新补全缓存，让新补全对后续 shell 立即生效。两个关键点：
-# 1. 必须用 -d 指定与 ~/.zshrc 相同的 dump 路径；裸 compinit 只会写 ~/.zcompdump，
-#    而 .zshrc 加载的是 zcompdump-$ZSH_VERSION，等于刷了个寂寞（原 bug 所在）。
-# 2. 不能用 -C：-C 只加载已有 dump，不会重扫 fpath、发现不了新生成的补全文件。
-_comp_dump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
-rm -f -- "$_comp_dump" # 删旧 dump，强制本次 compinit 做全量重扫
-fpath+=("$ZSH_COMPLETION_DIR")
-autoload -Uz compinit && compinit -d "$_comp_dump"
-unset _comp_dump
+echo "✅ ${success_count} 个补全脚本已生成至 $ZSH_FUNC"
 '''
 
 [tasks.i-mise-cli]
@@ -323,3 +313,15 @@ done
 echo "启动 cpa-usage-keeper"
 cpa-usage-keeper
 '''
+
+[tasks.set_llama_cpp]
+description = "设置 llama.cpp 版本"
+run = """
+#!/usr/bin/env zsh
+
+echo "设置 llama.cpp 的版本为 $1"
+mise use --global github:ggml-org/llama.cpp@$1 &&
+mise prune github:ggml-org/llama.cpp -y &&
+rm -fr ~/.hermes/runtimes/llamacpp/$(hermes config get local_runtime.tag) ~/.hermes/runtimes/llamacpp/downloads/llama-$(hermes config get local_runtime.tag)-bin-macos-arm64.tar.gz &&
+hermes config set local_runtime.tag $1
+"""

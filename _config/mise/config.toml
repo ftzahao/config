@@ -15,7 +15,7 @@ deno = "latest"
 "github:cargo-bins/cargo-binstall" = "latest"
 "github:cli/cli" = { version = "latest", rename_exe = "gh" }
 "github:evilmartians/lefthook" = { version = "latest", rename_exe = "lefthook" }
-"github:ggml-org/llama.cpp" = "b10994"
+"github:ggml-org/llama.cpp" = "b11065"
 "github:hatoo/oha" = "latest"
 "github:jdx/pitchfork" = "latest"
 "github:jqlang/jq" = { version = "latest", rename_exe = "jq" }
@@ -32,6 +32,7 @@ deno = "latest"
 java = "latest"
 node = "latest"
 "npm:@deepseek-ai/dsh" = "alpha"
+"npm:@opencode/cli" = { version = "latest", allow_builds = true }
 "npm:@vscode/vsce" = "latest"
 "npm:npkill" = "latest"
 "npm:nrm" = "latest"
@@ -65,11 +66,9 @@ usage = "latest"
 "brew:witr" = "latest"
 "brew:xcbeautify" = "latest"
 "brew:zinit" = "latest"
-"brew-cask:apifox" = "latest"
 "brew-cask:betterdisplay" = "latest"
 "brew-cask:brave-browser" = "latest"
 "brew-cask:cleanmymac" = "latest"
-"brew-cask:cleanmymac-cli" = "latest"
 "brew-cask:cleanshot" = "latest"
 "brew-cask:crossover" = "latest"
 "brew-cask:dbx" = "latest"
@@ -108,7 +107,6 @@ experimental = true
 idiomatic_version_file_enable_tools = ["node", "python", "ruby", "java"]
 trusted_config_paths = ["/"]
 npm.package_manager = "auto"
-npm.shell_out = true
 minimum_release_age = "0"
 fetch_remote_versions_cache = "0"
 activate_aggressive = true

@@ -1,3 +1,4 @@
+tap "patrik-csak/tap"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Cross-platform make
@@ -38,6 +39,10 @@ brew "witr"
 brew "xcbeautify"
 # Flexible and fast Zsh plugin manager
 brew "zinit"
+# Automatically switch Terminal profiles with macOS dark/light mode
+brew "patrik-csak/tap/auto-terminal-profile", trusted: true
+# Stand alone ad blocker
+cask "adguard"
 # AirPods companion app
 cask "airbuddy"
 # Display management tool
@@ -87,6 +92,8 @@ cask "proxyman"
 cask "qq"
 # Tool that provides consistent, highly configurable symbols for apps
 cask "sf-symbols"
+# Music app
+cask "sodamusic"
 # Network tool based on Clash
 cask "stash"
 # Video game digital distribution service
@@ -107,6 +114,8 @@ cask "wechat"
 cask "wechatwebdevtools"
 # Messaging and calling application
 cask "wechatwork"
+# AI-assisted development environment
+cask "zcode"
 # Multiplayer code editor
 cask "zed"
 vscode "alefragnani.project-manager"
@@ -120,7 +129,6 @@ vscode "esbenp.prettier-vscode"
 vscode "fanaticpythoner.better-todo-tree"
 vscode "ftzahao.sparrow"
 vscode "github.remotehub"
-vscode "github.vscode-github-actions"
 vscode "github.vscode-pull-request-github"
 vscode "hverlin.mise-vscode"
 vscode "keyshout.sqlite-db-viewer"
