@@ -85,36 +85,67 @@ openai-compatibility:
     api-key-entries:
       - api-key:
     headers:
-      User-Agent: HermesAgent/0.21.3
+      User-Agent: HermesAgent/0.21.4
       Authorization: Bearer
     models:
-      - name: deepseek/deepseek-v4.1-flash
+      - name: xiaomi/mimo-v2.6-flash
         alias: ""
-        display-name: "DeepSeek: DeepSeek V4.1 Flash"
+        display-name: "Xiaomi: MiMo-V2.6-Flash"
         max-context-length: 1048576
         input-modalities:
           - text
           - image
+      - name: xiaomi/mimo-v2.6-pro
+        alias: ""
+        display-name: "Xiaomi: MiMo-V2.6-Pro"
+        max-context-length: 1048576
+        input-modalities:
+          - text
+          - image
+      - name: openai/gpt-5.6-luna
+        alias: ""
+        display-name: "OpenAI: GPT-5.6 Luna"
+        max-context-length: 1050000
+        input-modalities:
+          - image
+          - text
+        thinking:
+          levels:
+            - max
+            - xhigh
+            - high
+            - medium
+            - low
+            - none
+      - name: openai/gpt-5.6-luna-pro
+        alias: ""
+        display-name: "OpenAI: GPT-5.6 Luna Pro"
+        max-context-length: 1050000
+        input-modalities:
+          - image
+          - text
+        thinking:
+          levels:
+            - max
+            - xhigh
+            - high
+            - medium
+            - low
+            - none
+      - name: deepseek/deepseek-v4-flash-0731
+        alias: ""
+        display-name: "DeepSeek: DeepSeek V4 Flash"
+        max-context-length: 1048576
+        input-modalities:
+          - text
         thinking:
           levels:
             - max
             - high
             - low
-      - name: inclusionai/ling-3.0-flash-sante:free
+      - name: deepseek/deepseek-v4.1-flash
         alias: ""
-        display-name: "inclusionAI: Ling 3.0 Flash Sante (free)"
-        max-context-length: 262144
-        input-modalities:
-          - text
-      - name: inclusionai/ling-3.0-flash-fin:free
-        alias: ""
-        display-name: "inclusionAI: Ling 3.0 Flash Fin"
-        max-context-length: 262144
-        input-modalities:
-          - text
-      - name: z-ai/glm-5.3-flash
-        alias: ""
-        display-name: "Z.ai: GLM 5.3 Flash"
+        display-name: "DeepSeek: DeepSeek V4.1 Flash"
         max-context-length: 1048576
         input-modalities:
           - text
@@ -136,73 +167,24 @@ openai-compatibility:
             - max
             - high
             - low
-      - name: poolside/laguna-s-2.1:free
+      - name: z-ai/glm-5.3-flash
         alias: ""
-        display-name: "Poolside: Laguna S 2.1"
-        max-context-length: 262144
-        input-modalities:
-          - text
-      - name: openai/gpt-5.6-luna-pro
-        alias: ""
-        display-name: "OpenAI: GPT-5.6 Luna Pro"
-        max-context-length: 1050000
-        input-modalities:
-          - image
-          - text
-        thinking:
-          levels:
-            - max
-            - xhigh
-            - high
-            - medium
-            - low
-            - none
-      - name: openai/gpt-5.6-luna
-        alias: ""
-        display-name: "OpenAI: GPT-5.6 Luna"
-        max-context-length: 1050000
-        input-modalities:
-          - image
-          - text
-        thinking:
-          levels:
-            - max
-            - xhigh
-            - high
-            - medium
-            - low
-            - none
-      - name: poolside/laguna-xs-2.1:free
-        alias: ""
-        display-name: "Poolside: Laguna XS 2.1"
-        max-context-length: 262144
-        input-modalities:
-          - text
-      - name: xiaomi/mimo-v2.5-pro
-        alias: ""
-        display-name: "Xiaomi: MiMo-V2.5-Pro"
-        max-context-length: 1048576
-        input-modalities:
-          - text
-      - name: xiaomi/mimo-v2.5
-        alias: ""
-        display-name: "Xiaomi: MiMo-V2.5"
+        display-name: "Z.ai: GLM 5.3 Flash"
         max-context-length: 1048576
         input-modalities:
           - text
           - image
-      - name: stepfun/step-3.7-flash:free
-        alias: ""
-        display-name: "StepFun: Step 3.7 Flash"
-        max-context-length: 256000
-        input-modalities:
-          - text
-          - image
         thinking:
           levels:
+            - max
             - high
-            - medium
             - low
+      - name: meituan/longcat-2.0:free
+        alias: ""
+        display-name: "Meituan: LongCat 2.0"
+        max-context-length: 1048576
+        input-modalities:
+          - text
       - name: upstage/solar-pro4:free
         alias: ""
         display-name: "Upstage: Solar Pro 4"
@@ -218,22 +200,41 @@ openai-compatibility:
             - low
             - minimal
             - none
-      - name: meituan/longcat-2.0:free
+      - name: poolside/laguna-xs-2.1:free
         alias: ""
-        display-name: "Meituan: LongCat 2.0"
-        max-context-length: 1048576
+        display-name: "Poolside: Laguna XS 2.1"
+        max-context-length: 262144
         input-modalities:
           - text
-      - name: deepseek/deepseek-v4-flash-0731
+      - name: inclusionai/ling-3.0-flash-fin:free
         alias: ""
-        display-name: "DeepSeek: DeepSeek V4 Flash"
-        max-context-length: 1048576
+        display-name: "inclusionAI: Ling 3.0 Flash Fin"
+        max-context-length: 262144
         input-modalities:
           - text
+      - name: inclusionai/ling-3.0-flash-sante:free
+        alias: ""
+        display-name: "inclusionAI: Ling 3.0 Flash Sante (free)"
+        max-context-length: 262144
+        input-modalities:
+          - text
+      - name: poolside/laguna-s-2.1:free
+        alias: ""
+        display-name: "Poolside: Laguna S 2.1"
+        max-context-length: 262144
+        input-modalities:
+          - text
+      - name: stepfun/step-3.7-flash:free
+        alias: ""
+        display-name: "StepFun: Step 3.7 Flash"
+        max-context-length: 262144
+        input-modalities:
+          - text
+          - image
         thinking:
           levels:
-            - max
             - high
+            - medium
             - low
 # Vertex API 密钥（Vertex 兼容端点，使用 API key + base URL）
 vertex-api-key: []

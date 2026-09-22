@@ -1,2 +1,2 @@
 # https://dashboard.exa.ai/api-keys
-EXA_API_KEY:
+# EXA_API_KEY=""

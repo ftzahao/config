@@ -1,0 +1,4 @@
+# https://portal.nousresearch.com/api-docs
+NOUS_CHAT_COMPLETION_BASE_URL="https://inference-api.nousresearch.com/v1"
+NOUS_BASE_URL=$NOUS_CHAT_COMPLETION_BASE_URL
+# NOUS_API_KEY=""
