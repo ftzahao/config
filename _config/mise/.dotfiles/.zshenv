@@ -1,31 +1,57 @@
-_load_zsh_files() {
-  local dir="$1"
-  shift
+# ==== rust ====
+RUSTUP_HOME="$HOME/.local/share/rustup"
+CARGO_HOME="$HOME/.local/share/cargo"
+# ==== k9s ====
+K9SCONFIG="$HOME/.config/k9s"
+# ==== github ====
+# GITHUB_TOKEN=""
+# GITHUB_PAT=$GITHUB_TOKEN
+# GH_TOKEN=$GITHUB_TOKEN
+# GITHUB_PERSONAL_ACCESS_TOKEN=$GITHUB_TOKEN
+# ==== deepseek ====
+DSH_HOME="$HOME/.local/share/dsh"
+# ==== Copilot ====
+COPILOT_HOME="$HOME/.local/share/copilot"
+# ==== exa ====
+# https://dashboard.exa.ai/api-keys
+# EXA_API_KEY=""
+# ==== tavily ====
+# https://app.tavily.com/home
+# TAVILY_API_KEY=""
+# ==== huggingface ====
+# https://huggingface.co/settings/tokens
+# HF_TOKEN=""
+# ==== Xiaomi MIMO ====
+# MIMO_MESSAGE_BASE_URL="https://api.xiaomimimo.com/anthropic"
+# MIMO_CHAT_COMPLETION_BASE_URL="https://api.xiaomimimo.com/v1"
+# MIMO_RESPONSE_BASE_URL="https://api.xiaomimimo.com/v1"
+# MIMO_BASE_URL=$MIMO_CHAT_COMPLETION_BASE_URL
+# MIMO_API_KEY=""
+# ==== Nous Portal ====
+# NOUS_CHAT_COMPLETION_BASE_URL="https://inference-api.nousresearch.com/v1"
+# NOUS_BASE_URL=$NOUS_CHAT_COMPLETION_BASE_URL
+# NOUS_API_KEY=""
+# ==== Claude Code ====
+ANTHROPIC_BASE_URL="http://127.0.0.1:8317"
+ANTHROPIC_AUTH_TOKEN="000"
+# CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY="1"
+API_TIMEOUT_MS="600000"
+BASH_DEFAULT_TIMEOUT_MS="600000"
+BASH_MAX_TIMEOUT_MS="600000"
+CLAUDE_API_TIMEOUT="600000"
+CLAUDE_AUTOCOMPACT_PCT_OVERRIDE="95"
+DISABLE_TELEMETRY="1"
+MCP_TIMEOUT="30000"
+MCP_TOOL_TIMEOUT="600000"
+CLAUDE_CODE_ENABLE_TELEMETRY="0"
+CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1"
+CLAUDE_CODE_ATTRIBUTION_HEADER="0"
+ANTHROPIC_DEFAULT_MODEL="xiaomi/mimo-v2.6-flash[1m]"
+ANTHROPIC_DEFAULT_FABLE_MODEL="$ANTHROPIC_DEFAULT_MODEL"
+ANTHROPIC_DEFAULT_OPUS_MODEL="$ANTHROPIC_DEFAULT_MODEL"
+ANTHROPIC_DEFAULT_SONNET_MODEL="$ANTHROPIC_DEFAULT_MODEL"
+ANTHROPIC_DEFAULT_HAIKU_MODEL="$ANTHROPIC_DEFAULT_MODEL"
 
-  local f
-  for f in "$@"; do
-    [[ -f "$dir/$f.zsh" ]] && source "$dir/$f.zsh"
-  done
-}
-
-_load_zsh_files "$HOME/.config/zsh/env" \
-  github \
-  rust \
-  npm \
-  homebrew \
-  copilot \
-  k9s \
-  modelscope \
-  deepseek \
-  xiaomi \
-  z \
-  hf \
-  tavily \
-  exa \
-  tinyfish \
-  hermes \
-  claude
-
-unset -f _load_zsh_env
-
+# ==== path ====
 path+=("$HOME/.local/bin")
+typeset -U path

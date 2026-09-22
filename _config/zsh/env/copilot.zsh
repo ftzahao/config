@@ -1,1 +1,0 @@
-COPILOT_HOME="$HOME/.local/share/copilot"

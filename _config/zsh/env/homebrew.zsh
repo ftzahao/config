@@ -1,1 +1,0 @@
-HOMEBREW_USER_CONFIG_HOME="$HOME/.config/homebrew"

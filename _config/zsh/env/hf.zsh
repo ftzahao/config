@@ -1,3 +1,0 @@
-# https://huggingface.co/settings/tokens
-HF_BASE_URL="https://router.huggingface.co/v1"
-# HF_TOKEN=""

@@ -102,6 +102,53 @@ openai-compatibility:
         input-modalities:
           - text
           - image
+      - name: z-ai/glm-5.3-flash
+        alias: ""
+        display-name: "Z.ai: GLM 5.3 Flash"
+        max-context-length: 1048576
+        input-modalities:
+          - text
+          - image
+        thinking:
+          levels:
+            - max
+            - high
+            - low
+      - name: deepseek/deepseek-v4-flash-vision-exp
+        alias: ""
+        display-name: "DeepSeek: DeepSeek V4 Flash Vision Exp"
+        max-context-length: 1048576
+        input-modalities:
+          - text
+          - image
+        thinking:
+          levels:
+            - max
+            - high
+            - low
+      - name: deepseek/deepseek-v4-flash-0731
+        alias: ""
+        display-name: "DeepSeek: DeepSeek V4 Flash"
+        max-context-length: 1048576
+        input-modalities:
+          - text
+        thinking:
+          levels:
+            - max
+            - high
+            - low
+      - name: deepseek/deepseek-v4.1-flash
+        alias: ""
+        display-name: "DeepSeek: DeepSeek V4.1 Flash"
+        max-context-length: 1048576
+        input-modalities:
+          - text
+          - image
+        thinking:
+          levels:
+            - max
+            - high
+            - low
       - name: openai/gpt-5.6-luna
         alias: ""
         display-name: "OpenAI: GPT-5.6 Luna"
@@ -132,53 +179,6 @@ openai-compatibility:
             - medium
             - low
             - none
-      - name: deepseek/deepseek-v4-flash-0731
-        alias: ""
-        display-name: "DeepSeek: DeepSeek V4 Flash"
-        max-context-length: 1048576
-        input-modalities:
-          - text
-        thinking:
-          levels:
-            - max
-            - high
-            - low
-      - name: deepseek/deepseek-v4.1-flash
-        alias: ""
-        display-name: "DeepSeek: DeepSeek V4.1 Flash"
-        max-context-length: 1048576
-        input-modalities:
-          - text
-          - image
-        thinking:
-          levels:
-            - max
-            - high
-            - low
-      - name: deepseek/deepseek-v4-flash-vision-exp
-        alias: ""
-        display-name: "DeepSeek: DeepSeek V4 Flash Vision Exp"
-        max-context-length: 1048576
-        input-modalities:
-          - text
-          - image
-        thinking:
-          levels:
-            - max
-            - high
-            - low
-      - name: z-ai/glm-5.3-flash
-        alias: ""
-        display-name: "Z.ai: GLM 5.3 Flash"
-        max-context-length: 1048576
-        input-modalities:
-          - text
-          - image
-        thinking:
-          levels:
-            - max
-            - high
-            - low
       - name: meituan/longcat-2.0:free
         alias: ""
         display-name: "Meituan: LongCat 2.0"
@@ -200,27 +200,15 @@ openai-compatibility:
             - low
             - minimal
             - none
-      - name: poolside/laguna-xs-2.1:free
-        alias: ""
-        display-name: "Poolside: Laguna XS 2.1"
-        max-context-length: 262144
-        input-modalities:
-          - text
-      - name: inclusionai/ling-3.0-flash-fin:free
-        alias: ""
-        display-name: "inclusionAI: Ling 3.0 Flash Fin"
-        max-context-length: 262144
-        input-modalities:
-          - text
-      - name: inclusionai/ling-3.0-flash-sante:free
-        alias: ""
-        display-name: "inclusionAI: Ling 3.0 Flash Sante (free)"
-        max-context-length: 262144
-        input-modalities:
-          - text
       - name: poolside/laguna-s-2.1:free
         alias: ""
         display-name: "Poolside: Laguna S 2.1"
+        max-context-length: 262144
+        input-modalities:
+          - text
+      - name: poolside/laguna-xs-2.1:free
+        alias: ""
+        display-name: "Poolside: Laguna XS 2.1"
         max-context-length: 262144
         input-modalities:
           - text
@@ -236,6 +224,18 @@ openai-compatibility:
             - high
             - medium
             - low
+      - name: inclusionai/ling-3.0-flash-sante:free
+        alias: ""
+        display-name: "inclusionAI: Ling 3.0 Flash Sante (free)"
+        max-context-length: 262144
+        input-modalities:
+          - text
+      - name: inclusionai/ling-3.0-flash-fin:free
+        alias: ""
+        display-name: "inclusionAI: Ling 3.0 Flash Fin"
+        max-context-length: 262144
+        input-modalities:
+          - text
 # Vertex API 密钥（Vertex 兼容端点，使用 API key + base URL）
 vertex-api-key: []
 # 全局 OAuth 模型名称别名（按渠道）

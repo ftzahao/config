@@ -1,5 +1,0 @@
-RUSTUP_HOME="$HOME/.local/share/rustup"
-CARGO_HOME="$HOME/.local/share/cargo"
-
-MISE_RUSTUP_HOME=$RUSTUP_HOME
-MISE_CARGO_HOME=$CARGO_HOME

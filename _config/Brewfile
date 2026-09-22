@@ -1,4 +1,4 @@
-tap "patrik-csak/tap"
+tap "patrik-csak/tap", trusted: true
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Cross-platform make
@@ -11,6 +11,8 @@ brew "openssl@3"
 brew "opus"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
+# GitHub command-line tool
+brew "gh"
 # Distributed revision control system
 brew "git"
 # GNU Privacy Guard (OpenPGP)
@@ -21,10 +23,16 @@ brew "helm"
 brew "k9s"
 # Kubernetes command-line interface
 brew "kubernetes-cli"
+# Fast and powerful Git hooks manager for any type of projects
+brew "lefthook"
+# Simple tool to make locally trusted development certificates
+brew "mkcert"
 # Deep clean and optimize your Mac
 brew "mole"
 # Simple, correct PEP 517 build frontend
 brew "python-build"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
 # Install various Ruby versions and implementations
 brew "ruby-build"
 # Cross-shell prompt for astronauts
@@ -40,7 +48,7 @@ brew "xcbeautify"
 # Flexible and fast Zsh plugin manager
 brew "zinit"
 # Automatically switch Terminal profiles with macOS dark/light mode
-brew "patrik-csak/tap/auto-terminal-profile", trusted: true
+brew "patrik-csak/tap/auto-terminal-profile"
 # Stand alone ad blocker
 cask "adguard"
 # AirPods companion app
@@ -114,8 +122,6 @@ cask "wechat"
 cask "wechatwebdevtools"
 # Messaging and calling application
 cask "wechatwork"
-# AI-assisted development environment
-cask "zcode"
 # Multiplayer code editor
 cask "zed"
 vscode "alefragnani.project-manager"

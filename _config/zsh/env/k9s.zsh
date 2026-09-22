@@ -1,1 +1,0 @@
-K9SCONFIG="$HOME/.config/k9s"
