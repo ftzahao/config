@@ -55,6 +55,9 @@ registry_floating = true
 history.sync = "sync"
 env_conf_d = true
 
+[env]
+_.file = { paths = ["~/.config/mise/env/.env"], tools = true }
+
 [dotfiles]
 "~/.zshenv" = { mode = "copy" }
 "~/.zprofile" = { mode = "copy" }
