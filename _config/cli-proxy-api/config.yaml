@@ -114,6 +114,18 @@ openai-compatibility:
             - max
             - high
             - low
+      - name: deepseek/deepseek-v4.1-flash
+        alias: ""
+        display-name: "DeepSeek: DeepSeek V4.1 Flash"
+        max-context-length: 1048576
+        input-modalities:
+          - text
+          - image
+        thinking:
+          levels:
+            - max
+            - high
+            - low
       - name: deepseek/deepseek-v4-flash-vision-exp
         alias: ""
         display-name: "DeepSeek: DeepSeek V4 Flash Vision Exp"
@@ -137,21 +149,9 @@ openai-compatibility:
             - max
             - high
             - low
-      - name: deepseek/deepseek-v4.1-flash
+      - name: openai/gpt-6-luna
         alias: ""
-        display-name: "DeepSeek: DeepSeek V4.1 Flash"
-        max-context-length: 1048576
-        input-modalities:
-          - text
-          - image
-        thinking:
-          levels:
-            - max
-            - high
-            - low
-      - name: openai/gpt-5.6-luna
-        alias: ""
-        display-name: "OpenAI: GPT-5.6 Luna"
+        display-name: "OpenAI: GPT-6 Luna"
         max-context-length: 1050000
         input-modalities:
           - image
@@ -164,9 +164,9 @@ openai-compatibility:
             - medium
             - low
             - none
-      - name: openai/gpt-5.6-luna-pro
+      - name: openai/gpt-6-luna-pro
         alias: ""
-        display-name: "OpenAI: GPT-5.6 Luna Pro"
+        display-name: "OpenAI: GPT-6 Luna Pro"
         max-context-length: 1050000
         input-modalities:
           - image
@@ -182,7 +182,7 @@ openai-compatibility:
       - name: meituan/longcat-2.0:free
         alias: ""
         display-name: "Meituan: LongCat 2.0"
-        max-context-length: 1048576
+        max-context-length: 1048756
         input-modalities:
           - text
       - name: upstage/solar-pro4:free
@@ -268,7 +268,7 @@ redis-usage-queue-retention-seconds: 60
 plugins:
   enabled: true
   # ~ 需要自行展开
-  dir: "~/.config/cli-proxy-api/plugins"
+  # dir: "~/.config/cli-proxy-api/plugins"
   configs:
     keeper:
       enabled: true

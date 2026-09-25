@@ -1,9 +1,0 @@
-CPA_BASE_URL: http://127.0.0.1:8317
-CPA_MANAGEMENT_KEY: 000
-LOGIN_PASSWORD: 000
-CPA_PUBLIC_URL: http://127.0.0.1:8317
-AUTH_ENABLED: false
-TLS_SKIP_VERIFY: true
-WORK_DIR: /Users/shimenghao/.cache/cli-proxy-api/data
-APP_HOST: 127.0.0.1
-APP_PORT: 8318

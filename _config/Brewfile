@@ -1,12 +1,18 @@
 tap "patrik-csak/tap", trusted: true
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@3"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
 # Cross-platform make
 brew "cmake"
 # Documentation for CMake
 brew "cmake-docs"
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@3"
+# Power of curl, ease of use of httpie
+brew "curlie"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
 # Audio codec
 brew "opus"
 # Play, record, convert, and stream select audio and video codecs
@@ -19,6 +25,8 @@ brew "git"
 brew "gnupg"
 # Kubernetes package manager
 brew "helm"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
 # Kubernetes CLI To Manage Your Clusters In Style!
 brew "k9s"
 # Kubernetes command-line interface
@@ -29,6 +37,8 @@ brew "lefthook"
 brew "mkcert"
 # Deep clean and optimize your Mac
 brew "mole"
+# HTTP load generator, inspired by rakyll/hey with tui animation
+brew "oha"
 # Simple, correct PEP 517 build frontend
 brew "python-build"
 # Search tool like grep and The Silver Searcher
@@ -45,6 +55,10 @@ brew "tokei"
 brew "witr"
 # Little beautifier tool for xcodebuild
 brew "xcbeautify"
+# Generate your Xcode project from a spec file and your folder structure
+brew "xcodegen"
+# Process YAML, JSON, XML, CSV and properties documents from the CLI
+brew "yq"
 # Flexible and fast Zsh plugin manager
 brew "zinit"
 # Automatically switch Terminal profiles with macOS dark/light mode
@@ -57,6 +71,8 @@ cask "airbuddy"
 cask "betterdisplay"
 # Web browser focusing on privacy
 cask "brave-browser"
+# Continuation of Clash Verge - A Clash Meta GUI based on Tauri
+cask "clash-verge-rev"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
 # Screen capturing tool
@@ -72,8 +88,6 @@ cask "equinox"
 cask "font-maple-mono-nf-cn"
 # Homebrew's official GUI
 cask "homebrew-app"
-# JetBrains tools manager
-cask "jetbrains-toolbox"
 # File archiver
 cask "keka"
 # Launchpad alternative
@@ -106,8 +120,6 @@ cask "sodamusic"
 cask "stash"
 # Video game digital distribution service
 cask "steam"
-# Quicklook extension for source files
-cask "syntax-highlight"
 # Native database client for many database types
 cask "tablepro"
 # Messaging app with a focus on speed and security

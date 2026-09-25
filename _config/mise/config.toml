@@ -1,29 +1,20 @@
+#:tombi toml-version = "v1.1.0"
 #:tombi schema.strict = false
+#:schema https://mise.jdx.dev/schema/mise.json
 
 [tools]
+aube = "latest"
 bun = "latest"
 "cargo:cargo-cache" = "latest"
 deno = "latest"
 "github:Willxup/cpa-usage-keeper" = "latest"
 "github:anthropics/claude-code" = "latest"
-"github:apple/pkl" = "latest"
-"github:astral-sh/uv" = "latest"
-"github:aubepkg/aube" = "latest"
-"github:ggml-org/llama.cpp" = "b11101"
-"github:hatoo/oha" = "latest"
-"github:jdx/pitchfork" = "latest"
-"github:jqlang/jq" = { version = "latest", rename_exe = "jq" }
-"github:mikefarah/yq" = { version = "latest", rename_exe = "yq" }
+"github:ggml-org/llama.cpp" = "b11179"
 "github:nubjs/nub" = "latest"
 "github:pnpm/pnpm" = "latest"
 "github:router-for-me/CLIProxyAPI" = "latest"
-"github:rs/curlie" = "latest"
-"github:sharkdp/bat" = "latest"
-"github:sharkdp/fd" = "latest"
-"github:showwin/speedtest-go" = "latest"
-"github:svenstaro/miniserve" = "latest"
-"github:watchexec/watchexec" = "latest"
 java = "latest"
+miniserve = "latest"
 node = "latest"
 "npm:@vscode/vsce" = "latest"
 "npm:npkill" = "latest"
@@ -32,10 +23,14 @@ node = "latest"
 "npm:skills" = "latest"
 "npm:vite-plus" = "latest"
 "pipx:hf" = "latest"
-python = ["latest", "3.13", "3.11", "3.10"]
+pitchfork = "latest"
+pkl = "latest"
+python = ["latest"]
 ruby = "latest"
 rust = "stable"
 usage = "latest"
+uv = "latest"
+watchexec = "latest"
 
 [settings]
 auto_update = true
@@ -46,7 +41,7 @@ trusted_config_paths = ["/"]
 npm.package_manager = "auto"
 minimum_release_age = "0"
 fetch_remote_versions_cache = "0"
-activate_aggressive = true
+activate_aggressive = false
 system_packages.managers = ["brew", "brew-cask"]
 dotfiles.root = "~/.config/mise/.dotfiles"
 dotfiles.default_mode = "copy"
@@ -56,12 +51,12 @@ history.sync = "sync"
 env_conf_d = true
 
 [env]
-_.file = { paths = ["~/.config/mise/env/.env"], tools = true }
+_.file = { paths = ["~/.config/mise/.env"], tools = true }
 
 [dotfiles]
-"~/.zshenv" = { mode = "copy" }
-"~/.zprofile" = { mode = "copy" }
-"~/.zshrc" = { mode = "copy" }
-"~/.config/starship.toml" = { mode = "copy" }
-"~/.gitconfig" = { mode = "copy" }
-"~/.gitignore_global" = { mode = "copy" }
+"~/.zshenv" = ".dotfiles/.zshenv"
+"~/.zprofile" = ".dotfiles/.zprofile"
+"~/.zshrc" = ".dotfiles/.zshrc"
+"~/.config/starship.toml" = ".dotfiles/.config/starship.toml"
+"~/.gitconfig" = ".dotfiles/.gitconfig"
+"~/.gitignore_global" = ".dotfiles/.gitignore_global"
