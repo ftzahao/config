@@ -14,7 +14,7 @@ Register-ArgumentCompleter -Native -CommandName 'llama-server' -ScriptBlock {
 
     'name "LLaMA Server (中文)"
 bin llama-server
-version "0.4.1-dev"
+version "0.5.0-dev"
 about "LLaMA OpenAI 兼容推理服务器"
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
@@ -517,7 +517,7 @@ flag --tags help=设置模型标签，逗号分隔（仅信息，不用于路由
 flag --embd-normalize help=嵌入归一化（默认：2） {
     arg <N>
 }
-flag --host help="监听 IP 地址（默认：127.0.0.1）" {
+flag --host help="监听的 IP 地址（逗号分隔）或以 .sock 结尾的 UNIX 套接字路径；包含多个 TCP 地址时 :: 仅绑定 IPv6；地址重叠时行为未定义（默认：127.0.0.1）" {
     arg <HOST>
 }
 flag --port help=监听端口（默认：8080） {

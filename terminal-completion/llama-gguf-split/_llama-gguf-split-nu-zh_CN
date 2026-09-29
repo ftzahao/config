@@ -2,7 +2,7 @@
 module _llama_gguf_split_completions {
     const _usage_spec_llama_gguf_split = r##'name "LLaMA GGUF Split (中文)"
 bin llama-gguf-split
-version "0.4.1-dev"
+version "0.5.0-dev"
 about "GGUF 文件拆分/合并工具"
 flag "-h --help" help=显示帮助信息并退出
 flag --version help=显示版本和构建信息
@@ -11,10 +11,10 @@ flag --merge help="将多个 GGUF 合并为单个 GGUF"
 flag --split-max-tensors help=每个分片的最大张量数（默认：128）
 flag --dry-run help=仅打印拆分计划并退出，不写入任何新文件
 flag --delete-splits help="合并期间删除分片文件以释放磁盘空间（⚠️ 不安全选项）"
-flag --split-max-size help="" {
+flag --split-max-size help=每个分片的最大大小 {
     arg <N_M_G>
 }
-flag --no-tensor-first-split help="" {
+flag --no-tensor-first-split help=不向第一个分片添加张量（默认禁用） {
     arg <DO>
 }
 '##
@@ -27,7 +27,10 @@ flag --no-tensor-first-split help="" {
         let spec_file = ($spec_dir | path join $"usage__usage_spec_llama_gguf_split.spec")
         $_usage_spec_llama_gguf_split | save -f $spec_file
 
-        (^usage complete-word -f $spec_file --shell nu -- ...$spans)
+        # `complete` captures stderr and the exit code: a line that doesn't
+        # parse makes complete-word fail, and its error would be printed over
+        # the prompt.
+        (^usage complete-word -f $spec_file --shell nu -- ...$spans | complete).stdout
         | lines
         | each {|it| $it | split column "\t" | rename value description | into record }
     }

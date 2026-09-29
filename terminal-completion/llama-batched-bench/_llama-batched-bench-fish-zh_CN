@@ -10,7 +10,7 @@ end
 
 set _usage_spec_llama_batched_bench 'name "Batched Bench (中文)"
 bin llama-batched-bench
-version "0.4.1-dev"
+version "0.5.0-dev"
 about 批处理解码性能基准测试工具
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
@@ -338,9 +338,13 @@ test -d "$spec_dir"; or mkdir -p -m 700 "$spec_dir"
 set -l spec_file "$spec_dir/usage__usage_spec_llama_batched_bench.spec"
 echo $_usage_spec_llama_batched_bench > "$spec_file"
 
-set -l tokens
+# stderr is discarded: a line that doesn't parse (`llama-batched-bench help <Tab>`) makes
+# complete-word fail, and its error would be printed over the prompt.
+# The word being completed is cut at the cursor (`-c`) and unquoted, so
+# `'prod<Tab>` and `sub\ dir/<Tab>` match the same values as their bare
+# spellings; fish re-quotes whatever it inserts.
 if commandline -x >/dev/null 2>&1
-    complete -xc llama-batched-bench -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -t))"
+    complete -xc llama-batched-bench -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -ct | string unescape) 2>/dev/null)"
 else
-    complete -xc llama-batched-bench -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -t))"
+    complete -xc llama-batched-bench -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -ct | string unescape) 2>/dev/null)"
 end

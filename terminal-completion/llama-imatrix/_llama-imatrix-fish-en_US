@@ -10,7 +10,7 @@ end
 
 set _usage_spec_llama_imatrix 'name "LLaMA IMatrix (English)"
 bin llama-imatrix
-version "0.4.1-dev"
+version "0.5.0-dev"
 about 重要性矩阵生成工具
 flag "-h --help --usage" help="print usage and exit"
 flag --version help="show version and build info"
@@ -67,7 +67,7 @@ flag --ubatch-size help="physical maximum batch size (default: 512)" {
 flag --keep help="number of tokens to keep from the initial prompt (default: 0, -1 = all)" {
     arg <N>
 }
-flag --swa-full help="use full-size SWA cache (default: false) info)](https://github.com/ggml-org/llama.cpp/pull/13194#issuecomment-2868343055)"
+flag --swa-full help="use full-size SWA cache (default: false) [(more info)](https://github.com/ggml-org/llama.cpp/pull/13194#issuecomment-2868343055)"
 flag --flash-attn help="set Flash Attention use (\'on\', \'off\', or \'auto\', default: \'auto\')" {
     arg <ON_OFF_AUTO>
 }
@@ -144,7 +144,7 @@ flag --override-tensor help="override tensor buffer type" {
     arg <TENSOR>
 }
 flag --cpu-moe help="keep all Mixture of Experts (MoE) weights in the CPU"
-flag --n-cpu-moe help="keep the Mixture of Experts (MoE) weights of the first N layers in the" {
+flag --n-cpu-moe help="keep the Mixture of Experts (MoE) weights of the first N layers in the CPU" {
     arg <N>
 }
 flag --n-cpu-ffn help="keep the dense FFN weights of the first N layers in the CPU (dense models; for MoE expert weights use --n-cpu-moe)" {
@@ -230,7 +230,7 @@ flag "--spec-draft-type-k --cache-type-k-draft" help="KV cache data type for K f
 flag "--spec-draft-type-v --cache-type-v-draft" help="KV cache data type for V for the draft model allowed values: f32, f16, bf16, q8_0, q4_0, q4_1, iq4_nl, q5_0, q5_1 (default: f16)" {
     arg <TYPE>
 }
-flag --samplers help="samplers that will be used for generation in the order, separated by" {
+flag --samplers help="samplers that will be used for generation in the order, separated by \';\' (default: penalties;dry;top_n_sigma;top_k;typ_p;top_p;min_p;xtc;temperature)" {
     arg <SAMPLERS>
 }
 flag "-s --seed" help="RNG seed (default: -1, use random seed for -1)" {
@@ -291,7 +291,7 @@ flag --dry-penalty-last-n help="set DRY penalty for the last n tokens (default: 
 flag --dry-sequence-breaker help="add sequence breaker for DRY sampling, clearing out default breakers (\'\\n\', \':\', \'\"\', \'*\') in the process; use \"none\" to not use any sequence breakers" {
     arg <STRING>
 }
-flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00)" {
+flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00) [(more info)](https://github.com/ggml-org/llama.cpp/pull/17927)" {
     arg <N>
 }
 flag --adaptive-decay help="adaptive-p: decay rate for target adaptation over time. lower values are more reactive, higher values are more stable. (valid range 0.0 to 0.99) (default: 0.90)" {
@@ -321,10 +321,10 @@ flag --grammar help="BNF-like grammar to constrain generations (see samples in g
 flag --grammar-file help="file to read grammar from" {
     arg <FNAME>
 }
-flag "-j --json-schema" help="JSON schema to constrain generations (https://json-schema.org/), e.g. `{}` for any JSON object For schemas w/ external $refs, use --grammar + example/json_schema_to_grammar.py instead" {
+flag "-j --json-schema" help="JSON schema to constrain generations (https://json-schema.org/), e.g. `{\"type\": \"object\"}` for any JSON object" {
     arg <SCHEMA>
 }
-flag --json-schema-file help="File containing a JSON schema to constrain generations (https://json-schema.org/), e.g. `{}` for any JSON object For schemas w/ external $refs, use --grammar + example/json_schema_to_grammar.py instead" {
+flag --json-schema-file help="File containing a JSON schema to constrain generations (https://json-schema.org/), e.g. `{\"type\": \"object\"}` for any JSON object" {
     arg <FILE>
 }
 flag --backend-sampling help="enable backend sampling (experimental) (default: disabled)"
@@ -360,9 +360,13 @@ test -d "$spec_dir"; or mkdir -p -m 700 "$spec_dir"
 set -l spec_file "$spec_dir/usage__usage_spec_llama_imatrix.spec"
 echo $_usage_spec_llama_imatrix > "$spec_file"
 
-set -l tokens
+# stderr is discarded: a line that doesn't parse (`llama-imatrix help <Tab>`) makes
+# complete-word fail, and its error would be printed over the prompt.
+# The word being completed is cut at the cursor (`-c`) and unquoted, so
+# `'prod<Tab>` and `sub\ dir/<Tab>` match the same values as their bare
+# spellings; fish re-quotes whatever it inserts.
 if commandline -x >/dev/null 2>&1
-    complete -xc llama-imatrix -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -t))"
+    complete -xc llama-imatrix -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -ct | string unescape) 2>/dev/null)"
 else
-    complete -xc llama-imatrix -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -t))"
+    complete -xc llama-imatrix -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -ct | string unescape) 2>/dev/null)"
 end

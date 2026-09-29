@@ -20,7 +20,7 @@ _llama_server() {
   cat >| "$spec_file" <<'__USAGE_EOF__'
 name "LLaMA Server (中文)"
 bin llama-server
-version "0.4.1-dev"
+version "0.5.0-dev"
 about "LLaMA OpenAI 兼容推理服务器"
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
@@ -523,7 +523,7 @@ flag --tags help=设置模型标签，逗号分隔（仅信息，不用于路由
 flag --embd-normalize help=嵌入归一化（默认：2） {
     arg <N>
 }
-flag --host help="监听 IP 地址（默认：127.0.0.1）" {
+flag --host help="监听的 IP 地址（逗号分隔）或以 .sock 结尾的 UNIX 套接字路径；包含多个 TCP 地址时 :: 仅绑定 IPv6；地址重叠时行为未定义（默认：127.0.0.1）" {
     arg <HOST>
 }
 flag --port help=监听端口（默认：8080） {
@@ -665,14 +665,32 @@ flag --vision-gemma-12b-default help="使用 Gemma 3 12B QAT（可能从网络�
 flag --spec-default help=启用默认投机解码配置
 __USAGE_EOF__
   local -a values=() descs=() inserts=()
-  local needs_menu=0 line
+  local needs_menu=0 line usage_err=
   while IFS= read -r line; do
+    if [[ "$line" == $'\x1f'* ]]; then
+      usage_err="${line#?}"
+      continue
+    fi
     local -a parts=("${(@ps:\t:)line}")
     values+=("${parts[1]}")
     descs+=("${parts[2]}")
     inserts+=("${parts[3]}")
     [[ "${parts[3]}" == "'"* ]] && needs_menu=1
-  done < <(command usage complete-word --shell zsh -f "$spec_file" --cword=$((CURRENT - 1)) -- "${(Q)words[@]}")
+  done < <(
+    { _usage_err="$(command usage complete-word --shell zsh -f "$spec_file" --cword=$((CURRENT - 1)) -- "${(Q)words[@]}" 2>&1 >&3 3>&-)"; } 3>&1
+    (( $? )) || _usage_err=
+    for _usage_l in "${(@f)_usage_err}"; do
+      [[ "$_usage_l" == \[[A-Z]*\]* ]] && continue
+      _usage_l="${_usage_l#"${_usage_l%%[![:space:]]*}"}"
+      _usage_l="${_usage_l#Error:}"
+      _usage_l="${_usage_l#"${_usage_l%%[![:space:]]*}"}"
+      _usage_l="${_usage_l#× }"
+      [[ -z "$_usage_l" || ( "$_usage_l" == *::* && "$_usage_l" != *' '* ) ]] && continue
+      print -r -- $'\x1f'"$_usage_l"
+      break
+    done
+  )
+  [[ -n "$usage_err" ]] && _message -r "usage: ${usage_err//\%/%%}"
   (( needs_menu )) && compstate[insert]=menu
   if (( ${#inserts[@]} )); then
     local -a _usage_display=()

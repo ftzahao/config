@@ -10,41 +10,42 @@ end
 
 set _usage_spec_llama_quantize 'name "LLaMA Quantize (中文)"
 bin llama-quantize
-version "0.4.1-dev"
+version "0.5.0-dev"
 about "GGUF 模型量化工具"
-flag --allow-requantize help=""
-flag --leave-output-tensor help=""
-flag --pure help=""
-flag --imatrix help="" {
+flag --help help=""
+flag --allow-requantize help="允许对已量化的张量重新量化 ⚠️ 警告：与从 16bit 或 32bit 量化相比，这可能会严重降低质量"
+flag --leave-output-tensor help="保持 output.weight 不进行重新量化 会增大模型体积，但可能提升质量（尤其是重新量化时）"
+flag --pure help="禁用 k-quant 混合，将所有张量量化为同一类型"
+flag --imatrix help="在量化优化中使用 file_name 文件中的数据作为重要性矩阵" {
     arg <FILE_NAME>
 }
-flag --include-weights help="" {
+flag --include-weights help=对这些张量使用重要性矩阵 {
     arg <TENSOR_NAME>
 }
-flag --exclude-weights help="" {
+flag --exclude-weights help=不对这些张量使用重要性矩阵 {
     arg <TENSOR_NAME>
 }
-flag --output-tensor-type help="" {
+flag --output-tensor-type help="对 output.weight 张量使用此 ggml_type" {
     arg <GGML_TYPE>
 }
-flag --token-embedding-type help="" {
+flag --token-embedding-type help="对 token 嵌入张量使用此 ggml_type" {
     arg <GGML_TYPE>
 }
-flag --tensor-type help="" {
+flag --tensor-type help="将此张量量化为此 ggml_type 这是选择性量化张量的高级选项，可多次指定。示例：--tensor-type attn_q=q8_0" {
     arg <TENSOR_NAME_GGML_TYPE>
 }
-flag --tensor-type-file help="" {
+flag --tensor-type-file help="要量化到指定 ggml_type 的张量列表 这是选择性量化大量张量的高级选项，文件格式与上述相同，以空格或换行分隔。" {
     arg <TENSOR_TYPES_TXT>
 }
-flag --prune-layers help="" {
+flag --prune-layers help="要从模型中修剪的层号列表（逗号分隔）⚠️ 警告：高级选项，请谨慎使用。" {
     arg <L0_L1_L2>
 }
-flag --keep-split help=""
-flag --override-kv help="" {
+flag --keep-split help=按与输入相同的分片生成量化模型
+flag --override-kv help="在量化模型中按 key 覆盖模型元数据，可多次指定 ⚠️ 警告：高级选项，请谨慎使用。" {
     arg <KEY_TYPE_VALUE>
 }
-flag --dry-run help=""
-flag --max-buffer-size help="" {
+flag --dry-run help="计算并显示最终量化大小而不执行量化 示例：llama-quantize --dry-run model-f32.gguf Q4_K"
+flag --max-buffer-size help=量化单个张量时保留在内存中的最大张量行数（默认：8192）在内存较小的机器上量化含超大张量的模型时可调低此值 {
     arg <MIB>
 }
 '
@@ -53,9 +54,13 @@ test -d "$spec_dir"; or mkdir -p -m 700 "$spec_dir"
 set -l spec_file "$spec_dir/usage__usage_spec_llama_quantize.spec"
 echo $_usage_spec_llama_quantize > "$spec_file"
 
-set -l tokens
+# stderr is discarded: a line that doesn't parse (`llama-quantize help <Tab>`) makes
+# complete-word fail, and its error would be printed over the prompt.
+# The word being completed is cut at the cursor (`-c`) and unquoted, so
+# `'prod<Tab>` and `sub\ dir/<Tab>` match the same values as their bare
+# spellings; fish re-quotes whatever it inserts.
 if commandline -x >/dev/null 2>&1
-    complete -xc llama-quantize -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -t))"
+    complete -xc llama-quantize -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -ct | string unescape) 2>/dev/null)"
 else
-    complete -xc llama-quantize -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -t))"
+    complete -xc llama-quantize -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -ct | string unescape) 2>/dev/null)"
 end

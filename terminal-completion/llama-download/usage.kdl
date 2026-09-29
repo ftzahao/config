@@ -1,7 +1,7 @@
 name "LLaMA Download"
 bin "llama download"
 about "llama.cpp model download tool"
-version "0.4.1-dev"
+version "0.5.0-dev"
 
 flag "-h --help --usage" help="print usage and exit"
 flag "--mmproj-auto --no-mmproj --no-mmproj-auto" help="disable automatic mmproj download"

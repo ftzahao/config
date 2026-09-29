@@ -10,7 +10,7 @@ end
 
 set _usage_spec_llama_gguf_split 'name "LLaMA GGUF Split (English)"
 bin llama-gguf-split
-version "0.4.1-dev"
+version "0.5.0-dev"
 about "GGUF 文件拆分/合并工具"
 flag "-h --help" help="show this help message and exit"
 flag --version help="show version and build info"
@@ -19,10 +19,10 @@ flag --merge help="merge multiple GGUF to a single GGUF"
 flag --split-max-tensors help="max tensors in each split (default: 128)"
 flag --dry-run help="only print out a split plan and exit, without writing any new files"
 flag --delete-splits help="delete the split files during merge to free up disk space WARNING: this option is unsafe and will leave you in an unrecoverable state if something fails during the merge"
-flag --split-max-size help="" {
+flag --split-max-size help="max size per split" {
     arg <N_M_G>
 }
-flag --no-tensor-first-split help="" {
+flag --no-tensor-first-split help="do not add tensors to the first split (disabled by default)" {
     arg <DO>
 }
 '
@@ -31,9 +31,13 @@ test -d "$spec_dir"; or mkdir -p -m 700 "$spec_dir"
 set -l spec_file "$spec_dir/usage__usage_spec_llama_gguf_split.spec"
 echo $_usage_spec_llama_gguf_split > "$spec_file"
 
-set -l tokens
+# stderr is discarded: a line that doesn't parse (`llama-gguf-split help <Tab>`) makes
+# complete-word fail, and its error would be printed over the prompt.
+# The word being completed is cut at the cursor (`-c`) and unquoted, so
+# `'prod<Tab>` and `sub\ dir/<Tab>` match the same values as their bare
+# spellings; fish re-quotes whatever it inserts.
 if commandline -x >/dev/null 2>&1
-    complete -xc llama-gguf-split -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -t))"
+    complete -xc llama-gguf-split -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -ct | string unescape) 2>/dev/null)"
 else
-    complete -xc llama-gguf-split -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -t))"
+    complete -xc llama-gguf-split -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -ct | string unescape) 2>/dev/null)"
 end

@@ -14,7 +14,7 @@ Register-ArgumentCompleter -Native -CommandName 'llama-fit-params' -ScriptBlock 
 
     'name "Fit Params (中文)"
 bin llama-fit-params
-version "0.4.1-dev"
+version "0.5.0-dev"
 about 计算模型适配设备内存的参数
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
@@ -295,7 +295,7 @@ flag --dry-penalty-last-n help="最近 n 个 token 的 DRY 惩罚（默认：64�
 flag --dry-sequence-breaker help="添加 DRY 采样的序列中断器" {
     arg <STRING>
 }
-flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00)" {
+flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00) [(more info)](https://github.com/ggml-org/llama.cpp/pull/17927)" {
     arg <N>
 }
 flag --adaptive-decay help="adaptive-p: decay rate for target adaptation over time. lower values are more reactive, higher values are more stable. (valid range 0.0 to 0.99) (default: 0.90)" {

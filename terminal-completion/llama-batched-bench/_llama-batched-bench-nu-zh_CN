@@ -2,7 +2,7 @@
 module _llama_batched_bench_completions {
     const _usage_spec_llama_batched_bench = r##'name "Batched Bench (中文)"
 bin llama-batched-bench
-version "0.4.1-dev"
+version "0.5.0-dev"
 about 批处理解码性能基准测试工具
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
@@ -334,7 +334,10 @@ flag --output-format help=输出格式（默认：gguf） {
         let spec_file = ($spec_dir | path join $"usage__usage_spec_llama_batched_bench.spec")
         $_usage_spec_llama_batched_bench | save -f $spec_file
 
-        (^usage complete-word -f $spec_file --shell nu -- ...$spans)
+        # `complete` captures stderr and the exit code: a line that doesn't
+        # parse makes complete-word fail, and its error would be printed over
+        # the prompt.
+        (^usage complete-word -f $spec_file --shell nu -- ...$spans | complete).stdout
         | lines
         | each {|it| $it | split column "\t" | rename value description | into record }
     }

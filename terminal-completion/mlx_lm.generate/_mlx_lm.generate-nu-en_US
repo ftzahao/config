@@ -91,7 +91,10 @@ flag --num-draft-tokens help="Number of tokens to draft when using speculative d
         let spec_file = ($spec_dir | path join $"usage__usage_spec_mlx_lm_generate.spec")
         $_usage_spec_mlx_lm_generate | save -f $spec_file
 
-        (^usage complete-word -f $spec_file --shell nu -- ...$spans)
+        # `complete` captures stderr and the exit code: a line that doesn't
+        # parse makes complete-word fail, and its error would be printed over
+        # the prompt.
+        (^usage complete-word -f $spec_file --shell nu -- ...$spans | complete).stdout
         | lines
         | each {|it| $it | split column "\t" | rename value description | into record }
     }

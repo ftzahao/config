@@ -2,7 +2,7 @@
 module _llama_completion_completions {
     const _usage_spec_llama_completion = r##'name "Text Completion (中文)"
 bin llama-completion
-version "0.4.1-dev"
+version "0.5.0-dev"
 about "文本补全 / 交互式对话工具"
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
@@ -398,7 +398,10 @@ flag --simple-io help="使用基本 I/O 以获得更好的兼容性"
         let spec_file = ($spec_dir | path join $"usage__usage_spec_llama_completion.spec")
         $_usage_spec_llama_completion | save -f $spec_file
 
-        (^usage complete-word -f $spec_file --shell nu -- ...$spans)
+        # `complete` captures stderr and the exit code: a line that doesn't
+        # parse makes complete-word fail, and its error would be printed over
+        # the prompt.
+        (^usage complete-word -f $spec_file --shell nu -- ...$spans | complete).stdout
         | lines
         | each {|it| $it | split column "\t" | rename value description | into record }
     }

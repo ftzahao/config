@@ -1,7 +1,7 @@
 name "Batched Bench (中文)"
 bin "llama-batched-bench"
 about "批处理解码性能基准测试工具"
-version "0.4.1-dev"
+version "0.5.0-dev"
 
 flag "-h --help --usage" help="打印用法并退出"
 flag "--version" help="显示版本和构建信息"

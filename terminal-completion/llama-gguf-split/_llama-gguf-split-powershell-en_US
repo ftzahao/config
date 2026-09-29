@@ -14,7 +14,7 @@ Register-ArgumentCompleter -Native -CommandName 'llama-gguf-split' -ScriptBlock 
 
     'name "LLaMA GGUF Split (English)"
 bin llama-gguf-split
-version "0.4.1-dev"
+version "0.5.0-dev"
 about "GGUF 文件拆分/合并工具"
 flag "-h --help" help="show this help message and exit"
 flag --version help="show version and build info"
@@ -23,10 +23,10 @@ flag --merge help="merge multiple GGUF to a single GGUF"
 flag --split-max-tensors help="max tensors in each split (default: 128)"
 flag --dry-run help="only print out a split plan and exit, without writing any new files"
 flag --delete-splits help="delete the split files during merge to free up disk space WARNING: this option is unsafe and will leave you in an unrecoverable state if something fails during the merge"
-flag --split-max-size help="" {
+flag --split-max-size help="max size per split" {
     arg <N_M_G>
 }
-flag --no-tensor-first-split help="" {
+flag --no-tensor-first-split help="do not add tensors to the first split (disabled by default)" {
     arg <DO>
 }
 ' | Out-File -FilePath $specFile -Encoding utf8

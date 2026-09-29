@@ -43,7 +43,10 @@ flag --quantized-kv-start help="设置 --kv-bits 后，从此步开始量化 KV 
         let spec_file = ($spec_dir | path join $"usage__usage_spec_mlx_lm_cache_prompt.spec")
         $_usage_spec_mlx_lm_cache_prompt | save -f $spec_file
 
-        (^usage complete-word -f $spec_file --shell nu -- ...$spans)
+        # `complete` captures stderr and the exit code: a line that doesn't
+        # parse makes complete-word fail, and its error would be printed over
+        # the prompt.
+        (^usage complete-word -f $spec_file --shell nu -- ...$spans | complete).stdout
         | lines
         | each {|it| $it | split column "\t" | rename value description | into record }
     }

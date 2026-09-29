@@ -2,7 +2,7 @@
 module _llama_completions {
     const _usage_spec_llama = r##'name "llama (中文)"
 bin llama
-version "0.4.1-dev"
+version "0.5.0-dev"
 about "llama.cpp 多工具启动器"
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本与构建信息
@@ -508,7 +508,7 @@ cmd serve help="HTTP API 服务器" {
     flag --embd-normalize help=嵌入归一化（默认：2） {
         arg <N>
     }
-    flag --host help="监听 IP 地址（默认：127.0.0.1）" {
+    flag --host help="监听的 IP 地址（逗号分隔）或以 .sock 结尾的 UNIX 套接字路径；包含多个 TCP 地址时 :: 仅绑定 IPv6；地址重叠时行为未定义（默认：127.0.0.1）" {
         arg <HOST>
     }
     flag --port help=监听端口（默认：8080） {
@@ -1694,7 +1694,7 @@ cmd bench help=模型性能基准测试 {
     flag --device help=设备（默认：auto） {
         arg <DEV0_DEV1>
     }
-    flag --load-mode help="" {
+    flag --load-mode help=（默认：auto） {
         arg <AUTO_NONE_MMAP_MLOCK_MMAP_MLOCK_DIO>
     }
     flag --lazy-mode help=延迟加载模式（默认：auto） {
@@ -1713,6 +1713,9 @@ cmd bench help=模型性能基准测试 {
         arg <N>
     }
     flag --no-host help=不使用主机（默认：0） {
+        arg <N>
+    }
+    flag --repack help=（默认：1） {
         arg <N>
     }
 }
@@ -2318,7 +2321,7 @@ cmd fit-params help=计算模型适配设备内存的参数 {
     flag --dry-sequence-breaker help="添加 DRY 采样的序列中断器" {
         arg <STRING>
     }
-    flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00)" {
+    flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00) [(more info)](https://github.com/ggml-org/llama.cpp/pull/17927)" {
         arg <N>
     }
     flag --adaptive-decay help="adaptive-p: decay rate for target adaptation over time. lower values are more reactive, higher values are more stable. (valid range 0.0 to 0.99) (default: 0.90)" {
@@ -2360,39 +2363,40 @@ cmd fit-params help=计算模型适配设备内存的参数 {
     }
 }
 cmd quantize help=量化模型 {
-    flag --allow-requantize help=""
-    flag --leave-output-tensor help=""
-    flag --pure help=""
-    flag --imatrix help="" {
+    flag --help help=""
+    flag --allow-requantize help="允许对已量化的张量重新量化 ⚠️ 警告：与从 16bit 或 32bit 量化相比，这可能会严重降低质量"
+    flag --leave-output-tensor help="保持 output.weight 不进行重新量化 会增大模型体积，但可能提升质量（尤其是重新量化时）"
+    flag --pure help="禁用 k-quant 混合，将所有张量量化为同一类型"
+    flag --imatrix help="在量化优化中使用 file_name 文件中的数据作为重要性矩阵" {
         arg <FILE_NAME>
     }
-    flag --include-weights help="" {
+    flag --include-weights help=对这些张量使用重要性矩阵 {
         arg <TENSOR_NAME>
     }
-    flag --exclude-weights help="" {
+    flag --exclude-weights help=不对这些张量使用重要性矩阵 {
         arg <TENSOR_NAME>
     }
-    flag --output-tensor-type help="" {
+    flag --output-tensor-type help="对 output.weight 张量使用此 ggml_type" {
         arg <GGML_TYPE>
     }
-    flag --token-embedding-type help="" {
+    flag --token-embedding-type help="对 token 嵌入张量使用此 ggml_type" {
         arg <GGML_TYPE>
     }
-    flag --tensor-type help="" {
+    flag --tensor-type help="将此张量量化为此 ggml_type 这是选择性量化张量的高级选项，可多次指定。示例：--tensor-type attn_q=q8_0" {
         arg <TENSOR_NAME_GGML_TYPE>
     }
-    flag --tensor-type-file help="" {
+    flag --tensor-type-file help="要量化到指定 ggml_type 的张量列表 这是选择性量化大量张量的高级选项，文件格式与上述相同，以空格或换行分隔。" {
         arg <TENSOR_TYPES_TXT>
     }
-    flag --prune-layers help="" {
+    flag --prune-layers help="要从模型中修剪的层号列表（逗号分隔）⚠️ 警告：高级选项，请谨慎使用。" {
         arg <L0_L1_L2>
     }
-    flag --keep-split help=""
-    flag --override-kv help="" {
+    flag --keep-split help=按与输入相同的分片生成量化模型
+    flag --override-kv help="在量化模型中按 key 覆盖模型元数据，可多次指定 ⚠️ 警告：高级选项，请谨慎使用。" {
         arg <KEY_TYPE_VALUE>
     }
-    flag --dry-run help=""
-    flag --max-buffer-size help="" {
+    flag --dry-run help="计算并显示最终量化大小而不执行量化 示例：llama-quantize --dry-run model-f32.gguf Q4_K"
+    flag --max-buffer-size help=量化单个张量时保留在内存中的最大张量行数（默认：8192）在内存较小的机器上量化含超大张量的模型时可调低此值 {
         arg <MIB>
     }
 }
@@ -2755,7 +2759,10 @@ cmd help help=显示可用命令
         let spec_file = ($spec_dir | path join $"usage__usage_spec_llama.spec")
         $_usage_spec_llama | save -f $spec_file
 
-        (^usage complete-word -f $spec_file --shell nu -- ...$spans)
+        # `complete` captures stderr and the exit code: a line that doesn't
+        # parse makes complete-word fail, and its error would be printed over
+        # the prompt.
+        (^usage complete-word -f $spec_file --shell nu -- ...$spans | complete).stdout
         | lines
         | each {|it| $it | split column "\t" | rename value description | into record }
     }

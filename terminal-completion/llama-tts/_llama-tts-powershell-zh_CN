@@ -14,7 +14,7 @@ Register-ArgumentCompleter -Native -CommandName 'llama-tts' -ScriptBlock {
 
     'name "TTS (中文)"
 bin llama-tts
-version "0.4.1-dev"
+version "0.5.0-dev"
 about 文本转语音工具
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息

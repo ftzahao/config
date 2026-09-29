@@ -49,7 +49,10 @@ flag --accumulation-dtype help=用于累积敏感性梯度的数据类型 {
         let spec_file = ($spec_dir | path join $"usage__usage_spec_mlx_lm_dynamic_quant.spec")
         $_usage_spec_mlx_lm_dynamic_quant | save -f $spec_file
 
-        (^usage complete-word -f $spec_file --shell nu -- ...$spans)
+        # `complete` captures stderr and the exit code: a line that doesn't
+        # parse makes complete-word fail, and its error would be printed over
+        # the prompt.
+        (^usage complete-word -f $spec_file --shell nu -- ...$spans | complete).stdout
         | lines
         | each {|it| $it | split column "\t" | rename value description | into record }
     }

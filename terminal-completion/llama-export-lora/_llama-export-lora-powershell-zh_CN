@@ -14,7 +14,7 @@ Register-ArgumentCompleter -Native -CommandName 'llama-export-lora' -ScriptBlock
 
     'name "LoRA Export (中文)"
 bin llama-export-lora
-version "0.4.1-dev"
+version "0.5.0-dev"
 about "LoRA 适配器导出 / 合并工具"
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息

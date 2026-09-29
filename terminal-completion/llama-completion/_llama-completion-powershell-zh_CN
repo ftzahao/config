@@ -14,7 +14,7 @@ Register-ArgumentCompleter -Native -CommandName 'llama-completion' -ScriptBlock 
 
     'name "Text Completion (中文)"
 bin llama-completion
-version "0.4.1-dev"
+version "0.5.0-dev"
 about "文本补全 / 交互式对话工具"
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息

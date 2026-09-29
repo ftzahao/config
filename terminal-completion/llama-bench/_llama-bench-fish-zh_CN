@@ -10,7 +10,7 @@ end
 
 set _usage_spec_llama_bench 'name "LLaMA Bench (中文)"
 bin llama-bench
-version "0.4.1-dev"
+version "0.5.0-dev"
 about 模型性能基准测试工具
 flag "-h --help" help=""
 flag --version help=显示版本和构建信息
@@ -112,7 +112,7 @@ flag --flash-attn help=闪存注意力（默认：auto） {
 flag --device help=设备（默认：auto） {
     arg <DEV0_DEV1>
 }
-flag --load-mode help="" {
+flag --load-mode help=（默认：auto） {
     arg <AUTO_NONE_MMAP_MLOCK_MMAP_MLOCK_DIO>
 }
 flag --lazy-mode help=延迟加载模式（默认：auto） {
@@ -133,15 +133,22 @@ flag --no-op-offload help=不使用主机张量操作卸载（默认：0） {
 flag --no-host help=不使用主机（默认：0） {
     arg <N>
 }
+flag --repack help=（默认：1） {
+    arg <N>
+}
 '
 set -l spec_dir (if set -q XDG_CACHE_HOME; echo $XDG_CACHE_HOME; else; echo $HOME/.cache; end)/usage
 test -d "$spec_dir"; or mkdir -p -m 700 "$spec_dir"
 set -l spec_file "$spec_dir/usage__usage_spec_llama_bench.spec"
 echo $_usage_spec_llama_bench > "$spec_file"
 
-set -l tokens
+# stderr is discarded: a line that doesn't parse (`llama-bench help <Tab>`) makes
+# complete-word fail, and its error would be printed over the prompt.
+# The word being completed is cut at the cursor (`-c`) and unquoted, so
+# `'prod<Tab>` and `sub\ dir/<Tab>` match the same values as their bare
+# spellings; fish re-quotes whatever it inserts.
 if commandline -x >/dev/null 2>&1
-    complete -xc llama-bench -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -t))"
+    complete -xc llama-bench -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -ct | string unescape) 2>/dev/null)"
 else
-    complete -xc llama-bench -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -t))"
+    complete -xc llama-bench -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -ct | string unescape) 2>/dev/null)"
 end

@@ -14,7 +14,7 @@ Register-ArgumentCompleter -Native -CommandName 'llama-bench' -ScriptBlock {
 
     'name "LLaMA Bench (中文)"
 bin llama-bench
-version "0.4.1-dev"
+version "0.5.0-dev"
 about 模型性能基准测试工具
 flag "-h --help" help=""
 flag --version help=显示版本和构建信息
@@ -116,7 +116,7 @@ flag --flash-attn help=闪存注意力（默认：auto） {
 flag --device help=设备（默认：auto） {
     arg <DEV0_DEV1>
 }
-flag --load-mode help="" {
+flag --load-mode help=（默认：auto） {
     arg <AUTO_NONE_MMAP_MLOCK_MMAP_MLOCK_DIO>
 }
 flag --lazy-mode help=延迟加载模式（默认：auto） {
@@ -135,6 +135,9 @@ flag --no-op-offload help=不使用主机张量操作卸载（默认：0） {
     arg <N>
 }
 flag --no-host help=不使用主机（默认：0） {
+    arg <N>
+}
+flag --repack help=（默认：1） {
     arg <N>
 }
 ' | Out-File -FilePath $specFile -Encoding utf8

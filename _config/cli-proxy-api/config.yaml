@@ -1,3 +1,4 @@
+config-version: 8
 # 服务器绑定主机/接口，默认空字符串同时绑定 IPv4/IPv6。
 # 使用 "127.0.0.1" 或 "localhost" 可限制仅本机访问。
 host: ""
@@ -85,7 +86,7 @@ openai-compatibility:
     api-key-entries:
       - api-key:
     headers:
-      User-Agent: HermesAgent/0.21.4
+      User-Agent: HermesAgent/0.21.5
       Authorization: Bearer
     models:
       - name: xiaomi/mimo-v2.6-flash
@@ -236,6 +237,27 @@ openai-compatibility:
         max-context-length: 262144
         input-modalities:
           - text
+      - name: stealth/space-bunny-alpha
+        alias: ""
+        display-name: Space Bunny Alpha
+        max-context-length: 1000000
+        input-modalities:
+          - text
+          - image
+        thinking:
+          levels:
+            - max
+            - xhigh
+            - high
+            - medium
+            - low
+      - name: meituan/longcat-2.5-preview:free
+        alias: ""
+        display-name: "Meituan: LongCat 2.5 Preview"
+        max-context-length: 1048576
+        input-modalities:
+          - text
+          - image
 # Vertex API 密钥（Vertex 兼容端点，使用 API key + base URL）
 vertex-api-key: []
 # 全局 OAuth 模型名称别名（按渠道）
@@ -275,7 +297,9 @@ plugins:
       store:
         id: keeper
         name: CPA Usage Keeper
-        description: Adds a CPAMC entry for opening CPA Usage Keeper from the management center. Requires CPA Usage Keeper v1.12.2 or later.
+        description:
+          Adds a CPAMC entry for opening CPA Usage Keeper from the management center. Requires CPA Usage Keeper
+          v1.12.2 or later.
         author: Willxup
         version: 0.1.0
         release-tag: v0.1.0

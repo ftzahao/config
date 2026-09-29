@@ -2,7 +2,7 @@
 module _llama_export_lora_completions {
     const _usage_spec_llama_export_lora = r##'name "LoRA Export (中文)"
 bin llama-export-lora
-version "0.4.1-dev"
+version "0.5.0-dev"
 about "LoRA 适配器导出 / 合并工具"
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
@@ -333,7 +333,10 @@ flag "-o --output --output-file" help=输出文件（默认：空） {
         let spec_file = ($spec_dir | path join $"usage__usage_spec_llama_export_lora.spec")
         $_usage_spec_llama_export_lora | save -f $spec_file
 
-        (^usage complete-word -f $spec_file --shell nu -- ...$spans)
+        # `complete` captures stderr and the exit code: a line that doesn't
+        # parse makes complete-word fail, and its error would be printed over
+        # the prompt.
+        (^usage complete-word -f $spec_file --shell nu -- ...$spans | complete).stdout
         | lines
         | each {|it| $it | split column "\t" | rename value description | into record }
     }

@@ -2,7 +2,7 @@
 module _llama_bench_completions {
     const _usage_spec_llama_bench = r##'name "LLaMA Bench (中文)"
 bin llama-bench
-version "0.4.1-dev"
+version "0.5.0-dev"
 about 模型性能基准测试工具
 flag "-h --help" help=""
 flag --version help=显示版本和构建信息
@@ -104,7 +104,7 @@ flag --flash-attn help=闪存注意力（默认：auto） {
 flag --device help=设备（默认：auto） {
     arg <DEV0_DEV1>
 }
-flag --load-mode help="" {
+flag --load-mode help=（默认：auto） {
     arg <AUTO_NONE_MMAP_MLOCK_MMAP_MLOCK_DIO>
 }
 flag --lazy-mode help=延迟加载模式（默认：auto） {
@@ -125,6 +125,9 @@ flag --no-op-offload help=不使用主机张量操作卸载（默认：0） {
 flag --no-host help=不使用主机（默认：0） {
     arg <N>
 }
+flag --repack help=（默认：1） {
+    arg <N>
+}
 '##
     def llama_bench_completer [spans: list<string>] {
         let spec_dir = ($env.XDG_CACHE_HOME? | default ($nu.home-dir? | default $nu.home-path? | path join ".cache") | path join "usage")
@@ -135,7 +138,10 @@ flag --no-host help=不使用主机（默认：0） {
         let spec_file = ($spec_dir | path join $"usage__usage_spec_llama_bench.spec")
         $_usage_spec_llama_bench | save -f $spec_file
 
-        (^usage complete-word -f $spec_file --shell nu -- ...$spans)
+        # `complete` captures stderr and the exit code: a line that doesn't
+        # parse makes complete-word fail, and its error would be printed over
+        # the prompt.
+        (^usage complete-word -f $spec_file --shell nu -- ...$spans | complete).stdout
         | lines
         | each {|it| $it | split column "\t" | rename value description | into record }
     }

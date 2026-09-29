@@ -2,7 +2,7 @@
 module _llama_mtmd_cli_completions {
     const _usage_spec_llama_mtmd_cli = r##'name "LLaMA Multimodal CLI (中文)"
 bin llama-mtmd-cli
-version "0.4.1-dev"
+version "0.5.0-dev"
 about 多模态模型命令行工具
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
@@ -354,7 +354,7 @@ flag --video-ffmpeg-dir help="ffmpeg 和 ffprobe 所在目录路径（默认：�
     arg <DIR>
 }
 flag "--jinja --no-jinja" help="是否使用 Jinja 模板引擎（默认：禁用）"
-flag --chat-template help="set custom jinja chat template (default: template taken from model's metadata) if suffix/prefix are specified, template will be disabled only commonly used templates are accepted (unless --jinja is set before this flag): list of built-in templates: bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
+flag --chat-template help="设置自定义 Jinja 聊天模板（默认：从模型元数据获取的模板）。如果指定了 suffix/prefix，模板将被禁用。仅接受常用模板（除非在此标志之前设置了 --jinja）：内置模板列表：bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
     arg <JINJA_TEMPLATE>
 }
 '##
@@ -367,7 +367,10 @@ flag --chat-template help="set custom jinja chat template (default: template tak
         let spec_file = ($spec_dir | path join $"usage__usage_spec_llama_mtmd_cli.spec")
         $_usage_spec_llama_mtmd_cli | save -f $spec_file
 
-        (^usage complete-word -f $spec_file --shell nu -- ...$spans)
+        # `complete` captures stderr and the exit code: a line that doesn't
+        # parse makes complete-word fail, and its error would be printed over
+        # the prompt.
+        (^usage complete-word -f $spec_file --shell nu -- ...$spans | complete).stdout
         | lines
         | each {|it| $it | split column "\t" | rename value description | into record }
     }

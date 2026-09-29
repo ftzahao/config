@@ -2,7 +2,7 @@
 module _llama_perplexity_completions {
     const _usage_spec_llama_perplexity = r##'name "LLaMA Perplexity (中文)"
 bin llama-perplexity
-version "0.4.1-dev"
+version "0.5.0-dev"
 about 模型困惑度评估工具
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
@@ -358,7 +358,10 @@ flag --ppl-output-type help=困惑度计算输出类型（默认：0） {
         let spec_file = ($spec_dir | path join $"usage__usage_spec_llama_perplexity.spec")
         $_usage_spec_llama_perplexity | save -f $spec_file
 
-        (^usage complete-word -f $spec_file --shell nu -- ...$spans)
+        # `complete` captures stderr and the exit code: a line that doesn't
+        # parse makes complete-word fail, and its error would be printed over
+        # the prompt.
+        (^usage complete-word -f $spec_file --shell nu -- ...$spans | complete).stdout
         | lines
         | each {|it| $it | split column "\t" | rename value description | into record }
     }

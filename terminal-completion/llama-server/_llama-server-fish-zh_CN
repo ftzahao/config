@@ -10,7 +10,7 @@ end
 
 set _usage_spec_llama_server 'name "LLaMA Server (中文)"
 bin llama-server
-version "0.4.1-dev"
+version "0.5.0-dev"
 about "LLaMA OpenAI 兼容推理服务器"
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
@@ -513,7 +513,7 @@ flag --tags help=设置模型标签，逗号分隔（仅信息，不用于路由
 flag --embd-normalize help=嵌入归一化（默认：2） {
     arg <N>
 }
-flag --host help="监听 IP 地址（默认：127.0.0.1）" {
+flag --host help="监听的 IP 地址（逗号分隔）或以 .sock 结尾的 UNIX 套接字路径；包含多个 TCP 地址时 :: 仅绑定 IPv6；地址重叠时行为未定义（默认：127.0.0.1）" {
     arg <HOST>
 }
 flag --port help=监听端口（默认：8080） {
@@ -659,9 +659,13 @@ test -d "$spec_dir"; or mkdir -p -m 700 "$spec_dir"
 set -l spec_file "$spec_dir/usage__usage_spec_llama_server.spec"
 echo $_usage_spec_llama_server > "$spec_file"
 
-set -l tokens
+# stderr is discarded: a line that doesn't parse (`llama-server help <Tab>`) makes
+# complete-word fail, and its error would be printed over the prompt.
+# The word being completed is cut at the cursor (`-c`) and unquoted, so
+# `'prod<Tab>` and `sub\ dir/<Tab>` match the same values as their bare
+# spellings; fish re-quotes whatever it inserts.
 if commandline -x >/dev/null 2>&1
-    complete -xc llama-server -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -t))"
+    complete -xc llama-server -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -ct | string unescape) 2>/dev/null)"
 else
-    complete -xc llama-server -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -t))"
+    complete -xc llama-server -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -ct | string unescape) 2>/dev/null)"
 end

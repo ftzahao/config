@@ -14,7 +14,7 @@ Register-ArgumentCompleter -Native -CommandName 'llama-bench' -ScriptBlock {
 
     'name "LLaMA Bench (English)"
 bin llama-bench
-version "0.4.1-dev"
+version "0.5.0-dev"
 about 模型性能基准测试工具
 flag "-h --help" help=""
 flag --version help="show version and build info"
@@ -116,7 +116,7 @@ flag --flash-attn help="(default: auto)" {
 flag --device help="(default: auto)" {
     arg <DEV0_DEV1>
 }
-flag --load-mode help="" {
+flag --load-mode help="(default: auto)" {
     arg <AUTO_NONE_MMAP_MLOCK_MMAP_MLOCK_DIO>
 }
 flag --lazy-mode help="(default: auto)" {
@@ -135,6 +135,9 @@ flag --no-op-offload help="(default: 0)" {
     arg <N>
 }
 flag --no-host help="(default: 0)" {
+    arg <N>
+}
+flag --repack help="(default: 1)" {
     arg <N>
 }
 ' | Out-File -FilePath $specFile -Encoding utf8

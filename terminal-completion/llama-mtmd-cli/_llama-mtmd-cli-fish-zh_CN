@@ -10,7 +10,7 @@ end
 
 set _usage_spec_llama_mtmd_cli 'name "LLaMA Multimodal CLI (中文)"
 bin llama-mtmd-cli
-version "0.4.1-dev"
+version "0.5.0-dev"
 about 多模态模型命令行工具
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
@@ -362,7 +362,7 @@ flag --video-ffmpeg-dir help="ffmpeg 和 ffprobe 所在目录路径（默认：�
     arg <DIR>
 }
 flag "--jinja --no-jinja" help="是否使用 Jinja 模板引擎（默认：禁用）"
-flag --chat-template help="set custom jinja chat template (default: template taken from model\'s metadata) if suffix/prefix are specified, template will be disabled only commonly used templates are accepted (unless --jinja is set before this flag): list of built-in templates: bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
+flag --chat-template help="设置自定义 Jinja 聊天模板（默认：从模型元数据获取的模板）。如果指定了 suffix/prefix，模板将被禁用。仅接受常用模板（除非在此标志之前设置了 --jinja）：内置模板列表：bailing, bailing-think, bailing2, chatglm3, chatglm4, chatml, command-r, deepseek, deepseek-ocr, deepseek2, deepseek3, exaone-moe, exaone3, exaone4, falcon3, gemma, gigachat, glmedge, gpt-oss, granite, granite-4.0, granite-4.1, grok-2, hunyuan-dense, hunyuan-moe, hunyuan-vl, kimi-k2, llama2, llama2-sys, llama2-sys-bos, llama2-sys-strip, llama3, llama4, megrez, minicpm, mistral-v1, mistral-v3, mistral-v3-tekken, mistral-v7, mistral-v7-tekken, monarch, openchat, orion, pangu-embedded, phi3, phi4, rwkv-world, seed_oss, smolvlm, solar-open, vicuna, vicuna-orca, yandex, zephyr" {
     arg <JINJA_TEMPLATE>
 }
 '
@@ -371,9 +371,13 @@ test -d "$spec_dir"; or mkdir -p -m 700 "$spec_dir"
 set -l spec_file "$spec_dir/usage__usage_spec_llama_mtmd_cli.spec"
 echo $_usage_spec_llama_mtmd_cli > "$spec_file"
 
-set -l tokens
+# stderr is discarded: a line that doesn't parse (`llama-mtmd-cli help <Tab>`) makes
+# complete-word fail, and its error would be printed over the prompt.
+# The word being completed is cut at the cursor (`-c`) and unquoted, so
+# `'prod<Tab>` and `sub\ dir/<Tab>` match the same values as their bare
+# spellings; fish re-quotes whatever it inserts.
 if commandline -x >/dev/null 2>&1
-    complete -xc llama-mtmd-cli -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -t))"
+    complete -xc llama-mtmd-cli -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -ct | string unescape) 2>/dev/null)"
 else
-    complete -xc llama-mtmd-cli -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -t))"
+    complete -xc llama-mtmd-cli -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -ct | string unescape) 2>/dev/null)"
 end

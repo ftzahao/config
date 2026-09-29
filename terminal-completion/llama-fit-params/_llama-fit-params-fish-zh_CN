@@ -10,7 +10,7 @@ end
 
 set _usage_spec_llama_fit_params 'name "Fit Params (中文)"
 bin llama-fit-params
-version "0.4.1-dev"
+version "0.5.0-dev"
 about 计算模型适配设备内存的参数
 flag "-h --help --usage" help=打印用法并退出
 flag --version help=显示版本和构建信息
@@ -291,7 +291,7 @@ flag --dry-penalty-last-n help="最近 n 个 token 的 DRY 惩罚（默认：64�
 flag --dry-sequence-breaker help="添加 DRY 采样的序列中断器" {
     arg <STRING>
 }
-flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00)" {
+flag --adaptive-target help="adaptive-p: select tokens near this probability (valid range 0.0 to 1.0; negative = disabled) (default: -1.00) [(more info)](https://github.com/ggml-org/llama.cpp/pull/17927)" {
     arg <N>
 }
 flag --adaptive-decay help="adaptive-p: decay rate for target adaptation over time. lower values are more reactive, higher values are more stable. (valid range 0.0 to 0.99) (default: 0.90)" {
@@ -337,9 +337,13 @@ test -d "$spec_dir"; or mkdir -p -m 700 "$spec_dir"
 set -l spec_file "$spec_dir/usage__usage_spec_llama_fit_params.spec"
 echo $_usage_spec_llama_fit_params > "$spec_file"
 
-set -l tokens
+# stderr is discarded: a line that doesn't parse (`llama-fit-params help <Tab>`) makes
+# complete-word fail, and its error would be printed over the prompt.
+# The word being completed is cut at the cursor (`-c`) and unquoted, so
+# `'prod<Tab>` and `sub\ dir/<Tab>` match the same values as their bare
+# spellings; fish re-quotes whatever it inserts.
 if commandline -x >/dev/null 2>&1
-    complete -xc llama-fit-params -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -t))"
+    complete -xc llama-fit-params -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -xpc) (commandline -ct | string unescape) 2>/dev/null)"
 else
-    complete -xc llama-fit-params -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -t))"
+    complete -xc llama-fit-params -a "(command usage complete-word --shell fish -f \"$spec_file\" -- (commandline -opc) (commandline -ct | string unescape) 2>/dev/null)"
 end
