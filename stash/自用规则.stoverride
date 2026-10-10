@@ -60,38 +60,12 @@ rule-providers:
     behavior: ipcidr
     format: yaml
     interval: 86400
-  Developer:
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Developer/Developer.yaml
-    behavior: classical
-    format: yaml
-    interval: 86400
-  CloudGlobal:
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Cloud/CloudGlobal/CloudGlobal.yaml
-    behavior: classical
-    format: yaml
-    interval: 86400
-  CloudGlobal_IP:
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Cloud/CloudGlobal/CloudGlobal_IP.yaml
-    behavior: ipcidr
-    format: yaml
-    interval: 86400
-  Global:
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Global/Global.yaml
-    behavior: classical
-    format: yaml
-    interval: 86400
-  Global_Domain:
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Global/Global_Domain.yaml
-    behavior: domain
-    format: yaml
-    interval: 86400
   Lan:
     url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan.yaml
     behavior: classical
     format: yaml
     interval: 86400
 rules:
-  - RULE-SET,Developer,PROXY
   - RULE-SET,FtzahaoDirect,DIRECT
   - RULE-SET,Apple,DIRECT
   - RULE-SET,Apple_Domain,DIRECT
@@ -101,11 +75,5 @@ rules:
   - RULE-SET,ChinaMax,DIRECT
   - RULE-SET,ChinaMax_Domain,DIRECT
   - RULE-SET,ChinaMax_IP,DIRECT
-  - RULE-SET,CloudGlobal,PROXY
-  - RULE-SET,CloudGlobal_IP,PROXY
-  - RULE-SET,Global,PROXY
-  - RULE-SET,Global_Domain,PROXY
   - RULE-SET,Lan,DIRECT
   - GEOIP,LAN,DIRECT
-  - GEOIP,CN,DIRECT
-  - MATCH,PROXY
