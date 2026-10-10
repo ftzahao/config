@@ -7,7 +7,7 @@ run = '''
 set -u
 
 # 补全目录与缓存路径（未加载 dotfiles 时使用默认值兜底）
-ZSH_FUNC=~/.cache/zsh/zfunc
+ZSH_FUNC=~/.local/share/zsh/site-functions
 CONCURRENCY=8 # 并发上限，curl 下载较多，串行太慢
 
 # 临时目录：所有补全先写到这里，全部跑完后再原子替换到目标目录
@@ -124,32 +124,8 @@ fetch_url_completion() {
 # ---- 本地命令补全（需要命令已安装） ----
 spawn gen_local_completion mise "mise completion zsh"
 spawn gen_local_completion hermes "hermes completion zsh"
-spawn gen_local_completion aube "aube completion zsh"
-spawn gen_local_completion bat "bat --completion zsh"
-spawn gen_local_completion bun "bun completions zsh"
-spawn gen_local_completion miniserve "miniserve --print-completions zsh"
-spawn gen_local_completion deno "deno completions zsh"
-spawn gen_local_completion fd "fd --gen-completions zsh"
-spawn gen_local_completion gh "gh completion -s zsh"
-spawn gen_local_completion opencode "opencode --completions zsh"
-spawn gen_local_completion npm "npm completion"
-spawn gen_local_completion pkl "pkl shell-completion zsh"
-spawn gen_local_completion pnpm "pnpm completion zsh"
-spawn gen_local_completion pip "pip completion --zsh"
-spawn gen_local_completion rg "rg --generate complete-zsh"
-spawn gen_local_completion usage "usage --completions zsh"
-spawn gen_local_completion uv "uv generate-shell-completion zsh"
-spawn gen_local_completion watchexec "watchexec --completions zsh"
-spawn gen_local_completion yq "yq completion zsh"
-spawn gen_local_completion pitchfork "pitchfork completion zsh"
-spawn gen_local_completion hf "hf --show-completion"
 spawn gen_local_completion container "container --generate-completion-script zsh"
-spawn gen_local_completion lefthook "lefthook completion zsh"
-spawn gen_local_completion kubectl "kubectl completion zsh"
-spawn gen_local_completion witr "witr completion zsh"
-spawn gen_local_completion xcbeautify "xcbeautify --generate-completion-script"
 spawn gen_local_completion unsloth "unsloth --show-completion zsh"
-spawn gen_local_completion mo "mo completion zsh"
 
 # ---- 远程补全（不依赖本地命令是否存在） ----
 spawn fetch_url_completion dust "https://raw.githubusercontent.com/bootandy/dust/refs/heads/master/completions/_dust"
@@ -220,22 +196,6 @@ echo "✅ ${success_count} 个补全脚本已生成至 $ZSH_FUNC"
 description = "安装 mise 到 ~/.local/bin"
 run = "curl https://mise.run | sh"
 
-[tasks.i-unsloth-cli]
-description = "安装 unsloth cli"
-run = "curl -fsSL https://unsloth.ai/install.sh | sh"
-
-[tasks.i-cua-cli]
-description = "安装 Cua 驱动"
-run = """
-#!/usr/bin/env zsh
-
-/bin/bash -c "$(curl -fsSL https://cua.ai/driver/install.sh)"
-"""
-
-[tasks.mise-update]
-description = "更新 mise 的包以及自身到最新版本"
-run = "mise self-update && mise cache clear && mise upgrade --prune"
-
 [tasks.i-x64]
 description = "安装64位系统的工具包: mise run i-x64 [tool@version]"
 env = { MISE_ARCH = "x86_64" }
@@ -245,88 +205,3 @@ run = "mise install"
 description = "仅用于安装 arm64 版本的 Node 14（走非官方镜像源）"
 env = { MISE_NODE_MIRROR_URL = "https://raw.githubusercontent.com/ftzahao/node14-apple-silicon-build/refs/heads/master/release/", MISE_NODE_VERIFY = 0 }
 run = "mise install"
-
-[tasks.i-hermes-agent]
-description = "安装 Hermes Agent"
-run = "curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash"
-
-[tasks.cli-proxy-api]
-description = "运行 cli-proxy-api"
-env = {
-  #
-  CPA_BASE_URL = "http://127.0.0.1:8317",
-  CPA_MANAGEMENT_KEY = "000",
-  LOGIN_PASSWORD = "000",
-  CPA_PUBLIC_URL = "http://127.0.0.1:8317",
-  AUTH_ENABLED = "false",
-  TLS_SKIP_VERIFY = "true",
-  WORK_DIR = "/Users/shimenghao/.cache/cli-proxy-api/data",
-  APP_HOST = "127.0.0.1",
-  APP_PORT = "8318"
-}
-run = '''
-#!/usr/bin/env zsh
-
-cd ~/.config/cli-proxy-api
-echo "cd $(pwd)"
-echo "运行 cli-proxy-api 密码: 000"
-# 停止旧的 CPA
-pids=$(lsof -ti :8317)
-if [ -n "$pids" ]; then
-    kill -9 $=pids
-fi
-echo "停止 8317 端口"
-
-pids=$(lsof -ti :8318)
-if [ -n "$pids" ]; then
-    kill -9 $=pids
-fi
-echo "停止 8318 端口"
-
-host=$(yq -r '.host // "" | select(length > 0) // "127.0.0.1"' ~/.config/cli-proxy-api/config.yaml)
-port=$(yq -r '.port // 8317' ~/.config/cli-proxy-api/config.yaml)
-echo "WEB: http://${host}:${port}/management.html"
-
-# 启动 CPA
-cli-proxy-api -config ~/.config/cli-proxy-api/config.yaml &
-cpa_pid=$!
-
-# CPA 退出时清理
-cleanup() {
-    echo "停止 cli-proxy-api (PID: ${cpa_pid})"
-    kill "$cpa_pid" 2>/dev/null
-}
-
-trap cleanup EXIT INT TERM
-
-echo "等待 cli-proxy-api 启动..."
-
-# 等待 CPA HTTP API 真正可用
-for i in {1..30}; do
-
-    if curl -fsS --max-time 1 \
-        "http://127.0.0.1:${port}/v1/models" \
-        >/dev/null 2>&1
-    then
-        echo "cli-proxy-api 已启动 (${port})"
-        break
-    fi
-
-    # CPA 进程已经挂了
-    if ! kill -0 "$cpa_pid" 2>/dev/null; then
-        echo "错误: cli-proxy-api 已退出"
-        exit 1
-    fi
-
-    # 30 秒超时
-    if [ "$i" -eq 30 ]; then
-        echo "错误: cli-proxy-api 启动超时"
-        exit 1
-    fi
-
-    sleep 1
-done
-
-echo "启动 cpa-usage-keeper"
-cpa-usage-keeper
-'''

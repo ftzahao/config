@@ -4,16 +4,45 @@
 
 [tools]
 aube = "latest"
+bat = "latest"
 bun = "latest"
+cargo-binstall = "latest"
 "cargo:cargo-cache" = "latest"
+claude = "latest"
+cmake = "latest"
+codex = "latest"
+copilot = "latest"
+curlie = "latest"
 deno = "latest"
-"github:Willxup/cpa-usage-keeper" = "latest"
-"github:anthropics/claude-code" = "latest"
-"github:ggml-org/llama.cpp" = "b11246"
-"github:pnpm/pnpm" = "latest"
-"github:router-for-me/CLIProxyAPI" = "latest"
+fd = "latest"
+ffmpeg = "latest"
+fnox = { version = "latest", workflow = "release.yml" }
+gh = "latest"
+"github:alltuner/mise-completions-sync" = "latest"
+helm = "latest"
+hk = { version = "latest", workflow = "release.yml" }
 java = "latest"
+k9s = "latest"
+kubectl = "latest"
+lefthook = "latest"
 miniserve = "latest"
+mkcert = "latest"
+mole = {
+  version = "latest",
+  additional_asset_patterns = ['binaries-darwin-{{ arch(x64="amd64") }}.tar.gz'],
+  bin_path = ".",
+  filter_bins = ["mo", "mole"],
+  postinstall = """
+set -eu
+cd "$MISE_TOOL_INSTALL_PATH"
+mv analyze-darwin-* bin/analyze-go
+mv status-darwin-* bin/status-go
+ln -s ../lib ../bin .mise-bins/
+""",
+  strip_components = 1,
+  version_prefix = "V",
+  platforms = { macos-arm64 = { url = "https://github.com/tw93/Mole/archive/refs/tags/V{{ version }}.tar.gz" }, macos-x64 = { url = "https://github.com/tw93/Mole/archive/refs/tags/V{{ version }}.tar.gz" } }
+}
 node = "latest"
 "npm:@vscode/vsce" = "latest"
 "npm:npkill" = "latest"
@@ -22,25 +51,34 @@ node = "latest"
 "npm:skills" = "latest"
 "npm:vite-plus" = "latest"
 nub = "latest"
+oha = "latest"
 "pipx:hf" = "latest"
-pitchfork = "latest"
+pitchfork = { version = "latest", workflow = "release.yml@refs/heads/main" }
 pkl = "latest"
+pnpm = "latest"
 python = ["latest"]
+ripgrep = "latest"
 ruby = "latest"
 rust = "stable"
-usage = "latest"
+tokei = "latest"
+usage = { version = "latest", workflow = "publish-cli.yml" }
 uv = "latest"
 watchexec = "latest"
+witr = "latest"
+xcbeautify = "latest"
+xcodegen = "latest"
+yarn = "latest"
+yq = "latest"
 
 [settings]
-auto_update = true
+self_update.auto = true
 auto_install = false
 experimental = true
 idiomatic_version_file_enable_tools = ["node", "python", "ruby", "java"]
 trusted_config_paths = ["/"]
 npm.package_manager = "auto"
-minimum_release_age = "0"
-fetch_remote_versions_cache = "0"
+minimum_release_age = "0s"
+fetch_remote_versions_cache = "0s"
 activate_aggressive = false
 system_packages.managers = ["brew", "brew-cask"]
 dotfiles.root = "~/.config/mise/.dotfiles"
@@ -52,6 +90,7 @@ env_conf_d = true
 
 [env]
 _.file = { paths = ["~/.config/mise/.env"], tools = true }
+_.path = ["bin", "~/.local/bin"]
 
 [dotfiles]
 "~/.zshenv" = ".dotfiles/.zshenv"
@@ -60,3 +99,20 @@ _.file = { paths = ["~/.config/mise/.env"], tools = true }
 "~/.config/starship.toml" = ".dotfiles/.config/starship.toml"
 "~/.gitconfig" = ".dotfiles/.gitconfig"
 "~/.gitignore_global" = ".dotfiles/.gitignore_global"
+
+[shell_alias]
+mise-update = "mise self-update && mise cache clear && mise upgrade --prune"  # 更新 mise 的包以及自身到最新版本
+brew-update = "brew update && brew upgrade --greedy && brew cleanup --prune 0"  # 更新 Homebrew 包并清理旧版本
+buz = "brew uninstall --zap"  # 卸载 Homebrew 包并清理相关文件
+bi = "brew install"  # 安装 Homebrew 包
+binfo = "brew info"  # 显示 Homebrew 包的信息
+dns-update = "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"  # 清理 DNS 缓存
+ip-local = "ipconfig getifaddr en0"  # 本机 IP 地址（局域网）
+ip-v4-public = "curl -fsL 4.ipcheck.ing/geo | yq --output-format yaml"  # 获取本机 IPv4 地址（公网）
+ip-v6-public = "curl -fsL 6.ipcheck.ing/geo | yq --output-format yaml"  # 获取本机 IPv6 地址（公网，强制 IPv6 出口）
+ip-net-public = "curl -fsL 64.ipcheck.ing/geo | yq --output-format yaml"  # 获取本机优先网络出口的 IP 地址（公网）
+cdr = 'cd "$(git rev-parse --show-toplevel)"'  # 切换到 Git 仓库的根目录
+dsstore-clean = "find . -name '.DS_Store' -type f -delete"  # 清理 .DS_Store 文件
+
+[hooks]
+postinstall = "misecompsync --new-only"
