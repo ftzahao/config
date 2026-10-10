@@ -1,0 +1,13 @@
+payload:
+  - DOMAIN-SUFFIX,mairuan.com
+  - DOMAIN-SUFFIX,appsflyer-cn.com
+  - DOMAIN-SUFFIX,oceanengine.com
+  - DOMAIN-SUFFIX,lilith.com
+  - DOMAIN-SUFFIX,lilithgame.com
+
+  - DOMAIN,rewards.bing.com
+  - DOMAIN,msrewardspme.azureedge.net
+
+  - DOMAIN-SUFFIX,ipfx.net
+
+  - DOMAIN-KEYWORD,nousresearch.com
