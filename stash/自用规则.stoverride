@@ -2,6 +2,17 @@ name: 自用规则
 category: 规则集
 desc: 自用规则
 mode: rule
+dns:
+  default-nameserver:
+    - 119.29.29.29
+    - 223.5.5.5
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  fake-ip-filter:
+    - "*"
+    - "+.lan"
+    - "+.local"
 rule-providers:
   FtzahaoDirect:
     url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/rules/rules.yaml
