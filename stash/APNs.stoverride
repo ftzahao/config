@@ -2,6 +2,8 @@ name: APNs
 category: 规则集
 desc: Apple 推送通知服务
 mode: rule
+icon: 'https://www.apple.com/favicon.ico'
+version: '1.0.0'
 rules:
   - DOMAIN-SUFFIX,push.apple.com,PROXY
   - DOMAIN-SUFFIX,akadns.net,PROXY
