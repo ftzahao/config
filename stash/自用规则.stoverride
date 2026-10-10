@@ -15,7 +15,7 @@ dns:
     - "+.local"
 rule-providers:
   FtzahaoDirect:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/rules/rules.yaml
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/Direct.yaml
     behavior: classical
     format: yaml
     interval: 86400
@@ -90,6 +90,7 @@ rule-providers:
     format: yaml
     interval: 86400
 rules:
+  - RULE-SET,Developer,PROXY
   - RULE-SET,FtzahaoDirect,DIRECT
   - RULE-SET,Apple,DIRECT
   - RULE-SET,Apple_Domain,DIRECT
@@ -99,7 +100,6 @@ rules:
   - RULE-SET,ChinaMax,DIRECT
   - RULE-SET,ChinaMax_Domain,DIRECT
   - RULE-SET,ChinaMax_IP,DIRECT
-  - RULE-SET,Developer,PROXY
   - RULE-SET,CloudGlobal,PROXY
   - RULE-SET,CloudGlobal_IP,PROXY
   - RULE-SET,Global,PROXY
