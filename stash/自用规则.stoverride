@@ -79,6 +79,7 @@ rules:
   - RULE-SET,ChinaMax_IP,DIRECT
   - RULE-SET,Lan,DIRECT
   - GEOIP,LAN,DIRECT
+  - MATCH,默认
 
 proxy-groups: #!replace
   - name: 默认
