@@ -67,7 +67,7 @@ rule-providers:
     format: yaml
     interval: 86400
 
-rules:
+rules: #!replace
   - RULE-SET,FtzahaoDirect,DIRECT
   - RULE-SET,Apple,DIRECT
   - RULE-SET,Apple_Domain,DIRECT
@@ -92,7 +92,11 @@ proxy-groups: #!replace
       - 日本
       - 新加坡
       - 英国
+      - 台湾
       - 香港
+      - 港澳台
+      - 韩国
+      - 马来西亚
   - name: 美国
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsUs.svg
     type: url-test
@@ -125,6 +129,22 @@ proxy-groups: #!replace
     tolerance: 50
     lazy: true
     filter: 英(?=国)|🇬🇧|UK| United Kingdom
+  - name: 台湾
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsTw.svg
+    type: url-test
+    include-all: true
+    interval: 120
+    tolerance: 50
+    lazy: true
+    filter: (?i)(台|TW|Tai)
+  - name: 香港
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsHk.svg
+    type: url-test
+    include-all: true
+    interval: 120
+    tolerance: 50
+    lazy: true
+    filter: (?i)(港|HK|Hong)
   - name: 港澳台
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsCn.svg
     type: url-test
@@ -133,8 +153,24 @@ proxy-groups: #!replace
     tolerance: 50
     lazy: true
     filter: (?i)(^|\s|\-|\[|\(|\|)(HK|TW|MO|香港|台湾|澳门|台北|台中|新北|彰化|Macau|Hong Kong|Taiwan|HKTW|港台|🇭🇰|🇹🇼|🇲🇴)(\s|\-|$|\]|\)|\|)
+  - name: 韩国
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsKr.svg
+    type: url-test
+    include-all: true
+    interval: 120
+    tolerance: 50
+    lazy: true
+    filter: 韩国|韓國|韩|韓|KR|KOR|Korea|South Korea|首尔|首爾|Seoul|서울|한국|🇰🇷
+  - name: 马来西亚
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsMy.svg
+    type: url-test
+    include-all: true
+    interval: 120
+    tolerance: 50
+    lazy: true
+    filter: (?i)(马来西亚|馬來西亞|马来(?:西亚)?|馬來(?:西亞)?|Malaysia|Kuala\s*Lumpur|吉隆坡|🇲🇾)
   - name: 自动选择
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlinePlumpColorAutoFlash.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineColorAutoFlash.svg
     type: url-test
     include-all: true
     interval: 120
@@ -143,7 +179,7 @@ proxy-groups: #!replace
     filter: .*
     exclude-filter: 剩余|官网|有效期|到期|流量|订阅|网址|客服|群组|机场|TG|Telegram
   - name: 全部节点
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/GcpNetworkConnectivityCenter.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/IconParkConnect.svg
     type: select
     include-all: true
     filter: .*
