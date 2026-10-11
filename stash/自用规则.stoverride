@@ -88,7 +88,7 @@ proxy-groups: #!replace
     type: select
     proxies:
       - 自动选择
-      - 全部节点
+      - 全部
       - 美国
       - 日本
       - 新加坡
@@ -179,7 +179,7 @@ proxy-groups: #!replace
     lazy: true
     filter: .*
     exclude-filter: 剩余|官网|有效期|到期|流量|订阅|网址|客服|群组|机场|TG|Telegram
-  - name: 全部节点
+  - name: 全部
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/IconParkConnect.svg
     type: select
     include-all: true
