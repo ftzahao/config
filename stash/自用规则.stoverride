@@ -99,7 +99,7 @@ proxy-groups:
     interval: 120
     tolerance: 50
     lazy: true
-    filter: "美(?=国|利坚|联邦)|🇺🇲|US|USA|United States|America|america|美国|凤凰城|洛杉矶|西雅图|芝加哥|纽约|沪美"
+    filter: 美(?=国|利坚|联邦)|🇺🇲|US|USA|United States|America|america|美国|凤凰城|洛杉矶|西雅图|芝加哥|纽约|沪美
   - name: 日本
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsJp.svg
     type: url-test
@@ -107,7 +107,7 @@ proxy-groups:
     interval: 120
     tolerance: 50
     lazy: true
-    filter: "(?:日本|🇯🇵|东京|JP(?:\s*[^A-Za-z0-9]|$)|Japan|JAPAN|japan|JPN|日(?:本|系|产))(?!\s*[利亚亚])"
+    filter: (?:日本|🇯🇵|东京|JP(?:\s*[^A-Za-z0-9]|$)|Japan|JAPAN|japan|JPN|日(?:本|系|产))(?!\s*[利亚亚])
   - name: 新加坡
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsSg.svg
     type: url-test
@@ -115,7 +115,7 @@ proxy-groups:
     interval: 120
     tolerance: 50
     lazy: true
-    filter: "新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore"
+    filter: 新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore
   - name: 英国
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsUk.svg
     type: url-test
@@ -123,7 +123,7 @@ proxy-groups:
     interval: 120
     tolerance: 50
     lazy: true
-    filter: "英(?=国)|🇬🇧|UK| United Kingdom"
+    filter: 英(?=国)|🇬🇧|UK| United Kingdom
   - name: 香港
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsHk.svg
     type: url-test
@@ -131,7 +131,7 @@ proxy-groups:
     interval: 120
     tolerance: 50
     lazy: true
-    filter: "港|🇭🇰|HK|(?i)Hong"
+    filter: 港|🇭🇰|HK|(?i)Hong
   - name: 自动选择
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlinePlumpColorAutoFlash.svg
     type: url-test
@@ -139,11 +139,11 @@ proxy-groups:
     interval: 120
     tolerance: 50
     lazy: true
-    filter: '.*'
-    exclude-filter: '剩余|官网|有效期|到期|流量|订阅|网址|客服|群组|机场|TG|Telegram'
+    filter: .*
+    exclude-filter: 剩余|官网|有效期|到期|流量|订阅|网址|客服|群组|机场|TG|Telegram
   - name: 全部节点
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/GcpNetworkConnectivityCenter.svg
     type: select
     include-all: true
-    filter: '.*'
-    exclude-filter: '剩余|官网|有效期|到期|流量|订阅|网址|客服|群组|机场|TG|Telegram'
+    filter: .*
+    exclude-filter: 剩余|官网|有效期|到期|流量|订阅|网址|客服|群组|机场|TG|Telegram
