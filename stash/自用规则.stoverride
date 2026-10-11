@@ -84,7 +84,7 @@ rules: #!replace
 
 proxy-groups: #!replace
   - name: 默认
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineStickiesColorCompass1Duo.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineStickiesColorGlobe1Duo.png
     type: select
     proxies:
       - 自动选择
@@ -171,7 +171,7 @@ proxy-groups: #!replace
     lazy: true
     filter: (?i)(马来西亚|馬來西亞|马来(?:西亚)?|馬來(?:西亞)?|Malaysia|Kuala\s*Lumpur|吉隆坡|🇲🇾)
   - name: 自动选择
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineColorAutoFlash.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineStickiesColorCompass1Duo.png
     type: url-test
     include-all: true
     interval: 120
@@ -179,7 +179,7 @@ proxy-groups: #!replace
     lazy: true
     filter: (?i)^(?!.*(剩余|官网|星云|有效期|剩余|到期|流量|订阅|网址|客服|邮箱|群组|机场|TG|Telegram)).*$
   - name: 手动选择
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/IconParkConnect.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineStickiesColorCursorDuo.png
     type: select
     include-all: true
     filter: (?i)^(?!.*(剩余|官网|星云|有效期|剩余|到期|流量|订阅|网址|客服|邮箱|群组|机场|TG|Telegram)).*$
