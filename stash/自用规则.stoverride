@@ -2,6 +2,7 @@ name: 自用规则
 category: 规则集
 desc: 自用规则
 mode: rule
+icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/avatar.png
 version: "1.0.0"
 dns:
   default-nameserver:
