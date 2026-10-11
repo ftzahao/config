@@ -80,7 +80,7 @@ rules:
   - RULE-SET,Lan,DIRECT
   - GEOIP,LAN,DIRECT
 
-proxy-groups:
+proxy-groups: #!replace
   - name: 默认
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineUltimateColorNetwork.svg
     type: select
