@@ -125,14 +125,14 @@ proxy-groups: #!replace
     tolerance: 50
     lazy: true
     filter: 英(?=国)|🇬🇧|UK| United Kingdom
-  - name: 香港
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsHk.svg
+  - name: 港澳台
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsCn.svg
     type: url-test
     include-all: true
     interval: 120
     tolerance: 50
     lazy: true
-    filter: 港|🇭🇰|HK|(?i)Hong
+    filter: (?i)(^|\s|\-|\[|\(|\|)(HK|TW|MO|香港|台湾|澳门|台北|台中|新北|彰化|Macau|Hong Kong|Taiwan|HKTW|港台|🇭🇰|🇹🇼|🇲🇴)(\s|\-|$|\]|\)|\|)
   - name: 自动选择
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlinePlumpColorAutoFlash.svg
     type: url-test
