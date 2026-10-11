@@ -2,7 +2,7 @@ name: 自用规则
 category: 规则集
 desc: 自用规则
 mode: rule
-version: '1.0.0'
+version: "1.0.0"
 dns:
   default-nameserver:
     - 119.29.29.29
@@ -14,6 +14,7 @@ dns:
     - "*"
     - "+.lan"
     - "+.local"
+
 rule-providers:
   FtzahaoDirect:
     url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/Direct.yaml
@@ -65,6 +66,7 @@ rule-providers:
     behavior: classical
     format: yaml
     interval: 86400
+
 rules:
   - RULE-SET,FtzahaoDirect,DIRECT
   - RULE-SET,Apple,DIRECT
@@ -77,3 +79,71 @@ rules:
   - RULE-SET,ChinaMax_IP,DIRECT
   - RULE-SET,Lan,DIRECT
   - GEOIP,LAN,DIRECT
+
+proxy-groups:
+  - name: 默认
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineUltimateColorNetwork.svg
+    type: select
+    proxies:
+      - 自动选择
+      - 全部节点
+      - 美国
+      - 日本
+      - 新加坡
+      - 英国
+      - 香港
+  - name: 美国
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsUs.svg
+    type: url-test
+    include-all: true
+    interval: 120
+    tolerance: 50
+    lazy: true
+    filter: "美(?=国|利坚|联邦)|🇺🇲|US|USA|United States|America|america|美国|凤凰城|洛杉矶|西雅图|芝加哥|纽约|沪美"
+  - name: 日本
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsJp.svg
+    type: url-test
+    include-all: true
+    interval: 120
+    tolerance: 50
+    lazy: true
+    filter: "(?:日本|🇯🇵|东京|JP(?:\s*[^A-Za-z0-9]|$)|Japan|JAPAN|japan|JPN|日(?:本|系|产))(?!\s*[利亚亚])"
+  - name: 新加坡
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsSg.svg
+    type: url-test
+    include-all: true
+    interval: 120
+    tolerance: 50
+    lazy: true
+    filter: "新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore"
+  - name: 英国
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsUk.svg
+    type: url-test
+    include-all: true
+    interval: 120
+    tolerance: 50
+    lazy: true
+    filter: "英(?=国)|🇬🇧|UK| United Kingdom"
+  - name: 香港
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsHk.svg
+    type: url-test
+    include-all: true
+    interval: 120
+    tolerance: 50
+    lazy: true
+    filter: "港|🇭🇰|HK|(?i)Hong"
+  - name: 自动选择
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlinePlumpColorAutoFlash.svg
+    type: url-test
+    include-all: true
+    interval: 120
+    tolerance: 50
+    lazy: true
+    filter: '.*'
+    exclude-filter: '剩余|官网|有效期|到期|流量|订阅|网址|客服|群组|机场|TG|Telegram'
+  - name: 全部节点
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/GcpNetworkConnectivityCenter.svg
+    type: select
+    include-all: true
+    filter: '.*'
+    exclude-filter: '剩余|官网|有效期|到期|流量|订阅|网址|客服|群组|机场|TG|Telegram'
