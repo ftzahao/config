@@ -84,7 +84,7 @@ rules: #!replace
 
 proxy-groups: #!replace
   - name: 默认
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineUltimateColorNetwork.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineStickiesColorCompass1Duo.png
     type: select
     proxies:
       - 自动选择
