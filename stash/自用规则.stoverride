@@ -84,7 +84,7 @@ rules: #!replace
 
 proxy-groups: #!replace
   - name: 默认
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineUltimateColorNetwork.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineUltimateColorNetwork.png
     type: select
     proxies:
       - 自动选择
@@ -99,7 +99,7 @@ proxy-groups: #!replace
       - 韩国
       - 马来西亚
   - name: 美国
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsUs.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsUs.png
     type: url-test
     include-all: true
     interval: 120
@@ -107,7 +107,7 @@ proxy-groups: #!replace
     lazy: true
     filter: 美(?=国|利坚|联邦)|🇺🇲|US|USA|United States|America|america|美国|凤凰城|洛杉矶|西雅图|芝加哥|纽约|沪美
   - name: 日本
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsJp.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsJp.png
     type: url-test
     include-all: true
     interval: 120
@@ -115,7 +115,7 @@ proxy-groups: #!replace
     lazy: true
     filter: (?:日本|🇯🇵|东京|JP(?:\s*[^A-Za-z0-9]|$)|Japan|JAPAN|japan|JPN|日(?:本|系|产))(?!\s*[利亚亚])
   - name: 新加坡
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsSg.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsSg.png
     type: url-test
     include-all: true
     interval: 120
@@ -123,7 +123,7 @@ proxy-groups: #!replace
     lazy: true
     filter: 新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore
   - name: 英国
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsUk.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsUk.png
     type: url-test
     include-all: true
     interval: 120
@@ -131,7 +131,7 @@ proxy-groups: #!replace
     lazy: true
     filter: 英(?=国)|🇬🇧|UK| United Kingdom
   - name: 台湾
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsTw.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsTw.png
     type: url-test
     include-all: true
     interval: 120
@@ -139,7 +139,7 @@ proxy-groups: #!replace
     lazy: true
     filter: (?i)(台|TW|Tai)
   - name: 香港
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsHk.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsHk.png
     type: url-test
     include-all: true
     interval: 120
@@ -147,7 +147,7 @@ proxy-groups: #!replace
     lazy: true
     filter: (?i)(港|HK|Hong)
   - name: 港澳台
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsCn.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsCn.png
     type: url-test
     include-all: true
     interval: 120
@@ -155,7 +155,7 @@ proxy-groups: #!replace
     lazy: true
     filter: (?i)(^|\s|\-|\[|\(|\|)(HK|TW|MO|香港|台湾|澳门|台北|台中|新北|彰化|Macau|Hong Kong|Taiwan|HKTW|港台|🇭🇰|🇹🇼|🇲🇴)(\s|\-|$|\]|\)|\|)
   - name: 韩国
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsKr.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsKr.png
     type: url-test
     include-all: true
     interval: 120
@@ -163,7 +163,7 @@ proxy-groups: #!replace
     lazy: true
     filter: 韩国|韓國|韩|韓|KR|KOR|Korea|South Korea|首尔|首爾|Seoul|서울|한국|🇰🇷
   - name: 马来西亚
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsMy.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsMy.png
     type: url-test
     include-all: true
     interval: 120
@@ -171,7 +171,7 @@ proxy-groups: #!replace
     lazy: true
     filter: (?i)(马来西亚|馬來西亞|马来(?:西亚)?|馬來(?:西亞)?|Malaysia|Kuala\s*Lumpur|吉隆坡|🇲🇾)
   - name: 自动选择
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineColorAutoFlash.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineColorAutoFlash.png
     type: url-test
     include-all: true
     interval: 120
@@ -180,7 +180,7 @@ proxy-groups: #!replace
     filter: .*
     exclude-filter: 剩余|官网|有效期|到期|流量|订阅|网址|客服|群组|机场|TG|Telegram
   - name: 全部
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/IconParkConnect.svg
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/IconParkConnect.png
     type: select
     include-all: true
     filter: .*
