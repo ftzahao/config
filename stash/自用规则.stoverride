@@ -96,7 +96,7 @@ rule-providers:
     behavior: classical
     format: yaml
     interval: 86400
-  Twitter:
+  x:
     url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Twitter/Twitter.yaml
     behavior: classical
     format: yaml
@@ -123,7 +123,7 @@ rules: #!replace
   - RULE-SET,Netflix_IP,Netflix
   - RULE-SET,Disney,Disney
   - RULE-SET,Spotify,Spotify
-  - RULE-SET,Twitter,Twitter
+  - RULE-SET,x,x
   - RULE-SET,TikTok,TikTok
   - RULE-SET,Lan,DIRECT
   - GEOIP,LAN,DIRECT
@@ -175,7 +175,7 @@ proxy-groups: #!replace
       - 港澳台
       - 韩国
       - 马来西亚
-  - name: Twitter
+  - name: x
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/LogosX.png
     type: select
     proxies:
