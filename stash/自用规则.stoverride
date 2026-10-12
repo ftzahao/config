@@ -77,6 +77,16 @@ rule-providers:
     behavior: classical
     format: yaml
     interval: 86400
+  Netflix:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Netflix/Netflix.yaml
+    behavior: classical
+    format: yaml
+    interval: 86400
+  Netflix_IP:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Netflix/Netflix_IP.yaml
+    behavior: ipcidr
+    format: yaml
+    interval: 86400
 
 rules: #!replace
   - RULE-SET,FtzahaoDirect,DIRECT
@@ -90,6 +100,8 @@ rules: #!replace
   - RULE-SET,ChinaMax_IP,DIRECT
   - RULE-SET,Telegram,Telegram
   - RULE-SET,Youtube,Youtube
+  - RULE-SET,Netflix,Netflix
+  - RULE-SET,Netflix_IP,Netflix
   - RULE-SET,Lan,DIRECT
   - GEOIP,LAN,DIRECT
   - MATCH,默认
@@ -127,6 +139,21 @@ proxy-groups: #!replace
       - 马来西亚
   - name: Youtube
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/SelfhstYoutube.png
+    type: select
+    proxies:
+      - 自动选择
+      - 手动选择
+      - 美国
+      - 日本
+      - 新加坡
+      - 英国
+      - 台湾
+      - 香港
+      - 港澳台
+      - 韩国
+      - 马来西亚
+  - name: Netflix
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/SelfhstNetflix.png
     type: select
     proxies:
       - 自动选择
