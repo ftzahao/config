@@ -145,6 +145,7 @@ proxy-groups: #!replace
       - 港澳台
       - 韩国
       - 马来西亚
+      - 德国
   - name: Telegram
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/LogosTelegram.png
     type: select
@@ -160,6 +161,7 @@ proxy-groups: #!replace
       - 港澳台
       - 韩国
       - 马来西亚
+      - 德国
   - name: Youtube
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/SelfhstYoutube.png
     type: select
@@ -175,6 +177,7 @@ proxy-groups: #!replace
       - 港澳台
       - 韩国
       - 马来西亚
+      - 德国
   - name: x
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/LogosX.png
     type: select
@@ -190,6 +193,7 @@ proxy-groups: #!replace
       - 港澳台
       - 韩国
       - 马来西亚
+      - 德国
   - name: TikTok
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/LogosTiktokIcon.png
     type: select
@@ -205,6 +209,7 @@ proxy-groups: #!replace
       - 港澳台
       - 韩国
       - 马来西亚
+      - 德国
   - name: Netflix
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/SelfhstNetflix.png
     type: select
@@ -220,6 +225,7 @@ proxy-groups: #!replace
       - 港澳台
       - 韩国
       - 马来西亚
+      - 德国
   - name: Disney
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/SelfhstDisneyPlus.png
     type: select
@@ -235,6 +241,7 @@ proxy-groups: #!replace
       - 港澳台
       - 韩国
       - 马来西亚
+      - 德国
   - name: Spotify
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/LogosSpotifyIcon.png
     type: select
@@ -250,6 +257,7 @@ proxy-groups: #!replace
       - 港澳台
       - 韩国
       - 马来西亚
+      - 德国
   - name: 美国
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsUs.png
     type: url-test
@@ -322,6 +330,14 @@ proxy-groups: #!replace
     tolerance: 50
     lazy: true
     filter: (?i)(马来西亚|馬來西亞|马来(?:西亚)?|馬來(?:西亞)?|Malaysia|Kuala\s*Lumpur|吉隆坡|🇲🇾)
+  - name: 德国
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsDe.png
+    type: url-test
+    include-all: true
+    interval: 120
+    tolerance: 50
+    lazy: true
+    filter: (?i)(德国|德國|germany|deutschland|frankfurt|berlin|🇩🇪|(^|[^a-z])de([^a-z]|$))
   - name: 自动选择
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineStickiesColorCompass1Duo.png
     type: url-test
