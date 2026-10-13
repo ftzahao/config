@@ -345,14 +345,14 @@ proxy-groups: #!replace
     interval: 120
     tolerance: 50
     lazy: true
-    filter: (?i)^(?!.*(剩余|官网|星云|有效期|剩余|到期|流量|订阅|网址|客服|邮箱|群组|机场|TG|Telegram)).*$
+    filter: (?i)^(?!.*(剩余|有效期|到期|流量|重置|套餐|用量|官网|网址|网站|客服|邮箱|邮件|群组|频道|订阅|机场|购买|会员|工单|公告|预警|跑路|说明|教程|负载|维护|反馈|测速|仪表盘|导航|镜像|天气|时间|Telegram|TG|电报|星云)).*$
   - name: 手动选择
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineStickiesColorCursorDuo.png
     type: select
     include-all: true
-    filter: (?i)^(?!.*(剩余|官网|星云|有效期|剩余|到期|流量|订阅|网址|客服|邮箱|群组|机场|TG|Telegram)).*$
+    filter: (?i)^(?!.*(剩余|有效期|到期|流量|重置|套餐|用量|官网|网址|网站|客服|邮箱|邮件|群组|频道|订阅|机场|购买|会员|工单|公告|预警|跑路|说明|教程|负载|维护|反馈|测速|仪表盘|导航|镜像|天气|时间|Telegram|TG|电报|星云)).*$
   - name: 其他信息
     icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineStickiesColorOnlineInformationDuo.png
     type: select
     include-all: true
-    filter: 剩余|官网|星云|有效期|剩余|到期|流量|订阅|网址|客服|邮箱|群组|机场|TG|Telegram
+    filter: (?i)(剩余|有效期|到期|流量|重置|套餐|用量|官网|网址|网站|客服|邮箱|邮件|群组|频道|订阅|机场|购买|会员|工单|公告|预警|跑路|说明|教程|负载|维护|反馈|测速|仪表盘|导航|镜像|天气|时间|Telegram|TG|电报|星云)
