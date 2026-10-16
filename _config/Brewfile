@@ -1,27 +1,23 @@
-tap "patrik-csak/tap", trusted: true
-tap "sbaruwal/tap"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Distributed revision control system
 brew "git"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
+# Kubernetes package manager
+brew "helm"
+# Kubernetes command-line interface
+brew "kubernetes-cli"
+# Deep clean and optimize your Mac
+brew "mole"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@4"
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@3"
-# Simple, correct PEP 517 build frontend
-brew "python-build"
-# Install various Ruby versions and implementations
-brew "ruby-build"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Formatting technology for Swift source code
 brew "swift-format"
 # Flexible and fast Zsh plugin manager
 brew "zinit"
-# Automatically switch Terminal profiles with macOS dark/light mode
-brew "patrik-csak/tap/auto-terminal-profile"
 # Stand alone ad blocker
 cask "adguard"
 # Display management tool
@@ -40,8 +36,6 @@ cask "cleanshot"
 cask "crossover"
 # Database management tool
 cask "dbx"
-# Plugin-based AI agent desktop application
-cask "deepseek-harness"
 # Downloads videos from different websites
 cask "downie"
 # Create dynamic wallpapers
@@ -61,8 +55,6 @@ cask "mole-app"
 cask "ogdesign-eagle"
 # Second-display utility for iPhone and iPad over USB and Wi-Fi
 cask "opendisplay"
-# Native code editor written in Rust
-cask "sbaruwal/tap/orbvane", trusted: true
 # LLM server built on MLX
 cask "osaurus"
 # Desktop virtualization software
@@ -73,6 +65,8 @@ cask "permute"
 cask "popclip"
 # HTTP debugging proxy
 cask "proxyman"
+# Clears caches and junk files by moving them to the Trash
+cask "purge"
 # Instant messaging tool
 cask "qq"
 # Photoshop alternative
@@ -125,7 +119,6 @@ vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
 vscode "ms-python.vscode-python-envs"
-vscode "ms-vscode.vscode-chat-customizations-evaluations"
 vscode "openai.chatgpt"
 vscode "openai.codex-audio"
 vscode "oven.bun-vscode"

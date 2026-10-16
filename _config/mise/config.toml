@@ -3,62 +3,35 @@
 #:schema https://mise.jdx.dev/schema/mise.json
 
 [tools]
-aube = "latest"
+aube = { version = "latest", workflow = ["release-plz.yml@refs/heads/main", "release.yml@refs/heads/main"] }
 bat = "latest"
 bun = "latest"
 cargo-binstall = "latest"
 "cargo:cargo-cache" = "latest"
-claude = "latest"
-cmake = "latest"
-codex = "latest"
-copilot = "latest"
 curlie = "latest"
 deno = "latest"
 fd = "latest"
 ffmpeg = "latest"
-fnox = { version = "latest", workflow = "release.yml" }
 gh = "latest"
 "github:alltuner/mise-completions-sync" = "latest"
-helm = "latest"
 hk = { version = "latest", workflow = "release.yml" }
 java = "latest"
-k9s = "latest"
-kubectl = "latest"
 lefthook = "latest"
 miniserve = "latest"
 mkcert = "latest"
-mole = {
-  version = "latest",
-  additional_asset_patterns = ['binaries-darwin-{{ arch(x64="amd64") }}.tar.gz'],
-  bin_path = ".",
-  filter_bins = ["mo", "mole"],
-  postinstall = """
-set -eu
-cd "$MISE_TOOL_INSTALL_PATH"
-mv analyze-darwin-* bin/analyze-go
-mv status-darwin-* bin/status-go
-ln -s ../lib ../bin .mise-bins/
-""",
-  strip_components = 1,
-  version_prefix = "V",
-  platforms = { macos-arm64 = { url = "https://github.com/tw93/Mole/archive/refs/tags/V{{ version }}.tar.gz" }, macos-x64 = { url = "https://github.com/tw93/Mole/archive/refs/tags/V{{ version }}.tar.gz" } }
-}
 node = "latest"
 "npm:@vscode/vsce" = "latest"
 "npm:npkill" = "latest"
 "npm:nrm" = "latest"
-"npm:prettier" = "latest"
 "npm:skills" = "latest"
 "npm:vite-plus" = "latest"
 nub = "latest"
 oha = "latest"
 "pipx:hf" = "latest"
 pitchfork = { version = "latest", workflow = "release.yml@refs/heads/main" }
-pkl = "latest"
 pnpm = "latest"
 python = ["latest"]
 ripgrep = "latest"
-ruby = "latest"
 rust = "stable"
 tokei = "latest"
 usage = { version = "latest", workflow = "publish-cli.yml" }
