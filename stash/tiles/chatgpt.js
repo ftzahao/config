@@ -1,42 +1,42 @@
 async function request(method, params) {
   return new Promise((resolve) => {
     $httpClient[method.toLowerCase()](params, (error, response, data) => {
-      resolve({ error, response, data });
-    });
-  });
+      resolve({ error, response, data })
+    })
+  })
 }
 
 async function main() {
   const { error, response, data } = await request("GET", {
     url: "https://api.openai.com/compliance/cookie_requirements",
-    timeout: 8,
-  });
+    timeout: 8
+  })
 
   if (error) {
-    $done({ content: "Network Error", backgroundColor: "#FF9500" });
-    return;
+    $done({ content: "网络错误", backgroundColor: "#FF9500" })
+    return
   }
 
-  const status = response.status || response.statusCode;
-  const body = (data || "").toLowerCase();
+  const status = response.status || response.statusCode
+  const body = (data || "").toLowerCase()
 
   if (status !== 200) {
-    $done({ content: "Error (" + status + ")", backgroundColor: "#FF9500" });
-    return;
+    $done({ content: "错误 (" + status + ")", backgroundColor: "#FF9500" })
+    return
   }
 
   if (body.includes("unsupported_country")) {
-    $done({ content: "Blocked", backgroundColor: "#FF3B30" });
-    return;
+    $done({ content: "被封锁", backgroundColor: "#FF3B30" })
+    return
   }
 
-  $done({ content: "Available", backgroundColor: "#10A37F" });
+  $done({ content: "可用", backgroundColor: "#10A37F" })
 }
 
-(async () => {
+;(async () => {
   main()
     .then((_) => {})
     .catch((error) => {
-      $done({ content: "Network Error", backgroundColor: "#FF9500" });
-    });
-})();
+      $done({ content: "网络错误", backgroundColor: "#FF9500" })
+    })
+})()

@@ -1,9 +1,27 @@
 name: 第三方服务可用性检测
+category: 规则集
+desc: 第三方服务可用性检测
 icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/avatar.png
-desc: 折叠面板逐项检测 Disney+ / Spotify / X / Instagram / TikTok / Google / Claude / Gemini / ChatGPT / YouTube / Netflix 的可用性
-category: tile
 
 tiles:
+  - name: IPPure-IP-Info
+    title: IPPure IP Info
+    icon: https://ippure.com/logo.png
+    collapsed: true
+    url: https://ippure.com
+
+  - name: IPPure-IP-Fraud-Score
+    title: IPPure IP Fraud Score
+    icon: https://ippure.com/logo.png
+    collapsed: true
+    url: https://ippure.com
+
+  - name: IPPure-IP-Native-Check
+    title: IPPure IP Native Check
+    icon: https://ippure.com/logo.png
+    collapsed: true
+    url: https://ippure.com
+
   - name: Check_DisneyPlus
     interval: 1800
     collapsed: true
@@ -115,6 +133,18 @@ tiles:
     timeout: 15
 
 script-providers:
+  IPPure-IP-Info:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/ippure-ip-info.js
+    path: ippure/ip-info.js
+    interval: 86400
+  IPPure-IP-Fraud-Score:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/ippure-ip-fraud-score.js
+    path: ippure/ip-fraud-score.js
+    interval: 86400
+  IPPure-IP-Native-Check:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/ippure-ip-native-check.js
+    path: ippure/ip-native-check.js
+    interval: 86400
   Check_DisneyPlus:
     url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/disney.js
     interval: 86400
