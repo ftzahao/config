@@ -6,6 +6,11 @@ async function request(method, params) {
   })
 }
 
+function isChinese() {
+  const lang = ($environment.language || "").toLowerCase()
+  return lang.startsWith("zh")
+}
+
 function header(headers, name) {
   const lower = name.toLowerCase()
   for (const key in headers) {
@@ -26,7 +31,7 @@ async function main() {
   })
 
   if (error) {
-    $done({ content: "网络错误", backgroundColor: "#FF9500" })
+    $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     return
   }
 
@@ -36,17 +41,20 @@ async function main() {
   const body = data || ""
 
   if (location && location.includes("/notfound")) {
-    $done({ content: "不可用", backgroundColor: "#FF3B30" })
+    $done({ content: isChinese() ? "不可用" : "Unavailable", backgroundColor: "#FF3B30" })
     return
   }
 
   if (status === 302 || status === 301) {
-    $done({ content: "重定向 (" + status + ")", backgroundColor: "#FF9500" })
+    $done({
+      content: (isChinese() ? "重定向 (" : "Redirect (") + status + ")",
+      backgroundColor: "#FF9500"
+    })
     return
   }
 
   if (status === 403 || body.includes("access denied")) {
-    $done({ content: "受限", backgroundColor: "#FF3B30" })
+    $done({ content: isChinese() ? "受限" : "Restricted", backgroundColor: "#FF3B30" })
     return
   }
 
@@ -54,27 +62,33 @@ async function main() {
 
   if (status === 200 && match) {
     const region = " (" + match[1].toUpperCase() + ")"
-    $done({ content: "可用" + region, backgroundColor: "#000000" })
+    $done({
+      content: (isChinese() ? "可用" : "Available") + region,
+      backgroundColor: "#000000"
+    })
     return
   }
 
   if (status === 200) {
-    $done({ content: "可用", backgroundColor: "#000000" })
+    $done({ content: isChinese() ? "可用" : "Available", backgroundColor: "#000000" })
     return
   }
 
   if (status !== 200) {
-    $done({ content: "错误 (" + status + ")", backgroundColor: "#FF9500" })
+    $done({
+      content: (isChinese() ? "错误 (" : "Error (") + status + ")",
+      backgroundColor: "#FF9500"
+    })
     return
   }
 
-  $done({ content: "未知", backgroundColor: "#FF9500" })
+  $done({ content: isChinese() ? "未知" : "Unknown", backgroundColor: "#FF9500" })
 }
 
 ;(async () => {
   main()
     .then((_) => {})
     .catch((error) => {
-      $done({ content: "网络错误", backgroundColor: "#FF9500" })
+      $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     })
 })()

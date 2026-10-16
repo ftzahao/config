@@ -6,11 +6,16 @@ async function request(method, params) {
   })
 }
 
+function isChinese() {
+  const lang = ($environment.language || "").toLowerCase()
+  return lang.startsWith("zh")
+}
+
 async function main() {
   const { error, response, data } = await request("GET", "https://www.youtube.com/premium")
 
   if (error) {
-    $done({ content: "网络错误", backgroundColor: "#FF9500" })
+    $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     return
   }
 
@@ -18,24 +23,30 @@ async function main() {
   const body = (data || "").toLowerCase()
 
   if (status !== 200 || body.length < 1000) {
-    $done({ content: "错误 (" + status + ")", backgroundColor: "#FF9500" })
+    $done({
+      content: (isChinese() ? "错误 (" : "Error (") + status + ")",
+      backgroundColor: "#FF9500"
+    })
     return
   }
 
   if (body.includes("not available in your country")) {
-    $done({ content: "不可用", backgroundColor: "#FF3B30" })
+    $done({ content: isChinese() ? "不可用" : "Unavailable", backgroundColor: "#FF3B30" })
     return
   }
 
   const match = data.match(/"GL"\s*:\s*"([A-Z]{2})"/i)
   const country = match ? " (" + match[1] + ")" : ""
-  $done({ content: "可用" + country, backgroundColor: "#FF0000" })
+  $done({
+    content: (isChinese() ? "可用" : "Available") + country,
+    backgroundColor: "#FF0000"
+  })
 }
 
 ;(async () => {
   main()
     .then((_) => {})
     .catch((error) => {
-      $done({ content: "网络错误", backgroundColor: "#FF9500" })
+      $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     })
 })()

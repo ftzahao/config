@@ -6,6 +6,11 @@ async function request(method, params) {
   })
 }
 
+function isChinese() {
+  const lang = ($environment.language || "").toLowerCase()
+  return lang.startsWith("zh")
+}
+
 async function main() {
   const { error, response, data } = await request("GET", {
     url: "https://api.openai.com/compliance/cookie_requirements",
@@ -13,7 +18,7 @@ async function main() {
   })
 
   if (error) {
-    $done({ content: "网络错误", backgroundColor: "#FF9500" })
+    $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     return
   }
 
@@ -21,22 +26,25 @@ async function main() {
   const body = (data || "").toLowerCase()
 
   if (status !== 200) {
-    $done({ content: "错误 (" + status + ")", backgroundColor: "#FF9500" })
+    $done({
+      content: (isChinese() ? "错误 (" : "Error (") + status + ")",
+      backgroundColor: "#FF9500"
+    })
     return
   }
 
   if (body.includes("unsupported_country")) {
-    $done({ content: "被封锁", backgroundColor: "#FF3B30" })
+    $done({ content: isChinese() ? "被封锁" : "Blocked", backgroundColor: "#FF3B30" })
     return
   }
 
-  $done({ content: "可用", backgroundColor: "#10A37F" })
+  $done({ content: isChinese() ? "可用" : "Available", backgroundColor: "#10A37F" })
 }
 
 ;(async () => {
   main()
     .then((_) => {})
     .catch((error) => {
-      $done({ content: "网络错误", backgroundColor: "#FF9500" })
+      $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     })
 })()

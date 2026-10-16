@@ -6,6 +6,11 @@ async function request(method, params) {
   })
 }
 
+function isChinese() {
+  const lang = ($environment.language || "").toLowerCase()
+  return lang.startsWith("zh")
+}
+
 async function main() {
   const { error, response, data } = await request("GET", {
     url: "https://api.anthropic.com/v1/models",
@@ -17,34 +22,37 @@ async function main() {
   })
 
   if (error) {
-    $done({ content: "网络错误", backgroundColor: "#FF9500" })
+    $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     return
   }
 
   const status = response.status || response.statusCode
 
   if (status === 403 || status === 451) {
-    $done({ content: "被封锁", backgroundColor: "#FF3B30" })
+    $done({ content: isChinese() ? "被封锁" : "Blocked", backgroundColor: "#FF3B30" })
     return
   }
 
   if (status === 401 || status === 200) {
-    $done({ content: "可用", backgroundColor: "#D97757" })
+    $done({ content: isChinese() ? "可用" : "Available", backgroundColor: "#D97757" })
     return
   }
 
   if (status === 429) {
-    $done({ content: "请求限流", backgroundColor: "#FF9500" })
+    $done({ content: isChinese() ? "请求限流" : "Rate Limited", backgroundColor: "#FF9500" })
     return
   }
 
-  $done({ content: "未知 (" + status + ")", backgroundColor: "#FF9500" })
+  $done({
+    content: (isChinese() ? "未知 (" : "Unknown (") + status + ")",
+    backgroundColor: "#FF9500"
+  })
 }
 
 ;(async () => {
   main()
     .then((_) => {})
     .catch((error) => {
-      $done({ content: "网络错误", backgroundColor: "#FF9500" })
+      $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     })
 })()

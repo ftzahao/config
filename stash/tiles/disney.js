@@ -6,6 +6,11 @@ async function request(method, params) {
   })
 }
 
+function isChinese() {
+  const lang = ($environment.language || "").toLowerCase()
+  return lang.startsWith("zh")
+}
+
 async function main() {
   const AUTH = "Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84"
   const RAW = "ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84"
@@ -23,14 +28,14 @@ async function main() {
   })
 
   if (r1.error) {
-    $done({ content: "网络错误", backgroundColor: "#FF9500" })
+    $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     return
   }
 
   const status1 = r1.response.status || r1.response.statusCode
 
   if (status1 === 403 || (r1.data && r1.data.includes("403 ERROR"))) {
-    $done({ content: "受限", backgroundColor: "#FF3B30" })
+    $done({ content: isChinese() ? "受限" : "Restricted", backgroundColor: "#FF3B30" })
     return
   }
 
@@ -39,7 +44,10 @@ async function main() {
     assertion = JSON.parse(r1.data).assertion
   } catch (e) {}
   if (!assertion) {
-    $done({ content: "错误 (" + status1 + ")", backgroundColor: "#FF9500" })
+    $done({
+      content: (isChinese() ? "错误 (" : "Error (") + status1 + ")",
+      backgroundColor: "#FF9500"
+    })
     return
   }
 
@@ -57,14 +65,14 @@ async function main() {
   })
 
   if (r2.error) {
-    $done({ content: "网络错误", backgroundColor: "#FF9500" })
+    $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     return
   }
 
   const status2 = r2.response.status || r2.response.statusCode
 
   if (status2 === 403 || (r2.data && r2.data.includes("forbidden-location"))) {
-    $done({ content: "不可用", backgroundColor: "#FF3B30" })
+    $done({ content: isChinese() ? "不可用" : "Unavailable", backgroundColor: "#FF3B30" })
     return
   }
 
@@ -73,7 +81,10 @@ async function main() {
     refreshToken = JSON.parse(r2.data).refresh_token
   } catch (e) {}
   if (!refreshToken) {
-    $done({ content: "错误 (" + status2 + ")", backgroundColor: "#FF9500" })
+    $done({
+      content: (isChinese() ? "错误 (" : "Error (") + status2 + ")",
+      backgroundColor: "#FF9500"
+    })
     return
   }
 
@@ -89,7 +100,7 @@ async function main() {
   })
 
   if (r3.error) {
-    $done({ content: "网络错误", backgroundColor: "#FF9500" })
+    $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     return
   }
 
@@ -97,24 +108,30 @@ async function main() {
   const body3 = r3.data || ""
 
   if (status3 !== 200 || body3.includes("403 ERROR")) {
-    $done({ content: "错误 (" + status3 + ")", backgroundColor: "#FF9500" })
+    $done({
+      content: (isChinese() ? "错误 (" : "Error (") + status3 + ")",
+      backgroundColor: "#FF9500"
+    })
     return
   }
 
   if (!/"inSupportedLocation"\s*:\s*true/.test(body3)) {
-    $done({ content: "不可用", backgroundColor: "#FF3B30" })
+    $done({ content: isChinese() ? "不可用" : "Unavailable", backgroundColor: "#FF3B30" })
     return
   }
 
   const match = body3.match(/"countryCode"\s*:\s*"([^"]+)"/)
   const region = match ? " (" + match[1].toUpperCase() + ")" : ""
-  $done({ content: "可用" + region, backgroundColor: "#113CCF" })
+  $done({
+    content: (isChinese() ? "可用" : "Available") + region,
+    backgroundColor: "#113CCF"
+  })
 }
 
 ;(async () => {
   main()
     .then((_) => {})
     .catch((error) => {
-      $done({ content: "网络错误", backgroundColor: "#FF9500" })
+      $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     })
 })()

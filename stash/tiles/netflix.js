@@ -6,6 +6,11 @@ async function request(method, params) {
   })
 }
 
+function isChinese() {
+  const lang = ($environment.language || "").toLowerCase()
+  return lang.startsWith("zh")
+}
+
 async function checkTitle(id) {
   const { error, response } = await request("GET", "https://www.netflix.com/title/" + id)
 
@@ -30,7 +35,7 @@ async function main() {
   let country = await checkTitle(70143836)
   if (country) {
     $done({
-      content: "无限制 (" + country.toUpperCase() + ")",
+      content: (isChinese() ? "无限制 (" : "Full (") + country.toUpperCase() + ")",
       backgroundColor: "#E50914"
     })
     return
@@ -39,19 +44,19 @@ async function main() {
   country = await checkTitle(80197526)
   if (country) {
     $done({
-      content: "仅原创 (" + country.toUpperCase() + ")",
+      content: (isChinese() ? "仅原创 (" : "Originals Only (") + country.toUpperCase() + ")",
       backgroundColor: "#FF9500"
     })
     return
   }
 
-  $done({ content: "不可用", backgroundColor: "#FF3B30" })
+  $done({ content: isChinese() ? "不可用" : "Unavailable", backgroundColor: "#FF3B30" })
 }
 
 ;(async () => {
   main()
     .then((_) => {})
     .catch((error) => {
-      $done({ content: "网络错误", backgroundColor: "#FF9500" })
+      $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     })
 })()
