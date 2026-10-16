@@ -1,0 +1,150 @@
+name: 第三方服务可用性检测
+icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/avatar.png
+desc: 折叠面板逐项检测 Disney+ / Spotify / X / Instagram / TikTok / Google / Claude / Gemini / ChatGPT / YouTube / Netflix 的可用性
+category: tile
+
+tiles:
+  - name: Check_DisneyPlus
+    interval: 1800
+    collapsed: true
+    title: "Disney+"
+    content: 检测中...
+    icon: sparkles
+    backgroundColor: "#113CCF"
+    url: https://www.disneyplus.com
+    timeout: 15
+
+  - name: Check_Spotify
+    interval: 1800
+    collapsed: true
+    title: "Spotify"
+    content: 检测中...
+    icon: music.note
+    backgroundColor: "#1DB954"
+    url: https://www.spotify.com
+    timeout: 15
+
+  - name: Check_X
+    interval: 1800
+    collapsed: true
+    title: "X"
+    content: 检测中...
+    icon: message.fill
+    backgroundColor: "#0F1419"
+    url: https://x.com
+    timeout: 15
+
+  - name: Check_Instagram
+    interval: 1800
+    collapsed: true
+    title: "Instagram"
+    content: 检测中...
+    icon: camera.fill
+    backgroundColor: "#E1306C"
+    url: https://www.instagram.com
+    timeout: 15
+
+  - name: Check_TikTok
+    interval: 1800
+    collapsed: true
+    title: "TikTok"
+    content: 检测中...
+    icon: music.note
+    backgroundColor: "#000000"
+    url: https://www.tiktok.com
+    timeout: 15
+
+  - name: Check_Google
+    interval: 1800
+    collapsed: true
+    title: "Google"
+    content: 检测中...
+    icon: magnifyingglass
+    backgroundColor: "#4285F4"
+    url: https://www.google.com
+    timeout: 15
+
+  - name: Check_Claude
+    interval: 1800
+    collapsed: true
+    title: "Claude"
+    content: 检测中...
+    icon: text.bubble.fill
+    backgroundColor: "#D97757"
+    url: https://claude.ai
+    timeout: 15
+
+  - name: Check_Gemini
+    interval: 1800
+    collapsed: true
+    title: "Gemini"
+    content: 检测中...
+    icon: sparkles
+    backgroundColor: "#4285F4"
+    url: https://gemini.google.com
+    timeout: 15
+
+  - name: Check_ChatGPT
+    interval: 1800
+    collapsed: true
+    title: "ChatGPT"
+    content: 检测中...
+    icon: bubble.left.and.bubble.right.fill
+    backgroundColor: "#10A37F"
+    url: https://chatgpt.com
+    timeout: 15
+
+  - name: Check_YouTube
+    interval: 1800
+    collapsed: true
+    title: "YouTube"
+    content: 检测中...
+    icon: play.rectangle.fill
+    backgroundColor: "#FF0000"
+    url: https://www.youtube.com
+    timeout: 15
+
+  - name: Check_Netflix
+    interval: 1800
+    collapsed: true
+    title: "Netflix"
+    content: 检测中...
+    icon: play.tv.fill
+    backgroundColor: "#E50914"
+    url: https://www.netflix.com
+    timeout: 15
+
+script-providers:
+  Check_DisneyPlus:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/disney.js
+    interval: 86400
+  Check_Spotify:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/spotify.js
+    interval: 86400
+  Check_X:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/x.js
+    interval: 86400
+  Check_Instagram:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/instagram.js
+    interval: 86400
+  Check_TikTok:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/tiktok.js
+    interval: 86400
+  Check_Google:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/google.js
+    interval: 86400
+  Check_Claude:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/claude.js
+    interval: 86400
+  Check_Gemini:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/gemini.js
+    interval: 86400
+  Check_ChatGPT:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/chatgpt.js
+    interval: 86400
+  Check_YouTube:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/youtube.js
+    interval: 86400
+  Check_Netflix:
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/netflix.js
+    interval: 86400
