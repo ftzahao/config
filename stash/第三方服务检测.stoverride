@@ -1,7 +1,7 @@
 name: 第三方服务可用性检测
 category: 规则集
 desc: 第三方服务可用性检测
-icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/avatar.png
+icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/avatar.png
 
 tiles:
   - name: IPPure-IP-Info
@@ -134,47 +134,47 @@ tiles:
 
 script-providers:
   IPPure-IP-Info:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/ippure-ip-info.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/ippure-ip-info.js
     path: ippure/ip-info.js
     interval: 86400
   IPPure-IP-Fraud-Score:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/ippure-ip-fraud-score.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/ippure-ip-fraud-score.js
     path: ippure/ip-fraud-score.js
     interval: 86400
   IPPure-IP-Native-Check:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/ippure-ip-native-check.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/ippure-ip-native-check.js
     path: ippure/ip-native-check.js
     interval: 86400
   Check_DisneyPlus:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/disney.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/disney.js
     interval: 86400
   Check_Spotify:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/spotify.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/spotify.js
     interval: 86400
   Check_X:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/x.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/x.js
     interval: 86400
   Check_Instagram:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/instagram.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/instagram.js
     interval: 86400
   Check_TikTok:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/tiktok.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/tiktok.js
     interval: 86400
   Check_Google:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/google.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/google.js
     interval: 86400
   Check_Claude:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/claude.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/claude.js
     interval: 86400
   Check_Gemini:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/gemini.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/gemini.js
     interval: 86400
   Check_ChatGPT:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/chatgpt.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/chatgpt.js
     interval: 86400
   Check_YouTube:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/youtube.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/youtube.js
     interval: 86400
   Check_Netflix:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/tiles/netflix.js
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/tiles/netflix.js
     interval: 86400

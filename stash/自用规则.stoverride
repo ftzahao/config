@@ -2,7 +2,7 @@ name: 自用规则
 category: 规则集
 desc: 自用规则
 mode: rule
-icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/avatar.png
+icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/avatar.png
 dns:
   enable: true
   ipv6: false
@@ -28,7 +28,7 @@ dns:
 
 rule-providers:
   FtzahaoDirect:
-    url: https://cdn.jsdelivr.net/gh/ftzahao/config@main/stash/Direct.yaml
+    url: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/stash/Direct.yaml
     behavior: classical
     format: yaml
     interval: 86400
@@ -142,7 +142,7 @@ rules: #!replace
 
 proxy-groups: #!replace
   - name: 默认
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineStickiesColorGlobe1Duo.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/StreamlineStickiesColorGlobe1Duo.png
     type: select
     proxies:
       - 自动选择
@@ -158,7 +158,7 @@ proxy-groups: #!replace
       - 马来西亚
       - 德国
   - name: Telegram
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/LogosTelegram.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/LogosTelegram.png
     type: select
     proxies:
       - 自动选择
@@ -174,7 +174,7 @@ proxy-groups: #!replace
       - 马来西亚
       - 德国
   - name: Youtube
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/SelfhstYoutube.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/SelfhstYoutube.png
     type: select
     proxies:
       - 自动选择
@@ -190,7 +190,7 @@ proxy-groups: #!replace
       - 马来西亚
       - 德国
   - name: x
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/LogosX.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/LogosX.png
     type: select
     proxies:
       - 自动选择
@@ -206,7 +206,7 @@ proxy-groups: #!replace
       - 马来西亚
       - 德国
   - name: TikTok
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/LogosTiktokIcon.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/LogosTiktokIcon.png
     type: select
     proxies:
       - 自动选择
@@ -222,7 +222,7 @@ proxy-groups: #!replace
       - 马来西亚
       - 德国
   - name: Netflix
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/SelfhstNetflix.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/SelfhstNetflix.png
     type: select
     proxies:
       - 自动选择
@@ -238,7 +238,7 @@ proxy-groups: #!replace
       - 马来西亚
       - 德国
   - name: Disney
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/SelfhstDisneyPlus.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/SelfhstDisneyPlus.png
     type: select
     proxies:
       - 自动选择
@@ -254,7 +254,7 @@ proxy-groups: #!replace
       - 马来西亚
       - 德国
   - name: Spotify
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/LogosSpotifyIcon.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/LogosSpotifyIcon.png
     type: select
     proxies:
       - 自动选择
@@ -270,7 +270,7 @@ proxy-groups: #!replace
       - 马来西亚
       - 德国
   - name: 美国
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsUs.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/CircleFlagsUs.png
     type: url-test
     include-all: true
     interval: 120
@@ -278,7 +278,7 @@ proxy-groups: #!replace
     lazy: true
     filter: 美(?=国|利坚|联邦)|🇺🇲|US|USA|United States|America|america|美国|凤凰城|洛杉矶|西雅图|芝加哥|纽约|沪美
   - name: 日本
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsJp.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/CircleFlagsJp.png
     type: url-test
     include-all: true
     interval: 120
@@ -286,7 +286,7 @@ proxy-groups: #!replace
     lazy: true
     filter: (?:日本|🇯🇵|东京|JP(?:\s*[^A-Za-z0-9]|$)|Japan|JAPAN|japan|JPN|日(?:本|系|产))(?!\s*[利亚亚])
   - name: 新加坡
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsSg.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/CircleFlagsSg.png
     type: url-test
     include-all: true
     interval: 120
@@ -294,7 +294,7 @@ proxy-groups: #!replace
     lazy: true
     filter: 新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore
   - name: 英国
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsUk.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/CircleFlagsUk.png
     type: url-test
     include-all: true
     interval: 120
@@ -302,7 +302,7 @@ proxy-groups: #!replace
     lazy: true
     filter: 英(?=国)|🇬🇧|UK| United Kingdom
   - name: 台湾
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsTw.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/CircleFlagsTw.png
     type: url-test
     include-all: true
     interval: 120
@@ -310,7 +310,7 @@ proxy-groups: #!replace
     lazy: true
     filter: (?i)(台|TW|Tai)
   - name: 香港
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsHk.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/CircleFlagsHk.png
     type: url-test
     include-all: true
     interval: 120
@@ -318,7 +318,7 @@ proxy-groups: #!replace
     lazy: true
     filter: (?i)(港|HK|Hong)
   - name: 港澳台
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsCn.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/CircleFlagsCn.png
     type: url-test
     include-all: true
     interval: 120
@@ -326,7 +326,7 @@ proxy-groups: #!replace
     lazy: true
     filter: (?i)(^|\s|\-|\[|\(|\|)(HK|TW|MO|香港|台湾|澳门|台北|台中|新北|彰化|Macau|Hong Kong|Taiwan|HKTW|港台|🇭🇰|🇹🇼|🇲🇴)(\s|\-|$|\]|\)|\|)
   - name: 韩国
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsKr.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/CircleFlagsKr.png
     type: url-test
     include-all: true
     interval: 120
@@ -334,7 +334,7 @@ proxy-groups: #!replace
     lazy: true
     filter: 韩国|韓國|韩|韓|KR|KOR|Korea|South Korea|首尔|首爾|Seoul|서울|한국|🇰🇷
   - name: 马来西亚
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsMy.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/CircleFlagsMy.png
     type: url-test
     include-all: true
     interval: 120
@@ -342,7 +342,7 @@ proxy-groups: #!replace
     lazy: true
     filter: (?i)(马来西亚|馬來西亞|马来(?:西亚)?|馬來(?:西亞)?|Malaysia|Kuala\s*Lumpur|吉隆坡|🇲🇾)
   - name: 德国
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/CircleFlagsDe.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/CircleFlagsDe.png
     type: url-test
     include-all: true
     interval: 120
@@ -350,7 +350,7 @@ proxy-groups: #!replace
     lazy: true
     filter: (?i)(德国|德國|germany|deutschland|frankfurt|berlin|🇩🇪|(^|[^a-z])de([^a-z]|$))
   - name: 自动选择
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineStickiesColorCompass1Duo.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/StreamlineStickiesColorCompass1Duo.png
     type: url-test
     include-all: true
     interval: 120
@@ -358,12 +358,12 @@ proxy-groups: #!replace
     lazy: true
     filter: (?i)^(?!.*(剩余|有效期|到期|流量|重置|套餐|用量|官网|网址|网站|客服|邮箱|邮件|群组|频道|订阅|机场|购买|会员|工单|公告|预警|跑路|说明|教程|负载|维护|反馈|测速|仪表盘|导航|镜像|天气|时间|Telegram|TG|电报|星云)).*$
   - name: 手动选择
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineStickiesColorCursorDuo.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/StreamlineStickiesColorCursorDuo.png
     type: select
     include-all: true
     filter: (?i)^(?!.*(剩余|有效期|到期|流量|重置|套餐|用量|官网|网址|网站|客服|邮箱|邮件|群组|频道|订阅|机场|购买|会员|工单|公告|预警|跑路|说明|教程|负载|维护|反馈|测速|仪表盘|导航|镜像|天气|时间|Telegram|TG|电报|星云)).*$
   - name: 其他信息
-    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@main/assets/StreamlineStickiesColorOnlineInformationDuo.png
+    icon: https://cdn.jsdelivr.net/gh/ftzahao/config@refs/heads/main/assets/StreamlineStickiesColorOnlineInformationDuo.png
     type: select
     include-all: true
     filter: (?i)(剩余|有效期|到期|流量|重置|套餐|用量|官网|网址|网站|客服|邮箱|邮件|群组|频道|订阅|机场|购买|会员|工单|公告|预警|跑路|说明|教程|负载|维护|反馈|测速|仪表盘|导航|镜像|天气|时间|Telegram|TG|电报|星云)
