@@ -37,7 +37,7 @@ tiles:
     collapsed: true
     title: "Spotify"
     content: 检测中...
-    icon: music.note
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosSpotifyIcon.png
     backgroundColor: "#1DB954"
     url: https://www.spotify.com
     timeout: 15
@@ -47,7 +47,7 @@ tiles:
     collapsed: true
     title: "X"
     content: 检测中...
-    icon: message.fill
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosX.png
     backgroundColor: "#0F1419"
     url: https://x.com
     timeout: 15
@@ -67,7 +67,7 @@ tiles:
     collapsed: true
     title: "TikTok"
     content: 检测中...
-    icon: music.note
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosTiktokIcon.png
     backgroundColor: "#000000"
     url: https://www.tiktok.com
     timeout: 15
@@ -77,7 +77,7 @@ tiles:
     collapsed: true
     title: "Google"
     content: 检测中...
-    icon: magnifyingglass
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosGoogleIcon.png
     backgroundColor: "#4285F4"
     url: https://www.google.com
     timeout: 15
@@ -87,7 +87,7 @@ tiles:
     collapsed: true
     title: "Claude"
     content: 检测中...
-    icon: text.bubble.fill
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosClaudeIcon.png
     backgroundColor: "#D97757"
     url: https://claude.ai
     timeout: 15
@@ -97,7 +97,7 @@ tiles:
     collapsed: true
     title: "Gemini"
     content: 检测中...
-    icon: sparkles
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/VscodeIconsFileTypeGemini.png
     backgroundColor: "#4285F4"
     url: https://gemini.google.com
     timeout: 15
@@ -107,7 +107,7 @@ tiles:
     collapsed: true
     title: "ChatGPT"
     content: 检测中...
-    icon: bubble.left.and.bubble.right.fill
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstChatgptLight.png
     backgroundColor: "#10A37F"
     url: https://chatgpt.com
     timeout: 15
@@ -117,7 +117,7 @@ tiles:
     collapsed: true
     title: "YouTube"
     content: 检测中...
-    icon: play.rectangle.fill
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstYoutube.png
     backgroundColor: "#FF0000"
     url: https://www.youtube.com
     timeout: 15
@@ -127,7 +127,7 @@ tiles:
     collapsed: true
     title: "Netflix"
     content: 检测中...
-    icon: play.tv.fill
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstNetflix.png
     backgroundColor: "#E50914"
     url: https://www.netflix.com
     timeout: 15
@@ -148,7 +148,7 @@ tiles:
     collapsed: true
     title: "Threads"
     content: 检测中...
-    icon: at
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosThreadsIcon.png
     backgroundColor: "#000000"
     url: https://www.threads.com
     timeout: 15
@@ -158,7 +158,7 @@ tiles:
     collapsed: true
     title: "Reddit"
     content: 检测中...
-    icon: text.bubble.fill
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosRedditIcon.png
     backgroundColor: "#FF4500"
     url: https://www.reddit.com
     timeout: 15
@@ -178,7 +178,7 @@ tiles:
     collapsed: true
     title: "Discord"
     content: 检测中...
-    icon: bubble.left.fill
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SkillIconsDiscord.png
     backgroundColor: "#5865F2"
     url: https://discord.com
     timeout: 15
@@ -229,7 +229,7 @@ tiles:
     collapsed: true
     title: "GitHub Copilot"
     content: 检测中...
-    icon: chevron.left.forwardslash.chevron.right
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/DeviconGithubcopilot.png
     backgroundColor: "#24292F"
     url: https://github.com/features/copilot
     timeout: 15
@@ -239,7 +239,7 @@ tiles:
     collapsed: true
     title: "Hugging Face"
     content: 检测中...
-    icon: face.smiling
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/DeviconHuggingface.png
     backgroundColor: "#FFD21E"
     url: https://huggingface.co
     timeout: 15
@@ -320,7 +320,7 @@ tiles:
     collapsed: true
     title: "微信"
     content: 检测中...
-    icon: message.fill
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstWechat.png
     backgroundColor: "#07C160"
     url: https://weixin.qq.com
     timeout: 15
@@ -351,7 +351,7 @@ tiles:
     collapsed: true
     title: "PyPI"
     content: 检测中...
-    icon: shippingbox.fill
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosPypi.png
     backgroundColor: "#3775A9"
     url: https://pypi.org
     timeout: 15
@@ -361,7 +361,7 @@ tiles:
     collapsed: true
     title: "npm"
     content: 检测中...
-    icon: shippingbox
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosNpmIcon.png
     backgroundColor: "#CB3837"
     url: https://www.npmjs.com
     timeout: 15
@@ -412,7 +412,7 @@ tiles:
     collapsed: true
     title: "Reddit (JSON)"
     content: 检测中...
-    icon: curlybraces
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosRedditIcon.png
     backgroundColor: "#FF4500"
     url: https://www.reddit.com
     timeout: 15
