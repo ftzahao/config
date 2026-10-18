@@ -55,9 +55,13 @@ tests/tile-harness/
 ├── run-all.mjs          # 运行器：汇总、失败定位、退出码
 ├── cases/
 │   ├── _contract.case.mjs        # 横切契约测试（对全部脚本 × 5 条契约）
-│   ├── google.case.mjs           # 每个脚本一个业务用例文件
+│   ├── google.case.mjs           # 每个脚本一个业务用例文件（44 个）
 │   ├── disney.case.mjs
 │   └── ...
+├── evidence/
+│   ├── _design.md                # 统一脚本模板规格（新增脚本必读）
+│   ├── SUMMARY.md                # 真实网络实测总表 + 逐卡片结论
+│   ├── a-endpoints.md … e-endpoints.md   # 各批次的原始实测分册
 └── README.md
 ```
 
@@ -205,12 +209,21 @@ export default {
 
 ```
 $ node tests/tile-harness/run-all.mjs
-用例 341 个: 通过 341, 失败 0, 已知 bug 0, 用例错误 0, 覆盖缺失 0, 跳过 0
-全部用例通过 ✔        # 退出码 0，单次约 20s（默认 4 路并发；--serial 约 73s）
+用例 1272 个: 通过 1272, 失败 0, 已知 bug 0, 用例错误 0, 覆盖缺失 0, 跳过 0
+全部用例通过 ✔        # 退出码 0，单次约 59s（默认 4 路并发）
+
+$ node tests/tile-harness/run-all.mjs _contract
+用例 308 个: 通过 308, 失败 0, …（44 脚本 × C1–C5 横切契约，均为 PASS）
 ```
 
-覆盖 `stash/tiles/` 下全部 **14 个** tile 脚本（每脚本 ≥9 条业务分支用例）+
-**横切契约测试 98 条**（14 脚本 × C1–C5）。修改任何 Tile 脚本后请重跑本命令，**退出码必须为 0**。
+覆盖 `stash/tiles/` 下全部 **44 个** tile 脚本（每脚本 19–28 条业务分支用例）+
+**横切契约测试**（44 脚本 × C1–C5）。修改任何 Tile 脚本后请重跑本命令，**退出码必须为 0**。
+
+> 📌 **新增脚本时请先读 [`evidence/_design.md`](evidence/_design.md)** —— 那是本批次统一模板的规格
+> （骨架代码、判定顺序表、硬约束），44 个脚本的公共骨架（`request`/`isChallenge`/`isDomain`/
+> `regionOfSegment`/`done*`）逐字一致，只有 `DOMAINS` / `COLOR` / URL / `main()` 分支不同。
+>
+> 真实网络下的端点实测与逐卡片结论见 [`evidence/SUMMARY.md`](evidence/SUMMARY.md)。
 
 > **关于兜底时长的容差**：「回调永不返回」类用例断言的是脚本 `request()` 兜底预算
 > （各脚本实测：`timeout*1000+400` ≈ 3.4s / 共享总预算 `TILE_BUDGET_MS` = 2.5s /

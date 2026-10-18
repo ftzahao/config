@@ -132,6 +132,311 @@ tiles:
     url: https://www.netflix.com
     timeout: 15
 
+  # ---------- 社交与直播 ----------
+  - name: Check_Facebook
+    interval: 1800
+    collapsed: true
+    title: "Facebook"
+    content: 检测中...
+    icon: person.2.fill
+    backgroundColor: "#0866FF"
+    url: https://www.facebook.com
+    timeout: 15
+
+  - name: Check_Threads
+    interval: 1800
+    collapsed: true
+    title: "Threads"
+    content: 检测中...
+    icon: at
+    backgroundColor: "#000000"
+    url: https://www.threads.com
+    timeout: 15
+
+  - name: Check_Reddit
+    interval: 1800
+    collapsed: true
+    title: "Reddit"
+    content: 检测中...
+    icon: text.bubble.fill
+    backgroundColor: "#FF4500"
+    url: https://www.reddit.com
+    timeout: 15
+
+  - name: Check_Twitch
+    interval: 1800
+    collapsed: true
+    title: "Twitch"
+    content: 检测中...
+    icon: video.fill
+    backgroundColor: "#9146FF"
+    url: https://www.twitch.tv
+    timeout: 15
+
+  - name: Check_Discord
+    interval: 1800
+    collapsed: true
+    title: "Discord"
+    content: 检测中...
+    icon: bubble.left.fill
+    backgroundColor: "#5865F2"
+    url: https://discord.com
+    timeout: 15
+
+  - name: Check_LinkedIn
+    interval: 1800
+    collapsed: true
+    title: "LinkedIn"
+    content: 检测中...
+    icon: briefcase.fill
+    backgroundColor: "#0A66C2"
+    url: https://www.linkedin.com
+    timeout: 15
+
+  # ---------- AI 服务 ----------
+  - name: Check_Grok
+    interval: 1800
+    collapsed: true
+    title: "Grok"
+    content: 检测中...
+    icon: sparkle
+    backgroundColor: "#1A1A1A"
+    url: https://grok.com
+    timeout: 15
+
+  - name: Check_xAI
+    interval: 1800
+    collapsed: true
+    title: "xAI"
+    content: 检测中...
+    icon: brain.head.profile
+    backgroundColor: "#1A1A1A"
+    url: https://x.ai
+    timeout: 15
+
+  - name: Check_Perplexity
+    interval: 1800
+    collapsed: true
+    title: "Perplexity"
+    content: 检测中...
+    icon: questionmark.circle.fill
+    backgroundColor: "#1FB8CD"
+    url: https://www.perplexity.ai
+    timeout: 15
+
+  - name: Check_Copilot
+    interval: 1800
+    collapsed: true
+    title: "GitHub Copilot"
+    content: 检测中...
+    icon: chevron.left.forwardslash.chevron.right
+    backgroundColor: "#24292F"
+    url: https://github.com/features/copilot
+    timeout: 15
+
+  - name: Check_HuggingFace
+    interval: 1800
+    collapsed: true
+    title: "Hugging Face"
+    content: 检测中...
+    icon: face.smiling
+    backgroundColor: "#FFD21E"
+    url: https://huggingface.co
+    timeout: 15
+
+  - name: Check_Poe
+    interval: 1800
+    collapsed: true
+    title: "Poe"
+    content: 检测中...
+    icon: text.alignleft
+    backgroundColor: "#5D3FD3"
+    url: https://poe.com
+    timeout: 15
+
+  # ---------- 流媒体与国内服务 ----------
+  - name: Check_HBO
+    interval: 1800
+    collapsed: true
+    title: "HBO Max"
+    content: 检测中...
+    icon: play.rectangle.fill
+    backgroundColor: "#002BE7"
+    url: https://www.max.com
+    timeout: 15
+
+  - name: Check_PrimeVideo
+    interval: 1800
+    collapsed: true
+    title: "Prime Video"
+    content: 检测中...
+    icon: play.tv.fill
+    backgroundColor: "#00A8E1"
+    url: https://www.primevideo.com
+    timeout: 15
+
+  - name: Check_Hulu
+    interval: 1800
+    collapsed: true
+    title: "Hulu"
+    content: 检测中...
+    icon: tv.fill
+    backgroundColor: "#1CE783"
+    url: https://www.hulu.com
+    timeout: 15
+
+  - name: Check_AppleMusic
+    interval: 1800
+    collapsed: true
+    title: "Apple Music"
+    content: 检测中...
+    icon: music.note.list
+    backgroundColor: "#FA243C"
+    url: https://music.apple.com
+    timeout: 15
+
+  - name: Check_Bilibili
+    interval: 1800
+    collapsed: true
+    title: "哔哩哔哩"
+    content: 检测中...
+    icon: play.tv
+    backgroundColor: "#00A1D6"
+    url: https://www.bilibili.com
+    timeout: 15
+
+  - name: Check_iQIYI
+    interval: 1800
+    collapsed: true
+    title: "爱奇艺"
+    content: 检测中...
+    icon: play.tv.fill
+    backgroundColor: "#00BE06"
+    url: https://www.iqiyi.com
+    timeout: 15
+
+  - name: Check_WeChat
+    interval: 1800
+    collapsed: true
+    title: "微信"
+    content: 检测中...
+    icon: message.fill
+    backgroundColor: "#07C160"
+    url: https://weixin.qq.com
+    timeout: 15
+
+  # ---------- 开发与游戏 ----------
+  - name: Check_Steam
+    interval: 1800
+    collapsed: true
+    title: "Steam"
+    content: 检测中...
+    icon: gamecontroller.fill
+    backgroundColor: "#1B2838"
+    url: https://store.steampowered.com
+    timeout: 15
+
+  - name: Check_Epic
+    interval: 1800
+    collapsed: true
+    title: "Epic Games"
+    content: 检测中...
+    icon: gift.fill
+    backgroundColor: "#2A2A2A"
+    url: https://store.epicgames.com
+    timeout: 15
+
+  - name: Check_PyPI
+    interval: 1800
+    collapsed: true
+    title: "PyPI"
+    content: 检测中...
+    icon: shippingbox.fill
+    backgroundColor: "#3775A9"
+    url: https://pypi.org
+    timeout: 15
+
+  - name: Check_NPM
+    interval: 1800
+    collapsed: true
+    title: "npm"
+    content: 检测中...
+    icon: shippingbox
+    backgroundColor: "#CB3837"
+    url: https://www.npmjs.com
+    timeout: 15
+
+  - name: Check_Wikipedia
+    interval: 1800
+    collapsed: true
+    title: "Wikipedia"
+    content: 检测中...
+    icon: book.fill
+    backgroundColor: "#000000"
+    url: https://www.wikipedia.org
+    timeout: 15
+
+  - name: Check_SpotifyWeb
+    interval: 1800
+    collapsed: true
+    title: "Spotify Web"
+    content: 检测中...
+    icon: music.note.house.fill
+    backgroundColor: "#1DB954"
+    url: https://open.spotify.com
+    timeout: 15
+
+  # ---------- 补充探测口径 ----------
+  - name: Check_YouTubeMobile
+    interval: 1800
+    collapsed: true
+    title: "YouTube (移动端)"
+    content: 检测中...
+    icon: iphone
+    backgroundColor: "#FF0000"
+    url: https://m.youtube.com
+    timeout: 15
+
+  - name: Check_GoogleJP
+    interval: 1800
+    collapsed: true
+    title: "Google (日本)"
+    content: 检测中...
+    icon: magnifyingglass
+    backgroundColor: "#4285F4"
+    url: https://www.google.co.jp
+    timeout: 15
+
+  - name: Check_RedditAPI
+    interval: 1800
+    collapsed: true
+    title: "Reddit (JSON)"
+    content: 检测中...
+    icon: curlybraces
+    backgroundColor: "#FF4500"
+    url: https://www.reddit.com
+    timeout: 15
+
+  - name: Check_PoeAPI
+    interval: 1800
+    collapsed: true
+    title: "Poe (API)"
+    content: 检测中...
+    icon: server.rack
+    backgroundColor: "#5D3FD3"
+    url: https://poe.com
+    timeout: 15
+
+  - name: Check_EpicStore
+    interval: 1800
+    collapsed: true
+    title: "Epic Store (严格)"
+    content: 检测中...
+    icon: cart
+    backgroundColor: "#2A2A2A"
+    url: https://store.epicgames.com
+    timeout: 15
+
 script-providers:
   IPPure-IP-Info:
     url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/ippure-ip-info.js
@@ -177,4 +482,129 @@ script-providers:
     interval: 86400
   Check_Netflix:
     url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/netflix.js
+    interval: 86400
+
+  # ---------- 社交与直播 ----------
+  Check_Facebook:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/facebook.js
+    interval: 86400
+
+  Check_Threads:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/threads.js
+    interval: 86400
+
+  Check_Reddit:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/reddit.js
+    interval: 86400
+
+  Check_Twitch:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/twitch.js
+    interval: 86400
+
+  Check_Discord:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/discord.js
+    interval: 86400
+
+  Check_LinkedIn:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/linkedin.js
+    interval: 86400
+
+  # ---------- AI 服务 ----------
+  Check_Grok:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/grok.js
+    interval: 86400
+
+  Check_xAI:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/xai.js
+    interval: 86400
+
+  Check_Perplexity:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/perplexity.js
+    interval: 86400
+
+  Check_Copilot:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/copilot.js
+    interval: 86400
+
+  Check_HuggingFace:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/huggingface.js
+    interval: 86400
+
+  Check_Poe:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/poe.js
+    interval: 86400
+
+  # ---------- 流媒体与国内服务 ----------
+  Check_HBO:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/hbo.js
+    interval: 86400
+
+  Check_PrimeVideo:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/primevideo.js
+    interval: 86400
+
+  Check_Hulu:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/hulu.js
+    interval: 86400
+
+  Check_AppleMusic:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/apple-music.js
+    interval: 86400
+
+  Check_Bilibili:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/bilibili.js
+    interval: 86400
+
+  Check_iQIYI:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/iqiyi.js
+    interval: 86400
+
+  Check_WeChat:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/wechat.js
+    interval: 86400
+
+  # ---------- 开发与游戏 ----------
+  Check_Steam:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/steam.js
+    interval: 86400
+
+  Check_Epic:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/epic.js
+    interval: 86400
+
+  Check_PyPI:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/pypi.js
+    interval: 86400
+
+  Check_NPM:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/npm.js
+    interval: 86400
+
+  Check_Wikipedia:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/wikipedia.js
+    interval: 86400
+
+  Check_SpotifyWeb:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/spotify_web.js
+    interval: 86400
+
+  # ---------- 补充探测口径 ----------
+  Check_YouTubeMobile:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/youtube_mobile.js
+    interval: 86400
+
+  Check_GoogleJP:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/googlejp.js
+    interval: 86400
+
+  Check_RedditAPI:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/reddit_api.js
+    interval: 86400
+
+  Check_PoeAPI:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/poe_api.js
+    interval: 86400
+
+  Check_EpicStore:
+    url: https://raw.githubusercontent.com/ftzahao/config/main/stash/tiles/epic_store.js
     interval: 86400
