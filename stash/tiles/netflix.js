@@ -116,11 +116,25 @@ async function checkTitle(id, budgetMs) {
     if (region) return { ok: true, network: false, region }
   }
 
-  // 没跳转/没头：若直接 200 且是登录态无前缀 URL，说明地区就是本出口但不带码
-  if (status === 200) return { ok: true, network: false, region: "" }
+  // 没跳转/没头：若直接 200 且是登录态无前缀 URL，说明地区就是本出口但不带码。
+  // 但 200 也可能是「反爬挑战页」或「地区封锁页」——这两种必须先排掉，
+  // 否则会被当成「无限制」（最严重的一类误报：把被拦的服务报成可用）。
+  const body = String(data || "")
+  const lower = body.toLowerCase()
 
-  // 未跳转却返回 403：Cloudflare 反爬拦截，不是「不可用」
-  if (isChallenge(status, data)) return { ok: false, network: false, region: "", blocked: true }
+  if (isChallenge(status, lower)) {
+    return { ok: false, network: false, region: "", blocked: true }
+  }
+
+  if (
+    lower.includes("not available in your country") ||
+    lower.includes("not available in your region") ||
+    lower.includes("isn't available in your region")
+  ) {
+    return { ok: false, network: false, region: "", unavailable: true }
+  }
+
+  if (status === 200) return { ok: true, network: false, region: "" }
 
   return { ok: false, network: false, region: "", code: codeOf(status) }
 }
@@ -146,6 +160,12 @@ async function main() {
   // Cloudflare 反爬拦截：既不是地区封锁，也不能当「不可用」
   if (full.blocked) {
     $done({ content: isChinese() ? "被拦截" : "Blocked", backgroundColor: "#FF9500" })
+    return
+  }
+
+  // 首页本身就写着「本地区不可用」：不必再探 /originals
+  if (full.unavailable) {
+    $done({ content: isChinese() ? "不可用" : "Unavailable", backgroundColor: "#FF3B30" })
     return
   }
 
@@ -180,6 +200,12 @@ async function main() {
   // 第二次也被反爬拦截
   if (originals.blocked) {
     $done({ content: isChinese() ? "被拦截" : "Blocked", backgroundColor: "#FF9500" })
+    return
+  }
+
+  // 原创页也写着「本地区不可用」
+  if (originals.unavailable) {
+    $done({ content: isChinese() ? "不可用" : "Unavailable", backgroundColor: "#FF3B30" })
     return
   }
 

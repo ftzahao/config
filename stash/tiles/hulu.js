@@ -95,7 +95,12 @@ function isDomain(host) {
 }
 
 function hostOf(location) {
-  return String(location || "").replace(/^https?:\/\//i, "").split("/")[0].toLowerCase()
+  // 协议相对（//host/path）也要取出 host：否则 host 为空会让
+  // 「跳到陌生域名 → 被拦截」的分支失效，把劫持页误报成「可用」。
+  const raw = String(location || "").trim()
+  if (!raw) return ""
+  const rest = raw.startsWith("//") ? raw.slice(2) : raw.replace(/^https?:\/\//i, "")
+  return rest.split("/")[0].split(":")[0].toLowerCase()
 }
 
 // 地区码：/de-de/、/jp-en/、/kr-ko/ 都取第一段再取 "-" 前，避免把语言后缀当地区

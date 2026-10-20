@@ -3,7 +3,8 @@ const UA =
 
 // ---- 本脚本配置 ----
 // 允许出现的业务域名：门户在 wikipedia.org，图片/字体走 wikimedia.org。
-// 部分地区会 302 到 /zh-cn/、/ja-jp/ 这类语言地区前缀（取首段给 (REGION) 后缀）。
+// 注意：首页的地区路由是**跳语言子域**（zh.wikipedia.org），不是路径前缀，
+// 因此 regionOfPath 取不到东西，正常情况只显示「可用」、不带 (REGION)。
 const DOMAINS = ["wikipedia.org", "wikimedia.org"]
 const COLOR = "#000000"
 
@@ -93,7 +94,12 @@ function isDomain(host) {
 }
 
 function hostOf(location) {
-  return String(location || "").replace(/^https?:\/\//i, "").split("/")[0].toLowerCase()
+  // 协议相对（//host/path）也要取出 host：否则 host 为空会让
+  // 「跳到陌生域名 → 被拦截」的分支失效，把劫持页误报成「可用」。
+  const raw = String(location || "").trim()
+  if (!raw) return ""
+  const rest = raw.startsWith("//") ? raw.slice(2) : raw.replace(/^https?:\/\//i, "")
+  return rest.split("/")[0].split(":")[0].toLowerCase()
 }
 
 // 地区码：/de-de/、/jp-en/、/kr-ko/ 都取第一段再取 "-" 前，避免把语言后缀当地区
@@ -139,9 +145,9 @@ function doneError(status) {
   $done({ content: text("错误 (", "Error (") + codeOf(status) + ")", backgroundColor: "#FF9500" })
 }
 
-// 落地域名判定：不跟随重定向，直接看服务端把请求路由到了哪个地区/站点。
-// www.wikipedia.org 会按出口 IP 跳语言子域（如 zh.wikipedia.org、ja.wikipedia.org），
-// 这属于 DOMAINS 内的正常地区路由。
+// 落地域名判定：不跟随重定向，直接看服务端把请求路由到了哪个站点。
+// www.wikipedia.org 会跳语言**子域**（如 zh.wikipedia.org、ja.wikipedia.org）——实测也有
+// 直接返回 200 不跳转的形态；两者都在 DOMAINS 内，属正常，且都拿不到地区码。
 async function main() {
   const { error, response, data } = await request("GET", {
     url: "https://www.wikipedia.org/",

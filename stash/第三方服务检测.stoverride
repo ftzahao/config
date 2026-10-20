@@ -5,19 +5,25 @@ icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/avatar.png
 
 tiles:
   - name: IPPure-IP-Info
+    interval: 1800
     title: IPPure IP Info
+    content: 检测中...
     icon: https://ippure.com/logo.png
     collapsed: true
     url: https://ippure.com
 
   - name: IPPure-IP-Fraud-Score
+    interval: 1800
     title: IPPure IP Fraud Score
+    content: 检测中...
     icon: https://ippure.com/logo.png
     collapsed: true
     url: https://ippure.com
 
   - name: IPPure-IP-Native-Check
+    interval: 1800
     title: IPPure IP Native Check
+    content: 检测中...
     icon: https://ippure.com/logo.png
     collapsed: true
     url: https://ippure.com

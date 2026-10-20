@@ -121,7 +121,13 @@ async function main() {
   }
 
   const lower = body.toLowerCase()
-  if (lower.includes("not available in your country") || lower.includes("isn't available in your country")) {
+  // 三种说法都要认：只认 "country" 会漏掉 "region" 措辞，把封锁页误报成「可用」
+  if (
+    lower.includes("not available in your country") ||
+    lower.includes("isn't available in your country") ||
+    lower.includes("not available in your region") ||
+    lower.includes("isn't available in your region")
+  ) {
     $done({ content: text("不可用", "Unavailable"), backgroundColor: "#FF3B30" })
     return
   }

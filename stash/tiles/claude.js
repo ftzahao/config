@@ -119,6 +119,17 @@ async function main() {
     return
   }
 
+  // 页面明写「本地区不可用」：不能因为 ipCountry 解析不出来就判「可用」
+  const lower = body.toLowerCase()
+  if (
+    lower.includes("not available in your country") ||
+    lower.includes("not available in your region") ||
+    lower.includes("isn't available in your region")
+  ) {
+    $done({ content: text("不可用", "Unavailable"), backgroundColor: "#FF3B30" })
+    return
+  }
+
   if (status === 429) {
     $done({ content: text("请求限流", "Rate Limited"), backgroundColor: "#FF9500" })
     return
@@ -127,8 +138,15 @@ async function main() {
   // console.anthropic.com → platform.claude.com 之类的正常搬家，不是地区封锁；
   // 但跳到 Anthropic 体系之外的域名说明被劫持/被拦，不能判「可用」
   if (status === 301 || status === 302 || status === 303 || status === 307 || status === 308) {
-    const location = String(header(response.headers, "location") || "")
-    const host = location.replace(/^https?:\/\//i, "").split("/")[0]
+    const location = String(header(response.headers, "location") || "").trim()
+    // 协议相对（//host/path）也要取出 host：否则 host 为空会让下面的站外判定失效
+    const host = (location.startsWith("//")
+      ? location.slice(2)
+      : location.replace(/^https?:\/\//i, "")
+    )
+      .split("/")[0]
+      .split(":")[0]
+      .toLowerCase()
 
     if (host && !/(^|\.)(claude\.ai|claude\.com|anthropic\.com)$/i.test(host)) {
       $done({ content: text("被拦截", "Blocked") + " -> " + host, backgroundColor: "#FF9500" })

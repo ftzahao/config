@@ -74,44 +74,91 @@ function header(headers, name) {
   return undefined
 }
 
-// 从 Location（如 https://www.spotify.com/jp/xx/）里取地区段，取不到返回 ""
+// Spotify 自家域名：30x 的落地 host 必须落在这个白名单内，否则按「被劫持/被地区重定向」处理
+const DOMAINS = ["spotify.com"]
+
+// 大小写不敏感地判断 host 是否属于 DOMAINS（允许 open./www./accounts. 之类的子域）
+function isDomain(host) {
+  const lower = String(host || "").toLowerCase()
+  if (!lower) return false
+  for (let i = 0; i < DOMAINS.length; i++) {
+    const domain = DOMAINS[i].toLowerCase()
+    if (lower === domain || lower.endsWith("." + domain)) return true
+  }
+  return false
+}
+
+// 从 Location 取 host：兼容绝对 URL、协议相对（//host/...）；相对路径返回 ""
+function hostOf(location) {
+  const raw = String(location || "").trim()
+  if (!raw) return ""
+  const rest = raw.startsWith("//") ? raw.slice(2) : raw.replace(/^[a-z][a-z0-9+.-]*:\/\//i, "")
+  return rest.split("/")[0].split(":")[0].toLowerCase()
+}
+
+// 纯语言代码（不是国家/地区码）：/en/xx/ 这类路径段不能当地区后缀报出去
+const LANGUAGE_ONLY = { en: true, ja: true, ko: true, zh: true }
+
+// 从 Location（如 https://www.spotify.com/sg-en/signup/）里取地区段，取不到返回 ""
 function regionOfLocation(location) {
-  const match = String(location).match(/spotify\.com\/([a-z]{2})(?:-[a-z]{2})?\//i)
-  return match ? match[1].toUpperCase() : ""
+  const rest = String(location || "").startsWith("//")
+    ? String(location).slice(2)
+    : String(location || "").replace(/^[a-z][a-z0-9+.-]*:\/\//i, "")
+  const slash = rest.indexOf("/")
+  if (slash < 0) return ""
+  const segment = rest.slice(slash + 1).split(/[/?]/)[0].toLowerCase()
+  const match = segment.match(/^([a-z]{2})(?:-[a-z]{2,})?$/)
+  if (!match) return ""
+  if (LANGUAGE_ONLY[match[1]]) return ""
+  return match[1].toUpperCase()
 }
 
 // www.spotify.com 会 302 到 /<国家码>/...，这是官方地区判定来源；
 // 不跟随重定向，才能读到 Location 与 sp_m cookie。
-async function countryFromRedirect() {
+async function countryFromRedirect(budgetMs) {
   const { error, response, data } = await request("GET", {
     url: "https://www.spotify.com/signup",
     "auto-redirect": false,
     headers: { "User-Agent": UA, "Accept-Language": "en" },
     timeout: 8
-  })
+  }, budgetMs)
 
   if (error || !response) return { ok: false, region: "" }
 
   const headers = response.headers || {}
-  let location
-  for (const key in headers) {
-    if (key.toLowerCase() === "location") location = headers[key]
+  const location = String(header(headers, "location") || "")
+  const status = statusOf(response)
+
+  // 跳到 Spotify 之外的站点 = 被劫持 / 被运营商地区重定向，必须判「被拦截」。
+  // 必须先于地区解析：否则 https://evil.example/sg-en/ 会被解析出地区并当成「可用」。
+  if (location) {
+    const host = hostOf(location)
+    // 相对路径（/sg-en/signup/）没有 host，属同域跳转，不在此列
+    if (host && !isDomain(host)) return { ok: false, region: "", blocked: true, host }
   }
 
-  const fromLocation = location ? regionOfLocation(location) : ""
+  const fromLocation = regionOfLocation(location)
   if (fromLocation) return { ok: true, region: fromLocation }
 
-  const cookie = String(headers["set-cookie"] || "")
+  const cookie = String(header(headers, "set-cookie") || "")
   const fromCookie = cookie.match(/sp_m=([a-z]{2})/i)
   if (fromCookie) return { ok: true, region: fromCookie[1].toUpperCase() }
-
-  const status = statusOf(response)
 
   // Cloudflare 反爬拦截：既不是地区封锁，也不能当「可用」
   if (isChallenge(status, data)) return { ok: false, region: "", blocked: true }
 
+  // 页面明写「本地区不可用」：不能因为没跳到 /<cc>/ 就当成可用
+  const lower = String(data || "").toLowerCase()
+  if (
+    lower.includes("not available in your country") ||
+    lower.includes("not available in your region") ||
+    lower.includes("isn't available in your region")
+  ) {
+    return { ok: false, region: "", unavailable: true }
+  }
+
   // 没跳转也没 cookie：状态码异常就说清楚，别把失败当成功
-  if (status !== 200 && status !== 302 && status !== 301) {
+  if (status !== 200 && status !== 301 && status !== 302 && status !== 303) {
     return { ok: false, region: "", code: codeOf(status) }
   }
 
@@ -120,12 +167,12 @@ async function countryFromRedirect() {
 }
 
 // open.spotify.com 首页内嵌 base64 的 appServerConfig（market / isAnonymous）
-async function marketFromOpen() {
+async function marketFromOpen(budgetMs) {
   const { error, response, data } = await request("GET", {
     url: "https://open.spotify.com/",
     headers: { "User-Agent": UA, "Accept-Language": "en" },
     timeout: 8
-  })
+  }, budgetMs)
 
   if (error || !response) return { ok: false, region: "" }
 
@@ -172,21 +219,54 @@ function base64Decode(input) {
 }
 
 async function main() {
-  const signup = await countryFromRedirect()
+  // 两次请求共享同一个 TILE_BUDGET_MS，总时长不会因为串行翻倍
+  const started = Date.now()
+  const signup = await countryFromRedirect(TILE_BUDGET_MS)
 
-  // Cloudflare 反爬拦截：既不是地区封锁，也不能当「可用」
+  // 被劫持（跳到站外域名）/ Cloudflare 反爬拦截：既不是地区封锁，也不能当「可用」
   if (signup.blocked) {
-    $done({ content: isChinese() ? "被拦截" : "Blocked", backgroundColor: "#FF9500" })
+    $done({
+      content: (isChinese() ? "被拦截" : "Blocked") + (signup.host ? " -> " + signup.host : ""),
+      backgroundColor: "#FF9500"
+    })
+    return
+  }
+
+  // 页面明写「本地区不可用」
+  if (signup.unavailable) {
+    $done({ content: isChinese() ? "不可用" : "Unavailable", backgroundColor: "#FF3B30" })
     return
   }
 
   if (!signup.ok) {
-    $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
+    // 状态码异常要说清楚，不能一律报「网络错误」
+    const code = signup.code
+    if (code === "451") {
+      $done({ content: isChinese() ? "不可用" : "Unavailable", backgroundColor: "#FF3B30" })
+    } else if (code === "403") {
+      $done({ content: isChinese() ? "受限" : "Restricted", backgroundColor: "#FF3B30" })
+    } else if (code === "429") {
+      $done({ content: isChinese() ? "请求限流" : "Rate Limited", backgroundColor: "#FF9500" })
+    } else if (Number(code) >= 500) {
+      $done({
+        content: (isChinese() ? "服务端错误 (" : "Server Error (") + code + ")",
+        backgroundColor: "#FF9500"
+      })
+    } else {
+      $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
+    }
     return
   }
 
   if (!signup.region) {
-    const open = await marketFromOpen()
+    // 预算耗尽就别再发第二个请求
+    const remaining = TILE_BUDGET_MS - (Date.now() - started)
+    if (remaining <= 300) {
+      $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
+      return
+    }
+
+    const open = await marketFromOpen(remaining)
     if (open.blocked) {
       $done({ content: isChinese() ? "被拦截" : "Blocked", backgroundColor: "#FF9500" })
       return

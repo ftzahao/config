@@ -61,6 +61,18 @@ function isChallenge(status, body) {
   return status === 200 || status === 403 || status === 503 || status === undefined
 }
 
+// 从 Location 取 host：
+//   · 绝对 URL https://www.tiktok.com/login → www.tiktok.com
+//   · 协议相对 //www.tiktok.com/login     → www.tiktok.com
+//   · 相对路径 /login                     → ""（同域跳转，没有 host 可判）
+// 直接用前缀正则匹配整个 Location 会把 tiktok.com.evil.example 误当成同品牌。
+function locationHost(location) {
+  const raw = String(location || "").trim()
+  if (!raw) return ""
+  const rest = raw.startsWith("//") ? raw.slice(2) : raw.replace(/^[a-z][a-z0-9+.-]*:\/\//i, "")
+  return rest.split("/")[0].split(":")[0].toLowerCase()
+}
+
 // 大小写不敏感地读响应头
 function header(headers, name) {
   const lower = String(name).toLowerCase()
@@ -103,7 +115,7 @@ async function main() {
     timeout: 8
   })
 
-  if (error) {
+  if (error || !response) {
     $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     return
   }
@@ -111,7 +123,7 @@ async function main() {
   const status = statusOf(response)
   const headers = (response && response.headers) || {}
   const location = header(headers, "location") || ""
-  const body = data || ""
+  const body = String(data || "")
   const lower = body.toLowerCase()
 
   // Cloudflare 反爬拦截：既不是地区封锁，也不能当「可用」
@@ -125,8 +137,11 @@ async function main() {
     return
   }
 
-  if (status === 301 || status === 302 || status === 307 || status === 308) {
-    if (location && !/^https?:\/\/(www\.)?tiktok\.com/i.test(location)) {
+  if (status === 301 || status === 302 || status === 303 || status === 307 || status === 308) {
+    const host = locationHost(location)
+    // 只有「确实跳到了站外」才算被拦；相对路径（/login）是同域跳转，不是被拦，
+    // 前缀正则还会把 tiktok.com.evil.example 这种仿冒域名放进来。
+    if (host && !/^(.*\.)?tiktok\.com$/i.test(host)) {
       $done({ content: isChinese() ? "不可用" : "Unavailable", backgroundColor: "#FF3B30" })
       return
     }
@@ -147,6 +162,7 @@ async function main() {
     status === 451 ||
     lower.includes("access denied") ||
     lower.includes("not available in your region") ||
+    lower.includes("isn't available in your region") ||
     lower.includes("not available in your country")
   ) {
     $done({ content: isChinese() ? "受限" : "Restricted", backgroundColor: "#FF3B30" })

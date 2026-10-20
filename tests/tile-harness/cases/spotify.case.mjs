@@ -3,7 +3,7 @@
  *   1. GET https://www.spotify.com/signup（auto-redirect:false）
  *      → Location / sp_m cookie 取地区；CF 挑战页 → blocked
  *   2. 无地区时 GET https://open.spotify.com/ → appServerConfig 的 base64 JSON（market/country）；CF → blocked
- * 文案：被拦截 / 网络错误 / 可用 (XX) / 可用
+ * 文案：被拦截 -> host / 受限 / 不可用 / 请求限流 / 服务端错误 (code) / 网络错误 / 可用 (XX) / 可用
  */
 import { assert, match, expectClean, expectRequest, expectRequestCount, expectContract } from "../support.mjs"
 import * as fx from "../fixtures.mjs"
@@ -95,18 +95,18 @@ export default {
       },
     },
     {
-      name: "signup 403（非 200/301/302 且无地区）→ 网络错误",
+      name: "signup 403（非 200/301/302/303 且无地区）→ 受限",
       responses: [{ status: 403, headers: {}, body: "" }],
       async expect(result) {
-        match(expectClean(result), { content: "网络错误", backgroundColor: "#FF9500" })
+        match(expectClean(result), { content: "受限", backgroundColor: "#FF3B30" })
         expectRequestCount(result, 1)
       },
     },
     {
-      name: "signup 500 → 网络错误",
+      name: "signup 500 → 服务端错误 (500)",
       responses: [fx.serverError(500)],
       async expect(result) {
-        match(expectClean(result), { content: "网络错误" })
+        match(expectClean(result), { content: "服务端错误 (500)", backgroundColor: "#FF9500" })
       },
     },
     {

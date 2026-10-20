@@ -115,13 +115,13 @@ async function main() {
     timeout: 8
   }, TILE_BUDGET_MS)
 
-  if (r1.error) {
+  if (r1.error || !r1.response) {
     $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     return
   }
 
   const status1 = statusOf(r1.response)
-  const body1 = r1.data || ""
+  const body1 = String(r1.data || "")
 
   // Cloudflare 挑战页的 403 是反爬拦截，不是「地区受限」—— 必须先于下面的
   // 403 分支单独识别，否则会把所有无浏览器指纹的请求误报成地区受限
@@ -168,13 +168,13 @@ async function main() {
     timeout: 8
   }, afterDevices)
 
-  if (r2.error) {
+  if (r2.error || !r2.response) {
     $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     return
   }
 
   const status2 = statusOf(r2.response)
-  const body2 = r2.data || ""
+  const body2 = String(r2.data || "")
 
   // 同 /devices：CF 挑战页的 403 不能当地区封锁
   if (isChallenge(status2, body2)) {
@@ -217,13 +217,20 @@ async function main() {
     timeout: 8
   }, afterToken)
 
-  if (r3.error) {
+  if (r3.error || !r3.response) {
     $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     return
   }
 
   const status3 = statusOf(r3.response)
-  const body3 = r3.data || ""
+  const body3 = String(r3.data || "")
+
+  // CloudFront 的 "403 ERROR" 页本身就是 403：必须在这之前判，
+  // 否则会被 status3 !== 200 分支统一吞成「不可用」（/devices 阶段是同一顺序）
+  if (body3.includes("403 ERROR")) {
+    $done({ content: isChinese() ? "受限" : "Restricted", backgroundColor: "#FF3B30" })
+    return
+  }
 
   if (status3 !== 200) {
     if (status3 === 403 || status3 === 451 || body3.includes("forbidden-location")) {
@@ -235,11 +242,6 @@ async function main() {
       content: (isChinese() ? "错误 (" : "Error (") + codeOf(status3) + ")",
       backgroundColor: "#FF9500"
     })
-    return
-  }
-
-  if (body3.includes("403 ERROR")) {
-    $done({ content: isChinese() ? "受限" : "Restricted", backgroundColor: "#FF3B30" })
     return
   }
 

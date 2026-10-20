@@ -92,7 +92,12 @@ function isDomain(host) {
 }
 
 function hostOf(location) {
-  return String(location || "").replace(/^https?:\/\//i, "").split("/")[0].toLowerCase()
+  // 协议相对（//host/path）也要取出 host：否则 host 为空会让
+  // 「跳到陌生域名 → 被拦截」的分支失效，把劫持页误报成「可用」。
+  const raw = String(location || "").trim()
+  if (!raw) return ""
+  const rest = raw.startsWith("//") ? raw.slice(2) : raw.replace(/^https?:\/\//i, "")
+  return rest.split("/")[0].split(":")[0].toLowerCase()
 }
 
 // 地区码：/de-de/、/jp-en/、/kr-ko/ 都取第一段再取 "-" 前，避免把语言后缀当地区
@@ -142,6 +147,8 @@ function doneError(status) {
 // 实测（2026-10-18，海外出口）：带上桌面 UA 访问首页会被 MockingBird 前置代理直接 400，
 // 去掉 UA 反而 200。所以 400 不能直接当「服务挂了」——「网站可达但首页挑 UA」要显式标成「受限」。
 async function main() {
+  // 两次请求共享同一个 TILE_BUDGET_MS：否则首页 2.5s + favicon 2.5s 最坏能拖到 5s
+  const started = Date.now()
   const { error, response, data } = await request("GET", {
     url: "https://www.facebook.com/",
     "auto-redirect": false,
@@ -210,14 +217,21 @@ async function main() {
     return
   }
 
-  // 400 是 UA/风控前置代理的拒绝，不是网络与服务不可用；用同域 favicon 复查是否连通
+  // 400 是 UA/风控前置代理的拒绝，不是网络与服务不可用；用同域 favicon 复查是否连通。
+  // 复查请求只花剩余的预算，避免两次请求各等 2.5s 把面板拖到 5s。
   if (status === 400) {
+    const remaining = TILE_BUDGET_MS - (Date.now() - started)
+    if (remaining <= 300) {
+      doneNetworkError()
+      return
+    }
+
     const { error: faviconError } = await request("GET", {
       url: "https://www.facebook.com/favicon.ico",
       "auto-redirect": false,
       headers: { "User-Agent": UA, "Accept-Language": "en-US,en;q=0.9" },
       timeout: 4
-    })
+    }, remaining)
 
     if (faviconError) doneNetworkError()
     else $done({ content: text("受限", "Restricted"), backgroundColor: "#FF3B30" })

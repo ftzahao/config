@@ -2,9 +2,11 @@ const UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 
 // 与 stash/tiles/epic.js 的策略差异：两者请求同一个 https://store.epicgames.com/，
-// 但 epic.js 把 403 判「受限」（红色「受限」），本脚本把 403 判「不可用」（红色「不可用」）。
-// 理由：该站的 403 = 区域/风控直接拒绝，本出口实际什么都拿不到，按「不可用」更贴近真实体验；
-// 保留 epic.js 的「受限」口径是为了在面板上直接对比两种判定，其余分支完全一致。
+// 差别只在「非挑战页的 403」这一支 —— epic.js 判「受限」，本脚本判「不可用」。
+//
+// ⚠️ 实测（evidence/SUMMARY.md）该站拿到的 403 是 Cloudflare 托管质询页
+// （body 含 "Enable JavaScript and cookies to continue"），会先被 isChallenge() 截住判「被拦截」，
+// 因此这里的 403 分支只覆盖「不是挑战页的裸 403」，两个脚本在实测出口上的结论其实是同一个「被拦截」。
 //
 // ---- 本脚本配置 ----
 // 允许出现的业务域名：store.epicgames.com 未登录时可能 30x 到 www.epicgames.com 自家站点，
@@ -98,7 +100,12 @@ function isDomain(host) {
 }
 
 function hostOf(location) {
-  return String(location || "").replace(/^https?:\/\//i, "").split("/")[0].toLowerCase()
+  // 协议相对（//host/path）也要取出 host：否则 host 为空会让
+  // 「跳到陌生域名 → 被拦截」的分支失效，把劫持页误报成「可用」。
+  const raw = String(location || "").trim()
+  if (!raw) return ""
+  const rest = raw.startsWith("//") ? raw.slice(2) : raw.replace(/^https?:\/\//i, "")
+  return rest.split("/")[0].split(":")[0].toLowerCase()
 }
 
 // 地区码：/de-de/、/jp-en/、/kr-ko/ 都取第一段再取 "-" 前，避免把语言后缀当地区

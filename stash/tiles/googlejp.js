@@ -93,7 +93,12 @@ function isDomain(host) {
 }
 
 function hostOf(location) {
-  return String(location || "").replace(/^https?:\/\//i, "").split("/")[0].toLowerCase()
+  // 协议相对（//host/path）也要取出 host：否则 host 为空会让
+  // 「跳到陌生域名 → 被拦截」的分支失效，把劫持页误报成「可用」。
+  const raw = String(location || "").trim()
+  if (!raw) return ""
+  const rest = raw.startsWith("//") ? raw.slice(2) : raw.replace(/^https?:\/\//i, "")
+  return rest.split("/")[0].split(":")[0].toLowerCase()
 }
 
 // 地区码：/de-de/、/jp-en/、/kr-ko/ 都取第一段再取 "-" 前，避免把语言后缀当地区
@@ -110,8 +115,9 @@ function regionOfPath(url) {
   return segments.length ? regionOfSegment(segments[0]) : ""
 }
 
-// generate_204 本身不带任何地区信息，所以地区只能从同一份响应体的 trace 文本里读。
-// 形如 "ip=1.2.3.4\nloc=JP\ncolo=NRT"；没有 loc= 行就返回空串，宁可不显示也不猜。
+// 仅当 204 端点被顶成 200 且 body 恰好是 trace 文本时才用得上：
+// 形如 "ip=1.2.3.4\nloc=JP\ncolo=NRT"，没有 loc= 行就返回空串，宁可不显示也不猜。
+// 正常形态下 /generate_204 是空 body 的裸 204，这个函数返回 ""（不会给地区后缀）。
 function traceLoc(body) {
   const match = String(body || "").match(/^loc=([A-Za-z]{2})$/m)
   return match ? match[1].toUpperCase() : ""

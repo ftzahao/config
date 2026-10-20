@@ -61,6 +61,19 @@ function isChallenge(status, body) {
   return status === 200 || status === 403 || status === 503 || status === undefined
 }
 
+// 从 Location 取 host：
+//   · 绝对 URL https://www.instagram.com/accounts/login/ → www.instagram.com
+//   · 协议相对 //www.instagram.com/accounts/login/       → www.instagram.com
+//   · 相对路径 /accounts/login/                          → ""（同域跳转，没有 host 可判）
+// 只按 host 判品牌归属：整串前缀正则会把 instagram.com.evil.example 放过去，
+// 而相对路径本身不是「跳到站外」，不能当被拦。
+function locationHost(location) {
+  const raw = String(location || "").trim()
+  if (!raw) return ""
+  const rest = raw.startsWith("//") ? raw.slice(2) : raw.replace(/^[a-z][a-z0-9+.-]*:\/\//i, "")
+  return rest.split("/")[0].split(":")[0].toLowerCase()
+}
+
 // 大小写不敏感地读响应头
 function header(headers, name) {
   const lower = String(name).toLowerCase()
@@ -100,7 +113,7 @@ async function main() {
   const status = statusOf(response)
   const headers = (response && response.headers) || {}
   const location = header(headers, "location") || ""
-  const body = data || ""
+  const body = String(data || "")
   const lower = body.toLowerCase()
 
   // Cloudflare 反爬拦截：既不是地区封锁，也不能当「可用」。
@@ -113,6 +126,8 @@ async function main() {
   if (
     lower.includes("not available in your country") ||
     lower.includes("isn't available in your country") ||
+    lower.includes("not available in your region") ||
+    lower.includes("isn't available in your region") ||
     lower.includes("is not available in your region") ||
     lower.includes('"is_country_blocked":true')
   ) {
@@ -120,13 +135,13 @@ async function main() {
     return
   }
 
-  if (status === 301 || status === 302 || status === 307 || status === 308) {
-    // 跳到登录/checkpoint 属于正常；跳到 Meta 之外的站点说明被拦
+  if (status === 301 || status === 302 || status === 303 || status === 307 || status === 308) {
+    // 跳到登录/checkpoint 属于正常；跳到 Meta 之外的站点说明被拦。
+    // 只按 host 判归属：相对路径（/welcome）是同域跳转，不能当被拦。
+    const host = locationHost(location)
     if (
-      location &&
-      !/^https?:\/\/([a-z0-9-]+\.)?(instagram\.com|facebook\.com|meta\.com|cdninstagram\.com)/i.test(
-        location
-      )
+      host &&
+      !/^(.*\.)?(instagram\.com|facebook\.com|meta\.com|cdninstagram\.com)$/i.test(host)
     ) {
       $done({ content: isChinese() ? "不可用" : "Unavailable", backgroundColor: "#FF3B30" })
       return

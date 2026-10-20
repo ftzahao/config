@@ -61,6 +61,18 @@ function isChallenge(status, body) {
   return status === 200 || status === 403 || status === 503 || status === undefined
 }
 
+// 从 Location 取 host：
+//   · 绝对 URL https://x.com/i/flow/login → x.com
+//   · 协议相对 //x.com/i/flow/login       → x.com
+//   · 相对路径 /i/flow/login              → ""（同域跳转，没有 host 可判）
+// 直接用前缀正则匹配整个 Location 会把 x.com.evil.example 误当成同品牌。
+function locationHost(location) {
+  const raw = String(location || "").trim()
+  if (!raw) return ""
+  const rest = raw.startsWith("//") ? raw.slice(2) : raw.replace(/^[a-z][a-z0-9+.-]*:\/\//i, "")
+  return rest.split("/")[0].split(":")[0].toLowerCase()
+}
+
 // 大小写不敏感地读响应头
 function header(headers, name) {
   const lower = String(name).toLowerCase()
@@ -84,7 +96,7 @@ async function main() {
     timeout: 8
   })
 
-  if (error) {
+  if (error || !response) {
     $done({ content: isChinese() ? "网络错误" : "Network Error", backgroundColor: "#FF9500" })
     return
   }
@@ -92,7 +104,7 @@ async function main() {
   const status = statusOf(response)
   const headers = (response && response.headers) || {}
   const location = header(headers, "location") || ""
-  const body = (data || "").toLowerCase()
+  const body = String(data || "").toLowerCase()
 
   // Cloudflare 反爬拦截：既不是地区封锁，也不能当「可用」
   if (isChallenge(status, body)) {
@@ -101,8 +113,11 @@ async function main() {
   }
 
   // 被墙/被地区重定向到其它站点
-  if (status === 301 || status === 302 || status === 307 || status === 308) {
-    if (location && !/^https?:\/\/(www\.)?x\.com/i.test(location)) {
+  if (status === 301 || status === 302 || status === 303 || status === 307 || status === 308) {
+    const host = locationHost(location)
+    // x.com 与 twitter.com 是同一品牌（x.com 会往 twitter.com 跳）；
+    // 只有「确实跳到站外」才算被拦，相对路径（/i/flow/login）不是被拦。
+    if (host && !/^(.*\.)?(x\.com|twitter\.com)$/i.test(host)) {
       $done({ content: isChinese() ? "不可用" : "Unavailable", backgroundColor: "#FF3B30" })
       return
     }
@@ -130,6 +145,8 @@ async function main() {
     // 正常首页会带 app shell 标记；出现封锁/错误文案则判不可用
     const blocked =
       body.includes("not available in your country") ||
+      body.includes("not available in your region") ||
+      body.includes("isn't available in your region") ||
       body.includes("region blocked") ||
       body.includes("this site is not available")
 

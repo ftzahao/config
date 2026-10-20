@@ -1,5 +1,5 @@
 /**
- * poe_api.js（GET https://api.poe.com/，auto-redirect: false）
+ * poe_api.js（GET https://api.poe.com/v1/models，auto-redirect: false）
  * 定位：「JSON API 端点」判定 —— 没有可看的落地页面，只能看响应内容本身能不能用。
  * 实测（2026-10-18 出口 KR/JP）：403，1.4KB，无挑战特征 → 按模板判「受限」。
  * 与模板的差别只在 200 这一支：必须能 JSON.parse 才算可用，解析失败判「异常」（#FF9500）。
@@ -14,7 +14,7 @@
 import { assert, match, expectClean, expectRequest } from "../support.mjs"
 import * as fx from "../fixtures.mjs"
 
-const URL = "https://api.poe.com/"
+const URL = "https://api.poe.com/v1/models"
 const COLOR = "#5D3FD3"
 const API_JSON = { error: "Unauthorized", status: 401 }
 

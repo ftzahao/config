@@ -201,7 +201,7 @@ export default {
 | --- | --- |
 | C1 | 网络错误（`{error}` / `response` undefined / `data` undefined）时 `$done` 恰好 1 次，文案不含 `undefined`/`NaN`/`[object Object]`，且不误判「可用」 |
 | C2 | 回调永不返回时**不得永久挂起**，须在兜底预算内（默认 ≤4.5s；`disney`/`netflix` 等串行脚本按共享总预算校验）调用 `$done` |
-| C3 | HTTP 200 + Cloudflare 挑战页时不得判为「可用 / Available」 |
+| C3 | HTTP 200 + Cloudflare 挑战页时不得判为「可用」及其同义文案（`Available`/`无限制`/`Full`/`可达`…） |
 | C4 | happy path 下 `$done` 恰好 1 次 |
 | C5 | 源码静态检查：不得用 `$httpClient[method]` / `const fn = $httpClient.get` 这种丢失 receiver 的写法 |
 
@@ -220,8 +220,18 @@ $ node tests/tile-harness/run-all.mjs _contract
 **横切契约测试**（44 脚本 × C1–C5）。修改任何 Tile 脚本后请重跑本命令，**退出码必须为 0**。
 
 > 📌 **新增脚本时请先读 [`evidence/_design.md`](evidence/_design.md)** —— 那是本批次统一模板的规格
-> （骨架代码、判定顺序表、硬约束），44 个脚本的公共骨架（`request`/`isChallenge`/`isDomain`/
-> `regionOfSegment`/`done*`）逐字一致，只有 `DOMAINS` / `COLOR` / URL / `main()` 分支不同。
+> （骨架代码、判定顺序表、硬约束）。
+>
+> ⚠️ 骨架**并非** 44 个脚本逐字一致，实际分三族（新增脚本请照第 1 族）：
+>
+> | 族 | 脚本 | `request()` 兜底预算 | 说明 |
+> | --- | --- | --- | --- |
+> | 扩量批次 36 个 | 其余全部 | `min(params.timeout*1000, TILE_BUDGET_MS=2500)`，`Math.max(500, …)` 保底 | 与 `_design.md` §1 逐字一致的骨架 |
+> | 早期 5 个 | `google` / `youtube` / `chatgpt` / `claude` / `gemini` | `params.timeout*1000 + 400`（`timeout: 3` → 3.4s） | 判定写在 `main()` 里，无 `DOMAINS`/`done*`，文案/色值与模板同义但不共用骨架 |
+> | IPPure 3 个 | `ippure-ip-*` | 主请求 1000ms + 降级 1200ms（串行共享） | 自带一份三文件逐字节一致的 helper 块（含 `classify`/`asBool`） |
+>
+> 三族的 `isChallenge` 语义也不同：36+5 个只认「语义强特征 + 状态码」，IPPure 另认 `challenge-platform`
+> 且把**任何** 403/503 都算作被拦截（见各文件注释）。改动前请先确认自己在改哪一族。
 >
 > 真实网络下的端点实测与逐卡片结论见 [`evidence/SUMMARY.md`](evidence/SUMMARY.md)。
 
@@ -259,8 +269,12 @@ $ node tests/tile-harness/run-all.mjs _contract
    `fraudScore` 不可得、`isBroadcast` 在 ip-api 里没有等价字段）只能在测试里锁定
    「不编造数据」这一行为，无法验证降级源本身的准确度。
 
-> 一致性约定：IPPure 三个 tile 的降级文案都**必须标明来源**（`(ip-api)`），
-> 且不得用 `ip-api` 的 `hosting` / `proxy` 冒充 IPPure 的 `isResidential` / `isBroadcast`。
+> 一致性约定：IPPure 三个 tile 的降级文案都**必须标明来源**（`(ip-api)`）。
+> 降级时**不得假装仍在检测 IPPure 的字段**：
+> - `isBroadcast`（原生性）在 `ip-api` 里没有等价字段 → 只能写「原生性不可判定」（`proxy` 是代理/VPN 检测，语义不同，不能拿来冒充）；
+> - `fraudScore` 没有等价字段 → 只能写「不可用」，不许用 `hosting`/`proxy` 折算成一个 0-100 的分数；
+> - `hosting` 可以近似 `isResidential`（`hosting:true` ≈ 机房、`false` ≈ 住宅），但必须带 `(ip-api)` 标注，
+>   且字段缺失时要写「类型未知」，不得默认成「机房」。
 8. **Gemini 地区为近似判定**：`gemini.google.com` 没有可用的地区端点
    （`/cdn-cgi/trace` 实测 404），脚本复用 YouTube 的 `INNERTUBE_CONTEXT_GL`。
    这属于**产品层面的近似值**，测试只能保证「解析逻辑与文案分支正确」，无法保证该近似对

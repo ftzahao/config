@@ -93,7 +93,12 @@ function isDomain(host) {
 }
 
 function hostOf(location) {
-  return String(location || "").replace(/^https?:\/\//i, "").split("/")[0].toLowerCase()
+  // 协议相对（//host/path）也要取出 host：否则 host 为空会让
+  // 「跳到陌生域名 → 被拦截」的分支失效，把劫持页误报成「可用」。
+  const raw = String(location || "").trim()
+  if (!raw) return ""
+  const rest = raw.startsWith("//") ? raw.slice(2) : raw.replace(/^https?:\/\//i, "")
+  return rest.split("/")[0].split(":")[0].toLowerCase()
 }
 
 // 地区码：/de-de/、/jp-en/、/kr-ko/ 都取第一段再取 "-" 前，避免把语言后缀当地区
@@ -171,9 +176,14 @@ function doneJsonBroken() {
 // JSON API 端点判定：api.poe.com 这类地址没有可看的落地页面，只能看响应内容本身。
 // 判定顺序与模板一致，额外只在 200 这一支加「必须能 JSON.parse」：
 //   CF 挑战页 → 封锁文案 → 451 → 429 → >=500 → 30x（DOMAINS 白名单）→ 200（parse）→ 403 → 其它。
+//
+// 探针路径必须是 /v1/models：实测（2026-10-20）
+//   GET https://api.poe.com/          → 403（nginx 路由拒绝，与出口 IP 无关，恒 403）
+//   GET https://api.poe.com/v1/models → 200 + JSON（未授权也返回模型列表）
+// 用根路径探测会让这个 tile 无论出口如何都停在「受限」，永远测不出真实可用性。
 async function main() {
   const { error, response, data } = await request("GET", {
-    url: "https://api.poe.com/",
+    url: "https://api.poe.com/v1/models",
     "auto-redirect": false,
     headers: { "User-Agent": UA, "Accept-Language": "en-US,en;q=0.9" },
     timeout: 8

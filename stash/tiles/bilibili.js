@@ -3,8 +3,8 @@ const UA =
 
 // ---- 本脚本配置 ----
 // b23.tv 是哔哩哔哩官方的短链域名（视频分享链接），首页可能 302 过去；
-// 它属于同一服务的跳转，不能当「被拦截」。港澳台站点走 /hk/、/tw/ 这类语种路径，
-// 首段不是两字母地区码，按 §2 规则不带地区后缀。
+// 它属于同一服务的跳转，不能当「被拦截」。港澳台站点走 /hk/、/tw/，
+// 首段正好是两字母地区码，按 §2 会显示成「可用 (HK)」「可用 (TW)」——这是预期行为，不是误报。
 const DOMAINS = ["bilibili.com", "b23.tv"]
 const COLOR = "#00A1D6"
 
@@ -93,7 +93,12 @@ function isDomain(host) {
 }
 
 function hostOf(location) {
-  return String(location || "").replace(/^https?:\/\//i, "").split("/")[0].toLowerCase()
+  // 协议相对（//host/path）也要取出 host：否则 host 为空会让
+  // 「跳到陌生域名 → 被拦截」的分支失效，把劫持页误报成「可用」。
+  const raw = String(location || "").trim()
+  if (!raw) return ""
+  const rest = raw.startsWith("//") ? raw.slice(2) : raw.replace(/^https?:\/\//i, "")
+  return rest.split("/")[0].split(":")[0].toLowerCase()
 }
 
 // 地区码：/de-de/、/jp-en/、/kr-ko/ 都取第一段再取 "-" 前，避免把语言后缀当地区

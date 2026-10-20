@@ -2,7 +2,9 @@ const UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 
 // ---- 本脚本配置 ----
-// music.apple.com 首页会按出口地区 302 到 /<地区段>，这是本 tile 唯一的地区来源：
+// music.apple.com 首页会 302 到 /<地区段>，这是本 tile 唯一的地区来源。
+// ⚠️ 该段来自 Apple 的账号/语言路由，**不完全等于出口 IP 所在地区**
+// （实测记录见 evidence/SUMMARY.md §2.3：KR 出口被送到 /cn），只能当参考，不能当地区证据。
 //   /cn    不带语言后缀（实测 KR/JP 出口之外常见形态）
 //   /jp    同上；/us/album/x 首段仍是地区
 // 也有 /jp-ja 这类「地区-语言」写法（类似 spotify 的 kr-ko），regionOfSegment 两种都认。
@@ -97,7 +99,12 @@ function isDomain(host) {
 }
 
 function hostOf(location) {
-  return String(location || "").replace(/^https?:\/\//i, "").split("/")[0].toLowerCase()
+  // 协议相对（//host/path）也要取出 host：否则 host 为空会让
+  // 「跳到陌生域名 → 被拦截」的分支失效，把劫持页误报成「可用」。
+  const raw = String(location || "").trim()
+  if (!raw) return ""
+  const rest = raw.startsWith("//") ? raw.slice(2) : raw.replace(/^https?:\/\//i, "")
+  return rest.split("/")[0].split(":")[0].toLowerCase()
 }
 
 // 地区码：/cn、/jp、/jp-ja、/kr-ko 都取第一段再取 "-" 前，避免把语言后缀当地区。

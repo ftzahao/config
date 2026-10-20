@@ -6,7 +6,8 @@
  *   C1  网络错误（{error} / response undefined / data undefined）时：$done 恰好调用 1 次，
  *       content 中不得出现 undefined / NaN / [object Object]，且不得误判为「可用」。
  *   C2  回调永不返回时不得永久挂起：超时（800ms）之前 $done 必须已被调用。
- *   C3  HTTP 200 但 body 是 Cloudflare 挑战页（"Just a moment..."）时不得判为「可用 / Available」。
+ *   C3  HTTP 200 但 body 是 Cloudflare 挑战页（"Just a moment..."）时不得判为「可用」——
+ *       同义文案（Available / 无限制 / Full / 可达 …）同样算失败，见 support.mjs expectNotAvailable。
  *   C4  $done 调用次数恰好为 1（happy path）。
  *   C5  源码静态检查：不得把 $httpClient 方法取出来脱离 receiver 调用
  *       （`$httpClient[method]` / `const fn = $httpClient.get` 等）。

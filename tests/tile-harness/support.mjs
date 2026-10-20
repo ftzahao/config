@@ -87,7 +87,9 @@ export function expectRequest(result, index, { method, url, timeout, autoRedirec
  */
 export function expectNotAvailable(done, label = "") {
   const content = String(done?.content ?? "")
-  if (/可用|Available/.test(content)) {
+  // 「可用」的等价说法都要拦住：只认「可用/Available」会漏掉 netflix 的「无限制/Full」
+  // 这类同义文案，让「200 + 挑战页被报成可用」的 bug 从 C3 底下溜过去。
+  if (/可用|Available|无限制|Full|可达|Reachable|可访问/.test(content)) {
     assert.fail(
       `[${label}] 拦截/异常页面被误判为「可用」`,
       `content = ${assert.stringify(content)}\n` +
