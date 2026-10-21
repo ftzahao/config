@@ -167,6 +167,7 @@ proxy-groups: #!replace
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosTelegram.png
     type: select
     proxies:
+      - 默认
       - 自动选择
       - 手动选择
       - 美国
@@ -183,6 +184,7 @@ proxy-groups: #!replace
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstYoutube.png
     type: select
     proxies:
+      - 默认
       - 自动选择
       - 手动选择
       - 美国
@@ -199,6 +201,7 @@ proxy-groups: #!replace
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosX.png
     type: select
     proxies:
+      - 默认
       - 自动选择
       - 手动选择
       - 美国
@@ -215,6 +218,7 @@ proxy-groups: #!replace
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosTiktokIcon.png
     type: select
     proxies:
+      - 默认
       - 自动选择
       - 手动选择
       - 美国
@@ -231,6 +235,7 @@ proxy-groups: #!replace
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstNetflix.png
     type: select
     proxies:
+      - 默认
       - 自动选择
       - 手动选择
       - 美国
@@ -247,6 +252,7 @@ proxy-groups: #!replace
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstDisneyPlus.png
     type: select
     proxies:
+      - 默认
       - 自动选择
       - 手动选择
       - 美国
@@ -263,6 +269,7 @@ proxy-groups: #!replace
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosSpotifyIcon.png
     type: select
     proxies:
+      - 默认
       - 自动选择
       - 手动选择
       - 美国
@@ -279,6 +286,7 @@ proxy-groups: #!replace
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstSteam.png
     type: select
     proxies:
+      - 默认
       - 自动选择
       - 手动选择
       - 美国
