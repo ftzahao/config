@@ -306,7 +306,7 @@ proxy-groups: #!replace
     interval: 120
     tolerance: 50
     lazy: true
-    filter: 美(?=国|利坚|联邦)|🇺🇲|US|USA|United States|America|america|美国|凤凰城|洛杉矶|西雅图|芝加哥|纽约|沪美
+    filter: (?i)(美国|美[利联]|🇺🇸|凤凰城|洛杉矶|西雅图|芝加哥|纽约|沪美|(^|[^a-z])(us|usa|united states|america)([^a-z]|$))
   - name: 日本
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/CircleFlagsJp.png
     type: url-test
@@ -314,7 +314,7 @@ proxy-groups: #!replace
     interval: 120
     tolerance: 50
     lazy: true
-    filter: (?:日本|🇯🇵|东京|JP(?:\s*[^A-Za-z0-9]|$)|Japan|JAPAN|japan|JPN|日(?:本|系|产))(?!\s*[利亚亚])
+    filter: (?i)(日本|🇯🇵|东京|大阪|日[系本]|(^|[^a-z])(jp|japan|jpn)([^a-z]|$))
   - name: 新加坡
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/CircleFlagsSg.png
     type: url-test
@@ -322,7 +322,7 @@ proxy-groups: #!replace
     interval: 120
     tolerance: 50
     lazy: true
-    filter: 新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore
+    filter: (?i)(新加坡|狮城|🇸🇬|(^|[^a-z])(sg|sgp|singapore)([^a-z]|$))
   - name: 英国
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/CircleFlagsUk.png
     type: url-test
@@ -330,7 +330,7 @@ proxy-groups: #!replace
     interval: 120
     tolerance: 50
     lazy: true
-    filter: 英(?=国)|🇬🇧|UK| United Kingdom
+    filter: (?i)(英国|伦敦|🇬🇧|(^|[^a-z])(uk|united kingdom)([^a-z]|$))
   - name: 台湾
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/CircleFlagsTw.png
     type: url-test
@@ -338,7 +338,7 @@ proxy-groups: #!replace
     interval: 120
     tolerance: 50
     lazy: true
-    filter: (?i)(台|TW|Tai)
+    filter: (?i)(台湾|台北|台中|台南|新北|高雄|🇹🇼|(^|[^a-z])(tw|taiwan)([^a-z]|$))
   - name: 香港
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/CircleFlagsHk.png
     type: url-test
@@ -346,7 +346,7 @@ proxy-groups: #!replace
     interval: 120
     tolerance: 50
     lazy: true
-    filter: (?i)(港|HK|Hong)
+    filter: (?i)(香港|🇭🇰|(^|[^a-z])(hk|hong ?kong)([^a-z]|$))
   - name: 港澳台
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/CircleFlagsCn.png
     type: url-test
@@ -362,7 +362,7 @@ proxy-groups: #!replace
     interval: 120
     tolerance: 50
     lazy: true
-    filter: 韩国|韓國|韩|韓|KR|KOR|Korea|South Korea|首尔|首爾|Seoul|서울|한국|🇰🇷
+    filter: (?i)(韩|韓|首尔|首爾|seoul|서울|한국|🇰🇷|(^|[^a-z])(kr|kor|korea)([^a-z]|$))
   - name: 马来西亚
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/CircleFlagsMy.png
     type: url-test
