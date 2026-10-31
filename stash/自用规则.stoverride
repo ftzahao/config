@@ -122,6 +122,36 @@ rule-providers:
     behavior: classical
     format: yaml
     interval: 86400
+  OpenAI:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml
+    behavior: classical
+    format: yaml
+    interval: 86400
+  Anthropic:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Anthropic/Anthropic.yaml
+    behavior: classical
+    format: yaml
+    interval: 86400
+  Claude:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Claude/Claude.yaml
+    behavior: classical
+    format: yaml
+    interval: 86400
+  Instagram:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Instagram/Instagram.yaml
+    behavior: classical
+    format: yaml
+    interval: 86400
+  Threads:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Threads/Threads.yaml
+    behavior: classical
+    format: yaml
+    interval: 86400
+  Whatsapp:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Whatsapp/Whatsapp.yaml
+    behavior: classical
+    format: yaml
+    interval: 86400
 
 rules: #!replace
   - RULE-SET,FtzahaoDirect,DIRECT
@@ -142,6 +172,12 @@ rules: #!replace
   - RULE-SET,x,x
   - RULE-SET,TikTok,TikTok
   - RULE-SET,Steam,Steam
+  - RULE-SET,OpenAI,OpenAI
+  - RULE-SET,Anthropic,Claude
+  - RULE-SET,Claude,Claude
+  - RULE-SET,Instagram,Instagram
+  - RULE-SET,Threads,Threads
+  - RULE-SET,Whatsapp,Whatsapp
   - RULE-SET,Lan,DIRECT
   - GEOIP,LAN,DIRECT
   - MATCH,默认
@@ -284,6 +320,91 @@ proxy-groups: #!replace
       - 德国
   - name: Steam
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstSteam.png
+    type: select
+    proxies:
+      - 默认
+      - 自动选择
+      - 手动选择
+      - 美国
+      - 日本
+      - 新加坡
+      - 英国
+      - 台湾
+      - 香港
+      - 港澳台
+      - 韩国
+      - 马来西亚
+      - 德国
+  - name: OpenAI
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstChatgpt.png
+    type: select
+    proxies:
+      - 默认
+      - 自动选择
+      - 手动选择
+      - 美国
+      - 日本
+      - 新加坡
+      - 英国
+      - 台湾
+      - 香港
+      - 港澳台
+      - 韩国
+      - 马来西亚
+      - 德国
+  - name: Claude
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstClaude.png
+    type: select
+    proxies:
+      - 默认
+      - 自动选择
+      - 手动选择
+      - 美国
+      - 日本
+      - 新加坡
+      - 英国
+      - 台湾
+      - 香港
+      - 港澳台
+      - 韩国
+      - 马来西亚
+      - 德国
+  - name: Instagram
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SkillIconsInstagram.png
+    type: select
+    proxies:
+      - 默认
+      - 自动选择
+      - 手动选择
+      - 美国
+      - 日本
+      - 新加坡
+      - 英国
+      - 台湾
+      - 香港
+      - 港澳台
+      - 韩国
+      - 马来西亚
+      - 德国
+  - name: Threads
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SimpleIconsThreads.png
+    type: select
+    proxies:
+      - 默认
+      - 自动选择
+      - 手动选择
+      - 美国
+      - 日本
+      - 新加坡
+      - 英国
+      - 台湾
+      - 香港
+      - 港澳台
+      - 韩国
+      - 马来西亚
+      - 德国
+  - name: Whatsapp
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosWhatsappIcon.png
     type: select
     proxies:
       - 默认
