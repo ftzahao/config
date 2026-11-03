@@ -1,11 +1,10 @@
+# 加载 mise 环境配置
 source $HOME/.config/mise/env.zsh
 
-export BUN_INSTALL="$HOME/.cache/bun"
-export PNPM_HOME="$HOME/.cache/pnpm"
+# 确保 path 数组中的路径不重复
+typeset -U path
 
 path+=(
-  "$HOME/.local/bin"
-  "$BUN_INSTALL/bin"
-  "$PNPM_HOME/bin"
+    # 将用户本地可执行文件目录加入搜索路径
+    "$HOME/.local/bin"
 )
-typeset -U path

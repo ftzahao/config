@@ -8,6 +8,9 @@ bat = "latest"
 bun = "latest"
 cargo-binstall = "latest"
 "cargo:cargo-cache" = "latest"
+claude = "latest"
+codex = "latest"
+copilot = "latest"
 curlie = "latest"
 deno = "latest"
 fd = "latest"
@@ -30,7 +33,7 @@ oha = "latest"
 "pipx:hf" = "latest"
 pitchfork = { version = "latest", workflow = "release.yml@refs/heads/main" }
 pnpm = "latest"
-python = ["latest"]
+python = "latest"
 ripgrep = "latest"
 rust = "stable"
 tokei = "latest"
@@ -88,4 +91,4 @@ cdr = 'cd "$(git rev-parse --show-toplevel)"'  # 切换到 Git 仓库的根目�
 dsstore-clean = "find . -name '.DS_Store' -type f -delete"  # 清理 .DS_Store 文件
 
 [hooks]
-postinstall = "misecompsync --new-only"
+postinstall = "misecompsync --new-only --shell zsh"

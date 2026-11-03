@@ -1,5 +1,8 @@
+tap "chen08209/tap"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@4"
 # Distributed revision control system
 brew "git"
 # GNU Privacy Guard (OpenPGP)
@@ -10,8 +13,8 @@ brew "helm"
 brew "kubernetes-cli"
 # Deep clean and optimize your Mac
 brew "mole"
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@4"
+# CLI proxy to minimize LLM token consumption
+brew "rtk"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Formatting technology for Swift source code
@@ -22,12 +25,14 @@ brew "zinit"
 cask "adguard"
 # Display management tool
 cask "betterdisplay"
+# 3D creation suite
+cask "blender"
 # Web browser focusing on privacy
 cask "brave-browser"
-# Configuration manager for AI coding agents
-cask "cc-switch"
-# OpenAI's official ChatGPT desktop app
-cask "chatgpt"
+# Git GUI
+cask "changes"
+# Continuation of Clash Verge - A Clash Meta GUI based on Tauri
+cask "clash-verge-rev"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
 # Screen capturing tool
@@ -36,13 +41,15 @@ cask "cleanshot"
 cask "crossover"
 # Database management tool
 cask "dbx"
+# Plugin-based AI agent desktop application
+cask "deepseek-harness"
 # Downloads videos from different websites
 cask "downie"
 # Create dynamic wallpapers
 cask "equinox"
+# Multi-platform proxy client based on ClashMeta
+cask "chen08209/tap/flclash", trusted: true
 cask "font-maple-mono-nf-cn"
-# Homebrew's official GUI
-cask "homebrew-app"
 # File archiver
 cask "keka"
 # Launchpad alternative
@@ -55,6 +62,8 @@ cask "mole-app"
 cask "ogdesign-eagle"
 # Second-display utility for iPhone and iPad over USB and Wi-Fi
 cask "opendisplay"
+# Receiver that turns a computer into a second display for OpenDisplay
+cask "opendisplay-receiver"
 # LLM server built on MLX
 cask "osaurus"
 # Desktop virtualization software
@@ -97,11 +106,16 @@ cask "wechat"
 cask "wechatwebdevtools"
 # Messaging and calling application
 cask "wechatwork"
+# AI-assisted development environment
+cask "zcode"
 # Multiplayer code editor
 cask "zed"
+# Multiplayer environment for coding with agents
+cask "zed-delta"
 vscode "alefragnani.project-manager"
 vscode "antfu.iconify"
 vscode "antfu.unocss"
+vscode "antfu.x18n"
 vscode "anthropic.claude-code"
 vscode "dbaeumer.vscode-eslint"
 vscode "eamodio.gitlens"
@@ -127,6 +141,5 @@ vscode "rust-lang.rust-analyzer"
 vscode "subframe7536.codeimg"
 vscode "swiftlang.swift-vscode"
 vscode "tombi-toml.tombi"
-vscode "vicanent.gcmp"
 vscode "vscode-icons-team.vscode-icons"
 vscode "vue.volar"
