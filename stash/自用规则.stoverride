@@ -475,7 +475,7 @@ proxy-groups: #!replace
     interval: 120
     tolerance: 50
     lazy: true
-    filter: (?i)(^|\s|\-|\[|\(|\|)(HK|TW|MO|香港|台湾|澳门|台北|台中|新北|彰化|Macau|Hong Kong|Taiwan|HKTW|港台|🇭🇰|🇹🇼|🇲🇴)(\s|\-|$|\]|\)|\|)
+    filter: (?i)(澳门|澳門|macau|macao|香港|台湾|台灣|臺灣|台北|台中|台南|新北|高雄|彰化|港台|Hong ?Kong|Taiwan|HKTW|🇭🇰|🇹🇼|🇲🇴|(^|[^a-z])(hk|tw|mo)([^a-z]|$))
   - name: 韩国
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/CircleFlagsKr.png
     type: url-test
