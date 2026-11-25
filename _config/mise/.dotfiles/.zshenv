@@ -1,10 +1,5 @@
-# 加载 mise 环境配置
-source $HOME/.config/mise/env.zsh
+export LANG="zh_CN.UTF-8"
 
-# 确保 path 数组中的路径不重复
-typeset -U path
+source "$HOME/.config/zsh/env.zsh"
 
-path+=(
-    # 将用户本地可执行文件目录加入搜索路径
-    "$HOME/.local/bin"
-)
+path=("$HOME/.local/bin" $path) && typeset -U path

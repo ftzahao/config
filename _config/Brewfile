@@ -1,8 +1,14 @@
-tap "chen08209/tap"
+tap "getnotchnook/v2"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
+# Cross-platform make
+brew "cmake"
+# Documentation for CMake
+brew "cmake-docs"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@4"
+# Dependency manager for Cocoa projects
+brew "cocoapods"
 # Distributed revision control system
 brew "git"
 # GNU Privacy Guard (OpenPGP)
@@ -21,24 +27,18 @@ brew "starship"
 brew "swift-format"
 # Flexible and fast Zsh plugin manager
 brew "zinit"
-# Stand alone ad blocker
-cask "adguard"
 # Display management tool
 cask "betterdisplay"
 # 3D creation suite
 cask "blender"
 # Web browser focusing on privacy
 cask "brave-browser"
-# Git GUI
-cask "changes"
-# Continuation of Clash Verge - A Clash Meta GUI based on Tauri
-cask "clash-verge-rev"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
 # Screen capturing tool
 cask "cleanshot"
-# Tool to run Windows software
-cask "crossover"
+# Plain-text editor for web pages, program source codes and more
+cask "coteditor"
 # Database management tool
 cask "dbx"
 # Plugin-based AI agent desktop application
@@ -47,9 +47,9 @@ cask "deepseek-harness"
 cask "downie"
 # Create dynamic wallpapers
 cask "equinox"
-# Multi-platform proxy client based on ClashMeta
-cask "chen08209/tap/flclash", trusted: true
 cask "font-maple-mono-nf-cn"
+# Web browser
+cask "google-chrome"
 # File archiver
 cask "keka"
 # Launchpad alternative
@@ -58,6 +58,8 @@ cask "launchos"
 cask "markdown-preview"
 # Deep clean, analyze, and optimize app
 cask "mole-app"
+# Notch workspace
+cask "getnotchnook/v2/notchnook-v2", trusted: true
 # Organise all your reference images in one place
 cask "ogdesign-eagle"
 # Second-display utility for iPhone and iPad over USB and Wi-Fi
@@ -82,6 +84,8 @@ cask "qq"
 cask "robbietilton-compositor"
 # Tool that provides consistent, highly configurable symbols for apps
 cask "sf-symbols"
+# SSH and SFTP client
+cask "shellrs"
 # Music app
 cask "sodamusic"
 # Network tool based on Clash
@@ -106,12 +110,8 @@ cask "wechat"
 cask "wechatwebdevtools"
 # Messaging and calling application
 cask "wechatwork"
-# AI-assisted development environment
-cask "zcode"
 # Multiplayer code editor
 cask "zed"
-# Multiplayer environment for coding with agents
-cask "zed-delta"
 vscode "alefragnani.project-manager"
 vscode "antfu.iconify"
 vscode "antfu.unocss"
