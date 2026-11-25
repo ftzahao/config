@@ -197,7 +197,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: Telegram
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosTelegram.png
     type: select
@@ -213,7 +212,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: Youtube
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstYoutube.png
     type: select
@@ -229,7 +227,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: x
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosX.png
     type: select
@@ -245,7 +242,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: TikTok
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosTiktokIcon.png
     type: select
@@ -261,7 +257,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: Netflix
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstNetflix.png
     type: select
@@ -277,7 +272,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: Disney
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstDisneyPlus.png
     type: select
@@ -293,7 +287,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: Spotify
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosSpotifyIcon.png
     type: select
@@ -309,7 +302,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: Steam
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstSteam.png
     type: select
@@ -325,7 +317,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: OpenAI
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstChatgpt.png
     type: select
@@ -341,7 +332,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: Claude
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SelfhstClaude.png
     type: select
@@ -357,7 +347,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: Instagram
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SkillIconsInstagram.png
     type: select
@@ -373,7 +362,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: Threads
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SimpleIconsThreads.png
     type: select
@@ -389,7 +377,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: Whatsapp
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosWhatsappIcon.png
     type: select
@@ -405,7 +392,6 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-      - 德国
   - name: 美国
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/CircleFlagsUs.png
     type: url-test
@@ -470,14 +456,6 @@ proxy-groups: #!replace
     tolerance: 50
     lazy: true
     filter: (?i)(马来西亚|馬來西亞|马来(?:西亚)?|馬來(?:西亞)?|Malaysia|Kuala\s*Lumpur|吉隆坡|🇲🇾)
-  - name: 德国
-    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/CircleFlagsDe.png
-    type: url-test
-    include-all: true
-    interval: 120
-    tolerance: 50
-    lazy: true
-    filter: (?i)(德国|德國|germany|deutschland|frankfurt|berlin|🇩🇪|(^|[^a-z])de([^a-z]|$))
   - name: 自动选择
     icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/StreamlineStickiesColorCompass1Duo.png
     type: url-test
