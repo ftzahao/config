@@ -175,9 +175,9 @@ rules: #!replace
   - RULE-SET,OpenAI,OpenAI
   - RULE-SET,Anthropic,Claude
   - RULE-SET,Claude,Claude
-  - RULE-SET,Instagram,Instagram
-  - RULE-SET,Threads,Threads
-  - RULE-SET,Whatsapp,Whatsapp
+  - RULE-SET,Instagram,Meta
+  - RULE-SET,Threads,Meta
+  - RULE-SET,Whatsapp,Meta
   - RULE-SET,Lan,DIRECT
   - GEOIP,LAN,DIRECT
   - MATCH,默认
@@ -347,38 +347,8 @@ proxy-groups: #!replace
       - 香港
       - 韩国
       - 马来西亚
-  - name: Instagram
-    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SkillIconsInstagram.png
-    type: select
-    proxies:
-      - 默认
-      - 自动选择
-      - 手动选择
-      - 美国
-      - 日本
-      - 新加坡
-      - 英国
-      - 台湾
-      - 香港
-      - 韩国
-      - 马来西亚
-  - name: Threads
-    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/SimpleIconsThreads.png
-    type: select
-    proxies:
-      - 默认
-      - 自动选择
-      - 手动选择
-      - 美国
-      - 日本
-      - 新加坡
-      - 英国
-      - 台湾
-      - 香港
-      - 韩国
-      - 马来西亚
-  - name: Whatsapp
-    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosWhatsappIcon.png
+  - name: Meta
+    icon: https://raw.githubusercontent.com/ftzahao/config/main/assets/LogosMetaIcon.png
     type: select
     proxies:
       - 默认
